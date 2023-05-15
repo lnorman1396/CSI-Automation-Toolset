@@ -11,8 +11,6 @@ from datetime import date
 import numpy as np
 import os
 from os import getcwd
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 from datetime import timedelta
 import streamlit_ext as ste
 import collections
