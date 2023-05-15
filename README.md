@@ -5,7 +5,7 @@ This repository contains the source code for a multipage Streamlit application t
 
 ## App Structure
 
-The app is organized with a main script (`main.py`) that serves as the entry point, and a `pages` directory that contains subdirectories for different categories of scripts. Each subdirectory contains Python scripts that can be run in the Streamlit app. The structure is as follows:
+The app is organized with a main script (`main.py`) that serves as the entry point, and a `pages` directory that contains subdirectories for different categories of scripts. Each subdirectory contains Python scripts that can be run in the Streamlit app. The structured (example) is as follows:
 
 my_app/
 ├── main.py
@@ -40,6 +40,10 @@ streamlit run main.py
 
 
 The app will open in a web browser. In the sidebar, you can select a page (which corresponds to a subdirectory under pages), and then select a script to run. The output of the script's run function will be displayed in the main section of the page.
+
+A directory will only be presented in the main page if a script exists for it.
+
+A certain level of error handling has been implemented (for basic python errors at runtime), however please check your code for more primitive errors (i.e syntax error as the code will not be able to compile). 
 
 Contributing
 To add a new script to the app, simply create a new Python file in the appropriate subdirectory under pages, and make sure that it contains a run function. The app will automatically discover the new script the next time it is run.
