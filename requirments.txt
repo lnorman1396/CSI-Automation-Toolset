@@ -13,9 +13,6 @@ XlsxWriter==3.0.3
 seaborn==0.11.2
 xlrd==2.0.1
 tk-tools==0.16.0
-
-
-
 utils==1.0.1
 views==0.3
 xlrd==2.0.1
