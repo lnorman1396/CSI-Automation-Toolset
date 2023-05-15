@@ -6,10 +6,10 @@ openpyxl==3.0.10
 pandas==1.4.2
 plotly==5.8.2
 python-dotenv==0.20.0
-streamlit==1.22.0
+streamlit==1.19.0
 streamlit_authenticator==0.1.5
 streamlit_option_menu==0.3.2
-XlsxWriter==3.0.1
+xlsxwriter==1.4.4
 seaborn==0.11.2
 xlrd==2.0.1
 tk-tools==0.16.0
