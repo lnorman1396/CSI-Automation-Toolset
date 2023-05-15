@@ -31,6 +31,7 @@ def main():
     # Discover modules
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pages")
     subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
+    st.write(base_dir)
 
     pages = {}
     for subdir in subdirs:
