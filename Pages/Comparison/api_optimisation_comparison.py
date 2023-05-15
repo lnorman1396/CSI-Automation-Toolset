@@ -657,7 +657,7 @@ def run():
                     for row in common_index:
                         if row not in df1.index or row not in df2.index:
                             unmatched_rows.add(row)
-                    common_index = common_index - unmatched_rows
+                    common_index = list(set(common_index) - unmatched_rows)
 
                     df1 = df1.loc[common_index, common_columns]
                     df2 = df2.loc[common_index, common_columns]
@@ -674,6 +674,7 @@ def run():
                     return diff_df, message
 
                 diff_df_duty_types, message_warning = compare_dataframes(df_duty_types_ba, df_duty_types_op)
+
 
 
                 
