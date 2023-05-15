@@ -1,6 +1,7 @@
 import os
 import importlib.util
 import streamlit as st
+import traceback
 
 def import_module(module_name, module_path):
     """
@@ -66,6 +67,7 @@ def main():
     except Exception as e:
         st.error(f"An error occurred while running the script: {e}")
         st.error("Please check the script and try again.")
+        traceback.print_exc()
 
 if __name__ == "__main__":
     main()
