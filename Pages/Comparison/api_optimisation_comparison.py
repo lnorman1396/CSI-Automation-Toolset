@@ -13,7 +13,6 @@ import os
 from os import getcwd
 from datetime import timedelta
 import collections
-import xlsxwriter
 
 import secrets 
 
