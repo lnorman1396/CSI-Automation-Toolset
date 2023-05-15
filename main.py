@@ -2,6 +2,7 @@ import os
 import importlib.util
 import streamlit as st
 import traceback
+import xlsxwriter
 
 def import_module(module_name, module_path):
     """
