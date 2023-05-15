@@ -29,7 +29,7 @@ def main():
     st.sidebar.subheader("CSI - Automation Toolset")
 
     # Discover modules
-    base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pages")
+    base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
     subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
     
 
