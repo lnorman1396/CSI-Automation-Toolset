@@ -642,8 +642,8 @@ def run():
 
                 def compare_dataframes(df1, df2):
                     # Find the common set of columns and rows
-                    common_columns = set(df1.columns).intersection(set(df2.columns))
-                    common_index = set(df1.index).intersection(set(df2.index))
+                    common_columns = list(set(df1.columns).intersection(set(df2.columns)))
+                    common_index = list(set(df1.index).intersection(set(df2.index)))
 
                     # Insert missing columns as zero-filled
                     for col in set(df1.columns).symmetric_difference(set(df2.columns)):
@@ -673,8 +673,8 @@ def run():
 
                     return diff_df, message
 
-
                 diff_df_duty_types, message_warning = compare_dataframes(df_duty_types_ba, df_duty_types_op)
+
 
                 
                 
