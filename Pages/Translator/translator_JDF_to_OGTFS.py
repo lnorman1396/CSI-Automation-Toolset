@@ -23,7 +23,7 @@ def run():
 
         logger.write(f'Packages imported in {(time() - start_time):.1f} seconds')
 
-        uploaded_file = st.file_uploader('upload your JDF ZIP file', type='zip')
+        uploaded_file = st.file_uploader('Upload your JDF ZIP file', type='zip')
 
         if uploaded_file is not None:
             with open("temp.zip", "wb") as f:
