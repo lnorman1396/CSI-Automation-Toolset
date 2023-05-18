@@ -27,7 +27,7 @@ def home_page():
     st.write("Welcome to CSI - Automation Toolset!")
     st.caption("This is an application that runs scripts from organised subdirectories within the optibus organisation")
     st.caption("You can search all scripts in the top global search bar")
-    st.caption("To contribute to the scripts, please find the github repo :link[here]")
+    st.caption("To contribute to the scripts, please find the github repo [here](https://github.com/lnorman1396/CSI-Automation-Toolset)")
 
 
 def main():
