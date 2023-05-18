@@ -13,7 +13,7 @@ import numpy as np
 import os
 from os import getcwd
 from datetime import timedelta
-import streamlit_ext as ste
+
 import collections
 import secrets 
 
@@ -1008,7 +1008,7 @@ def run():
 
 
     if download_run_optibus == 'run':
-        ste.download_button(
+        st.download_button(
             label=f"Download the Optimisation Comparison",
             data=buffer3,
             file_name= f"{depot_name} .xlsx",
