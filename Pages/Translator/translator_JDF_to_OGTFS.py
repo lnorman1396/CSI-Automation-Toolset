@@ -1,7 +1,4 @@
 from time import time
-import xlsxwriter
-
-
 import pandas as pd
 from pandas import read_csv, ExcelWriter, DataFrame, read_table
 from os.path import dirname, basename
@@ -496,7 +493,7 @@ def write_excel(table_array):
     logger.write('Writing excel output')
 
     output = io.BytesIO()
-    excel = pd.ExcelWriter(output, engine='xlsxwriter')
+    excel = pd.ExcelWriter(output)
     header_format = excel.book.add_format({'bold': True, 'text_wrap': False, 'align': 'left'})
 
     for i in table_array:
