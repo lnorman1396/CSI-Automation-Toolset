@@ -30,11 +30,11 @@ def run():
     #Info
     st.caption('*Author: Luke Norman*')
     support = st.expander('Supported Clients')
-    expander.write('Stagecoach')
-    expander.write('Arriva')
-    expander.write('First Bus')
-    expander.write('Dr Richard')
-    expander.caption('Please Contact the author if you wish a client to be supported for this api comparison')
+    support.write('Stagecoach')
+    support.write('Arriva')
+    support.write('First Bus')
+    support.write('Dr Richard')
+    support.caption('Please Contact the author if you wish a client to be supported for this api comparison')
     
 
     #TODO: Save this to a secrets.toml file 
