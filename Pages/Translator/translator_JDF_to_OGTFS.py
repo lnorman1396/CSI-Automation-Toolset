@@ -404,7 +404,7 @@ def creating_trips_file(zip_file):
     Trips.columns = ['trip_id', 'Region', 'Catalog Number', "Sign", 'direction_id', 'Alternative', 'Origin Stop id',
                      'Destination Stop Id', 'Day Offset', 'Departure', 'Arrival', 'Vehicle Type Ids', 'Distance',
                      'Existing', 'Custom', 'days', 'Boarding Time', 'Offboarding Time', 'Sub trip index', 'Route Id']
-    Trips[['route_id', 'old_trip']] = Trips['trip_id'].str.split('_', 1, expand=True)
+    Trips[['route_id', 'old_trip']] = Trips['trip_id'].str.split('_', n=1, expand=True)
     Trips['len_id']=Trips["old_trip"].str.len()
     Trips['first'] = Trips['old_trip'].astype(str).str[0]
     Trips['len_id'] = Trips['len_id'].astype(str)
