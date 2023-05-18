@@ -645,8 +645,10 @@ def run():
                             unmatched_rows.add(row)
                     common_index = common_index - unmatched_rows
 
-                    df1 = df1.loc[common_index, common_columns]
-                    df2 = df2.loc[common_index, common_columns]
+                    df1 = df1.loc[list(common_index), list(common_columns)]
+                    df2 = df2.loc[list(common_index), list(common_columns)]
+
+                    
 
                     # Compute the difference between the dataframes
                     diff_df = df1 - df2
