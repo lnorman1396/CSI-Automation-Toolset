@@ -1,6 +1,6 @@
 from time import time
 import pandas as pd
-import xlsxwriter as xlsxwriter
+import xlsxwriter
 
 from pandas import read_csv, ExcelWriter, DataFrame, read_table
 from os.path import dirname, basename
