@@ -2,6 +2,7 @@ import os
 import importlib.util
 import streamlit as st
 import traceback
+from streamlit_searchbox import st_searchbox
 
 def import_module(module_name, module_path):
     """
@@ -18,6 +19,14 @@ def import_module(module_name, module_path):
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def search_scripts(search_term: str) -> List[str]:
+    if search_term:
+        return [script for script in scripts if search_term.lower() in script.lower()]
+    else:
+        return []
+
 
 def main():
     """
@@ -54,19 +63,18 @@ def main():
         pages[subdir.capitalize()] = modules
 
     # Global search box
-    selected_script = st.sidebar.text_input(
-        'Search for a script:',
+    selected_script = st_searchbox(
+        search_scripts,
+        key="script_searchbox",
     )
 
-    if selected_script in scripts:
+    if selected_script:
         try:
             scripts[selected_script]()
         except Exception as e:
             st.error(f"An error occurred while running the script: {e}")
             st.error("Please check the script and try again.")
             traceback.print_exc()
-    elif selected_script: # If user entered something but it's not a valid script
-        st.error(f"No script found with the name: {selected_script}")
 
     else: # If the search box is empty, show the selectboxes for pages and scripts
         selected_page = st.sidebar.selectbox(
@@ -88,4 +96,5 @@ def main():
             traceback.print_exc()
 if __name__ == "__main__":
     main()
+
 
