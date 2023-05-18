@@ -494,15 +494,10 @@ def write_excel(table_array):
     logger.write('Writing excel output')
 
     output = io.BytesIO()
-    excel = pd.ExcelWriter(output, engine='xlsxwriter')
-    header_format = excel.book.add_format({'bold': True, 'text_wrap': False, 'align': 'left'})
+    excel = pd.ExcelWriter(output)
 
     for i in table_array:
-        table_array[i].to_excel(excel, sheet_name=i, merge_cells=False, freeze_panes=[1, 0], index=False)
-        for col_num, value in enumerate(table_array[i].columns.values):
-            excel.sheets[i].write(0, col_num, value, header_format)
-            excel.sheets[i].set_column(col_num, col_num,
-                                       max(table_array[i][value].astype(str).str.len().max(), len(value) + 2))
+        table_array[i].to_excel(excel, sheet_name=i, index=False)
 
     excel.save()
     output.seek(0)
