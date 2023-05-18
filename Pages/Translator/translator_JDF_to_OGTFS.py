@@ -17,7 +17,7 @@ def run():
     logger = st.expander('logging outputs for debugging')
  
     def main():
-        
+    
         start_time = time()
 
         logger.write(f'Packages imported in {(time() - start_time):.1f} seconds')
@@ -31,28 +31,53 @@ def run():
             time_0 = time()
             output_name = basename(input_file)[:-4]+'_OGTFS'
             JDF_dict={}
+            total_steps = 9  # total number of steps in your process
+            progress_bar = st.progress(0)  # initialize the progress bar
+            current_step = 1  # start from the first step
+
             agency = creating_agency_file(ZipFile(input_file, 'r'))
             logger.write(f'\ncreating_agency_file in {(time() - time_0):.1f} seconds')
             JDF_dict['agency']=agency
+            progress_bar.progress(current_step/total_steps)  # update the progress bar
+            current_step += 1  # move to the next step
+
             StopTimes = creating_routes_file(ZipFile(input_file, 'r'))
             logger.write(f'\ncreating_routes_file in {(time() - time_0):.1f} seconds')
             JDF_dict['routes']=StopTimes
+            progress_bar.progress(current_step/total_steps)
+            current_step += 1
+
             stops = creating_stops_file(ZipFile(input_file, 'r'))
             logger.write(f'\ncreating_stops in {(time() - time_0):.1f} seconds')
             JDF_dict['stops']=stops
+            progress_bar.progress(current_step/total_steps)
+            current_step += 1
+
             stop_times = creating_stop_times_file(ZipFile(input_file, 'r'))
             logger.write(f'\ncreating_stop_times in {(time() - time_0):.1f} seconds')
             JDF_dict['stop_times'] = stop_times
+            progress_bar.progress(current_step/total_steps)
+            current_step += 1
+
             trips,calendar = creating_trips_file(ZipFile(input_file, 'r'))
             logger.write(f'\ncreating_trips in {(time() - time_0):.1f} seconds')
             JDF_dict['trips'] = trips
             JDF_dict['calendar'] = calendar
+            progress_bar.progress(current_step/total_steps)
+            current_step += 1
+
             vehicle_types = creating_vehicle_types_file()
             logger.write(f'\ncreating_vehicle_types in {(time() - time_0):.1f} seconds')
             JDF_dict['vehicle_types'] = vehicle_types
+            progress_bar.progress(current_step/total_steps)
+            current_step += 1
+
             trip_vehicle_types = creating_trip_vehicle_types_file(ZipFile(input_file, 'r'))
             logger.write(f'\ncreating_trip_vehicle_types in {(time() - time_0):.1f} seconds')
             JDF_dict['trip_vehicle_types'] = trip_vehicle_types
+            progress_bar.progress(current_step/total_steps)
+            current_step += 1
+
             excel_data = write_excel(JDF_dict)
 
             st.download_button(
@@ -60,9 +85,13 @@ def run():
                 data=excel_data,
                 file_name='output.xlsx',
                 mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
+            )
             logger.write(f'\nScript ran in {(time() - time_0):.1f} seconds')
+            progress_bar.progress(current_step/total_steps)
+            current_step += 1
+
             os.remove("temp.zip")
+
 
 
     def creating_agency_file(zip_file):
