@@ -23,8 +23,11 @@ def import_module(module_name, module_path):
     return module
 
 def home_page():
-    st.header("Home Page")
+    
     st.write("Welcome to CSI - Automation Toolset!")
+    st.caption("This is an application that runs scripts from organised subdirectories within the optibus organisation")
+    st.caption("You can search all scripts in the top global search bar")
+    st.caption("To contribute to the scripts, please find the github repo :link[here]")
 
 
 def main():
