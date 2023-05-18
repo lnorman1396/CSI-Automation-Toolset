@@ -6,21 +6,10 @@ from typing import List
 from streamlit_searchbox import st_searchbox
 
 def import_module(module_name, module_path):
-    """
-    Dynamically import a Python module.
-
-    Args:
-        module_name (str): The name of the module to import.
-        module_path (str): The file system path to the module.
-
-    Returns:
-        module: The imported module.
-    """
     spec = importlib.util.spec_from_file_location(module_name, module_path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
-
 
 def main():
     st.sidebar.subheader("CSI - Automation Toolset")
@@ -42,16 +31,15 @@ def main():
             module_name = f"pages.{subdir}.{py_file[:-3]}"
             module_path = os.path.join(subdir_path, py_file)
             mod = import_module(module_name, module_path)
-            modules.append({"name": py_file[:-3], "function": mod.run})  # Assuming each module has a run function
+            modules.append({"name": py_file[:-3], "function": mod.run})  
 
-            # Add script name to the list
-            scripts.append(py_file[:-3])
+            scripts.append({"page": subdir.capitalize(), "script": py_file[:-3]})
 
         pages[subdir.capitalize()] = modules
 
     def search_scripts(search_term: str) -> List[str]:
         if search_term:
-            return [script for script in scripts if search_term.lower() in script.lower()]
+            return [script["script"] for script in scripts if search_term.lower() in script["script"].lower()]
         else:
             return []
 
@@ -60,37 +48,37 @@ def main():
         key="global_script_search",
     )
 
+    selected_page = None
+    selected_func = None
+
     if selected_script:
-        for page in pages.values():
-            for module in page:
-                if module["name"] == selected_script:
-                    try:
-                        module["function"]()
-                    except Exception as e:
-                        st.error(f"An error occurred while running the script: {e}")
-                        st.error("Please check the script and try again.")
-                        traceback.print_exc()
-    else:
-        selected_page = st.sidebar.selectbox(
-            'Select a page:',
-            list(pages.keys()),
-        )
+        for script in scripts:
+            if script["script"] == selected_script:
+                selected_page = script["page"]
+                selected_func = script["script"]
+                break
 
-        options = {module["name"]: module["function"] for module in pages[selected_page]}
-        option = st.sidebar.selectbox(
-            'Select Script',
-            list(options.keys()),
-        )
+    page_list = list(pages.keys())
+    selected_page = st.sidebar.selectbox(
+        'Select a page:',
+        page_list,
+        index=page_list.index(selected_page) if selected_page else 0
+    )
 
-        try:
-            options[option]()
-        except Exception as e:
-            st.error(f"An error occurred while running the script: {e}")
-            st.error("Please check the script and try again.")
-            traceback.print_exc()
+    options = {module["name"]: module["function"] for module in pages[selected_page]}
+    script_list = list(options.keys())
+    option = st.sidebar.selectbox(
+        'Select Script',
+        script_list,
+        index=script_list.index(selected_func) if selected_func else 0
+    )
+
+    try:
+        options[option]()
+    except Exception as e:
+        st.error(f"An error occurred while running the script: {e}")
+        st.error("Please check the script and try again.")
+        traceback.print_exc()
 
 if __name__ == "__main__":
     main()
-
-
-
