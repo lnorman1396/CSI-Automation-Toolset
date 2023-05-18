@@ -30,10 +30,7 @@ def run():
     #Info
     st.caption('*Author: Luke Norman*')
     support = st.expander('Supported Clients')
-    support.write('Stagecoach')
-    support.write('Arriva')
-    support.write('First Bus')
-    support.write('Dr Richard')
+    support.write('Stagecoach, Arriva, First Bus, Dr Richard')
     support.caption('Please Contact the author if you wish a client to be supported for this api comparison')
     
 
