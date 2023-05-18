@@ -22,13 +22,18 @@ def import_module(module_name, module_path):
     spec.loader.exec_module(module)
     return module
 
+def home_page():
+    st.header("Home Page")
+    st.write("Welcome to CSI - Automation Toolset!")
+
+
 def main():
     st.sidebar.subheader("CSI - Automation Toolset")
 
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
     subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
 
-    pages = {}
+    pages = {"Home": [{"name": "Home", "function": home_page}]}  # Initialize pages with Home page
     scripts = []  # List to store all script names
     for subdir in subdirs:
         subdir_path = os.path.join(base_dir, subdir)
@@ -47,6 +52,8 @@ def main():
             scripts.append({"page": subdir.capitalize(), "script": py_file[:-3]})
 
         pages[subdir.capitalize()] = modules
+    
+
 
     def search_scripts(search_term: str) -> List[str]:
         if search_term:
