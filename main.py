@@ -55,7 +55,7 @@ def main():
         else:
             return []
 
-    selected_script = st_searchbox(
+    selected_script = st.sidebar.st_searchbox(
         search_scripts,
         key="global_script_search",
     )
