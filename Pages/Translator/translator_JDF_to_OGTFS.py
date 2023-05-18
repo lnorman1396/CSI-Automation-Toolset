@@ -494,7 +494,7 @@ def write_excel(table_array):
     logger.write('Writing excel output')
 
     output = io.BytesIO()
-    excel = pd.ExcelWriter(output)
+    excel = pd.ExcelWriter(output, engine='xlsxwriter')
     header_format = excel.book.add_format({'bold': True, 'text_wrap': False, 'align': 'left'})
 
     for i in table_array:
