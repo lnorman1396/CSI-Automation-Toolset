@@ -9,10 +9,11 @@ import streamlit as st
 import os
 import io
 
-st.subheader('JDF to OGTFS Converter') 
+ 
 logger = st.expander('logging outputs for debugging')
 
 def run():
+    st.subheader('JDF to OGTFS Converter')
     start_time = time()
     
     logger.write(f'Packages imported in {(time() - start_time):.1f} seconds')
