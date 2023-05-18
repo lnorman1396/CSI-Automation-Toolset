@@ -2,6 +2,7 @@ import os
 import importlib.util
 import streamlit as st
 import traceback
+from typing import List
 from streamlit_searchbox import st_searchbox
 
 def import_module(module_name, module_path):
