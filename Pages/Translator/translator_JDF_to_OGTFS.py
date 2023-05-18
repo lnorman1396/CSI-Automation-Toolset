@@ -503,7 +503,7 @@ def write_excel(table_array):
             excel.sheets[i].set_column(col_num, col_num,
                                        max(table_array[i][value].astype(str).str.len().max(), len(value) + 2))
 
-    excel.save()
+    excel.close()
     output.seek(0)
 
     logger.write(f'Wrote excel output in {(time() - time_0):.1f} seconds')
