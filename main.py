@@ -25,20 +25,20 @@ def main():
 
     This function is responsible for discovering the Python modules in the
     subdirectories of the "pages" directory, and presenting these modules
-    to the user through selectboxes in the Streamlit app.
+    to the user through a searchbox and selectboxes in the Streamlit app.
     """
     st.sidebar.subheader("CSI - Automation Toolset")
 
     # Discover modules
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
     subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
-    
 
     pages = {}
+    scripts = {} # This will hold all scripts across pages
     for subdir in subdirs:
         subdir_path = os.path.join(base_dir, subdir)
         py_files = [f for f in os.listdir(subdir_path) if f.endswith(".py") and f != "__init__.py"]
-        
+
         # Skip directories that don't contain any Python files
         if not py_files:
             continue
@@ -49,25 +49,43 @@ def main():
             module_path = os.path.join(subdir_path, py_file)
             mod = import_module(module_name, module_path)
             modules.append({"name": py_file[:-3], "function": mod.run})  # Assuming each module has a run function
+            scripts[py_file[:-3]] = mod.run  # Add to global scripts dict
+
         pages[subdir.capitalize()] = modules
 
-    selected_page = st.sidebar.selectbox(
-        'Select a page:',
-        list(pages.keys()),
+    # Global search box
+    selected_script = st.sidebar.text_input(
+        'Search for a script:',
     )
 
-    options = {module["name"]: module["function"] for module in pages[selected_page]}
-    option = st.sidebar.selectbox(
-        'Select Script',
-        list(options.keys()),
-    )
+    if selected_script in scripts:
+        try:
+            scripts[selected_script]()
+        except Exception as e:
+            st.error(f"An error occurred while running the script: {e}")
+            st.error("Please check the script and try again.")
+            traceback.print_exc()
+    elif selected_script: # If user entered something but it's not a valid script
+        st.error(f"No script found with the name: {selected_script}")
 
-    try:
-        options[option]()
-    except Exception as e:
-        st.error(f"An error occurred while running the script: {e}")
-        st.error("Please check the script and try again.")
-        traceback.print_exc()
+    else: # If the search box is empty, show the selectboxes for pages and scripts
+        selected_page = st.sidebar.selectbox(
+            'Select a page:',
+            list(pages.keys()),
+        )
 
+        options = {module["name"]: module["function"] for module in pages[selected_page]}
+        option = st.sidebar.selectbox(
+            'Select Script',
+            list(options.keys()),
+        )
+
+        try:
+            options[option]()
+        except Exception as e:
+            st.error(f"An error occurred while running the script: {e}")
+            st.error("Please check the script and try again.")
+            traceback.print_exc()
 if __name__ == "__main__":
     main()
+
