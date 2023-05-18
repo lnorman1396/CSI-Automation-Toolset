@@ -13,7 +13,7 @@ import io
 
 
 def run():
-    st.subheader('JDF to OGTFS Converter')
+    
     st.caption('*Author: Lior Zachs*')
     logger = st.expander('logging outputs for debugging')
  
