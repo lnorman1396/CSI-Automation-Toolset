@@ -22,34 +22,18 @@ def import_module(module_name, module_path):
     return module
 
 
-def search_scripts(search_term: str) -> List[str]:
-    if search_term:
-        return [script for script in scripts if search_term.lower() in script.lower()]
-    else:
-        return []
-
-
 def main():
-    """
-    The main function of the Streamlit app.
-
-    This function is responsible for discovering the Python modules in the
-    subdirectories of the "pages" directory, and presenting these modules
-    to the user through a searchbox and selectboxes in the Streamlit app.
-    """
     st.sidebar.subheader("CSI - Automation Toolset")
 
-    # Discover modules
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
     subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
 
     pages = {}
-    scripts = {} # This will hold all scripts across pages
+    scripts = []  # List to store all script names
     for subdir in subdirs:
         subdir_path = os.path.join(base_dir, subdir)
         py_files = [f for f in os.listdir(subdir_path) if f.endswith(".py") and f != "__init__.py"]
-
-        # Skip directories that don't contain any Python files
+        
         if not py_files:
             continue
 
@@ -59,25 +43,34 @@ def main():
             module_path = os.path.join(subdir_path, py_file)
             mod = import_module(module_name, module_path)
             modules.append({"name": py_file[:-3], "function": mod.run})  # Assuming each module has a run function
-            scripts[py_file[:-3]] = mod.run  # Add to global scripts dict
+
+            # Add script name to the list
+            scripts.append(py_file[:-3])
 
         pages[subdir.capitalize()] = modules
 
-    # Global search box
+    def search_scripts(search_term: str) -> List[str]:
+        if search_term:
+            return [script for script in scripts if search_term.lower() in script.lower()]
+        else:
+            return []
+
     selected_script = st_searchbox(
         search_scripts,
-        key="script_searchbox",
+        key="global_script_search",
     )
 
     if selected_script:
-        try:
-            scripts[selected_script]()
-        except Exception as e:
-            st.error(f"An error occurred while running the script: {e}")
-            st.error("Please check the script and try again.")
-            traceback.print_exc()
-
-    else: # If the search box is empty, show the selectboxes for pages and scripts
+        for page in pages.values():
+            for module in page:
+                if module["name"] == selected_script:
+                    try:
+                        module["function"]()
+                    except Exception as e:
+                        st.error(f"An error occurred while running the script: {e}")
+                        st.error("Please check the script and try again.")
+                        traceback.print_exc()
+    else:
         selected_page = st.sidebar.selectbox(
             'Select a page:',
             list(pages.keys()),
@@ -95,7 +88,9 @@ def main():
             st.error(f"An error occurred while running the script: {e}")
             st.error("Please check the script and try again.")
             traceback.print_exc()
+
 if __name__ == "__main__":
     main()
+
 
 
