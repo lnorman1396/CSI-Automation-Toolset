@@ -42,7 +42,7 @@ def main():
             return [script["script"] for script in scripts if search_term.lower() in script["script"].lower()]
         else:
             return []
-
+    st.caption('🔍 Global Search (all scripts in repo)')
     selected_script = st_searchbox(
         search_scripts,
         key="global_script_search",
