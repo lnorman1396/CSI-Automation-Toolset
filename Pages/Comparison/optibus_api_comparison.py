@@ -18,8 +18,7 @@ import collections
 import secrets 
 
 def run():
-    st.write('**TESTING Run Function**')
-    st.caption('directories and files will only be presented in the UI if there is content to present. i.e if the Collector subdirectory is empty, it will not appear in the select page UI ')
+    
     #TODO: may need other client names - only have partial set so far 
     clients_dict = {
         'arriva-uk-bus': 'Arriva UK', 
@@ -29,7 +28,14 @@ def run():
     }
 
     #Info
-    st.subheader('Optimization Comparison - MultiThread V2')
+    st.caption('*Author: Luke Norman*')
+    support = st.expander('Supported Clients')
+    expander.write('Stagecoach')
+    expander.write('Arriva')
+    expander.write('First Bus')
+    expander.write('Dr Richard')
+    expander.caption('Please Contact the author if you wish a client to be supported for this api comparison')
+    
 
     #TODO: Save this to a secrets.toml file 
     api_secrets_dict= st.secrets['api_secrets_dict']
