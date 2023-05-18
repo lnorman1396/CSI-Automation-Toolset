@@ -1,7 +1,6 @@
 from time import time
 
-from tkinter import Tk, Frame, Label, Entry, Button, INSERT, Text, IntVar, END
-from tkinter.filedialog import askopenfile
+
 import pandas as pd
 from pandas import read_csv, ExcelWriter, DataFrame, read_table
 from os.path import dirname, basename
