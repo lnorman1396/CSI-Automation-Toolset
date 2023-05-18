@@ -87,8 +87,8 @@ def run():
                 mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             )
             logger.write(f'\nScript ran in {(time() - time_0):.1f} seconds')
-            progress_bar.progress(current_step/total_steps)
-            current_step += 1
+            progress_bar.progress(1)
+            
 
             os.remove("temp.zip")
 
