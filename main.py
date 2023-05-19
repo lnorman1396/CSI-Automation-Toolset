@@ -175,14 +175,13 @@ def main():
             scripts.append({"page": subdir.capitalize(), "script": py_file[:-3]})
 
         pages[subdir.capitalize()] = modules
-    
-
 
     def search_scripts(search_term: str) -> List[str]:
         if search_term:
             return [script["script"] for script in scripts if search_term.lower() in script["script"].lower()]
         else:
             return []
+
     st.caption('🔍 Global Search (all scripts in repo)')
     selected_script = st_searchbox(
         search_scripts,
@@ -197,11 +196,6 @@ def main():
             if script["script"] == selected_script:
                 selected_page = script["page"]
                 selected_func = script["script"]
-                title, description, icon, author = get_script_description(selected_func)  # You'll need to implement this function
-                 # Generate the card
-                card = generate_card(title, description, icon, author)
-                # Display the card in the sidebar or main window
-                st.sidebar.markdown(card, unsafe_allow_html=True)
                 break
 
     page_list = list(pages.keys())
@@ -219,12 +213,21 @@ def main():
         index=script_list.index(selected_func) if selected_func else 0
     )
 
+    # Generate and display the card for the selected script
+    title, description, icon, author = get_script_description(option)  # You'll need to implement this function
+    card = generate_card(title, description, icon, author)
+    st.sidebar.markdown(card, unsafe_allow_html=True)
+
     try:
         options[option]()
     except Exception as e:
         st.error(f"An error occurred while running the script: {e}")
         st.error("Please check the script and try again.")
         traceback.print_exc()
+
+if __name__ == "__main__":
+    main()
+
 
 if __name__ == "__main__":
     main()
