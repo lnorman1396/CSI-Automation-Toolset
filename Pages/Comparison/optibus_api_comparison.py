@@ -18,8 +18,8 @@ import collections
 import secrets 
 
 class Description:
-    title = "Optibus API Schedule Comparison"
-    description = "This is a script that compares schedules from urls and creates a comparison excel file, highlighting the savings between scenarios"
+    title = "API Schedule Comparison"
+    description = "This is a script that compares schedules from optibus urls and creates a comparison excel file, highlighting the savings between scenarios"
     icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmaLtoRAJT4nxBOCBs_mQapmWJv3gxDjaYIQ&usqp=CAU"
     author = 'Luke Norman'
 
