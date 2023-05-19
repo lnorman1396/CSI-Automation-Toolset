@@ -77,8 +77,7 @@ def home_page():
                         </p>
                     </div>
                 """, unsafe_allow_html=True)
-                if cols[j].button('Run Script'):
-                    function()
+                
 
 
 
