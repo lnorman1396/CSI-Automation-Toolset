@@ -16,7 +16,7 @@ def run():
     logger = st.expander('Log Debugging info')
 
     def main():
-        st.title('Convert calendar_dates.txt into calendar.txt')
+        
         uploaded_file = st.file_uploader("Select GTFS zip file", type="zip")
         if uploaded_file is not None:
             with ZipFile(uploaded_file, 'r') as zip_file:
