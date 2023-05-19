@@ -171,6 +171,55 @@ def get_script_description(script_name):
 
     return 'No title', 'No description', 'No icon', ''
 
+def get_script_instructions(script_name):
+    base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
+    subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
+
+    for subdir in subdirs:
+        subdir_path = os.path.join(base_dir, subdir)
+        py_files = [f for f in os.listdir(subdir_path) if f.endswith(".py") and f != "__init__.py"]
+        
+        if not py_files:
+            continue
+
+        for py_file in py_files:
+            if py_file[:-3] == script_name:
+                module_name = f"pages.{subdir}.{py_file[:-3]}"
+                module_path = os.path.join(subdir_path, py_file)
+                mod = import_module(module_name, module_path)
+
+                # Check if the module has a class named 'Instructions'
+                if hasattr(mod, 'Instructions'):
+                    inst = mod.Instructions()
+                    instructions = getattr(inst, 'instructions', 'No instructions')
+                    link = getattr(inst, 'link', 'No link')
+                
+
+                    return instructions, link
+
+    return 'No instructions', 'No link', 'No icon'
+
+def generate_instructions_card(instructions, link):
+    # Use a static icon
+    icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLlvf8qTqvuO7YUaN17vfVxHlaO3twzt3Jnw&usqp=CAU"  # Replace with the URL of your static icon
+
+    card = f"""
+        <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
+            <div>
+                <div style="display: flex; align-items: center;">
+                    <img src="{icon}" alt="icon" style="width: 40px; height: 40px; margin-right: 10px;">
+                    <h6>Instructions</h6>
+                </div>
+                <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">{instructions}</p>
+            </div>
+            <p style="position: relative; height: 100px;">
+                <a href="{link}" target="_blank">Click here</a>
+            </p>
+        </div>
+    """
+    return card
+
+
 
                 
 
@@ -243,6 +292,11 @@ def main():
         title, description, icon, author = get_script_description(option)  # You'll need to implement this function
         if title != 'No title':  # Check if a description class was found
             card = generate_card(title, description, icon, author)
+            st.sidebar.markdown(card, unsafe_allow_html=True)
+
+        instructions, link = get_script_instructions(option)
+        if instructions != 'No instructions':  # Check if an Instructions class was found
+            card = generate_instructions_card(instructions, link)
             st.sidebar.markdown(card, unsafe_allow_html=True)
 
     
