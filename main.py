@@ -22,12 +22,54 @@ def import_module(module_name, module_path):
     spec.loader.exec_module(module)
     return module
 
+def get_script_descriptions():
+    base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
+    subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
+
+    descriptions = []
+    for subdir in subdirs:
+        subdir_path = os.path.join(base_dir, subdir)
+        py_files = [f for f in os.listdir(subdir_path) if f.endswith(".py") and f != "__init__.py"]
+        
+        if not py_files:
+            continue
+
+        for py_file in py_files:
+            module_name = f"pages.{subdir}.{py_file[:-3]}"
+            module_path = os.path.join(subdir_path, py_file)
+            mod = import_module(module_name, module_path)
+
+            # Check if the module has a class named 'Description'
+            if hasattr(mod, 'Description'):
+                desc = mod.Description()
+                title = getattr(desc, 'title', 'No title')
+                description = getattr(desc, 'description', 'No description')
+                icon = getattr(desc, 'icon', 'No icon')
+
+                descriptions.append((title, description, icon))
+
+    return descriptions
+
 def home_page():
-    
     st.write("Welcome to CSI - Automation Toolset!")
     st.caption("This is an application that runs scripts from organised subdirectories within the optibus organisation")
     st.caption("You can search all scripts in the top global search bar")
     st.caption("To contribute to the scripts, please find the github repo [here](https://github.com/lnorman1396/CSI-Automation-Toolset)")
+
+    descriptions = get_script_descriptions()
+    for title, description, icon in descriptions:
+        # Create a preview card for the script
+        st.markdown(f"""
+            <div style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+                <div>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
+                </div>
+                <div>
+                    <img src="{icon}" alt="icon" style="width: 50px; height: 50px;">
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
 
 def main():
