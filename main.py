@@ -79,11 +79,12 @@ def home_page():
     end = start + cards_per_page
 
     # Display the cards for the current page
-    for i in range(start, min(end, len(descriptions))):
+    for i in range(start, min(end, len(descriptions)), 3):
         cols = st.columns(3)
         for j in range(3):
-            if i + j < len(descriptions):
-                title, description, icon, author = descriptions[i + j]
+            index = i + j
+            if index < min(end, len(descriptions)):
+                title, description, icon, author = descriptions[index]
                 # Create a preview card for the script
                 # Calculate whether the description is too long
                 is_description_too_long = len(description) > 100  # Adjust this value based on your needs
