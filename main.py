@@ -78,10 +78,11 @@ def home_page():
         </div>
         <p style="position: relative; height: 100px; overflow: hidden;">
             <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
-            <span style="position: absolute; bottom: 0; right: 0; padding-left: 10px; background-color: white;">...</span>
+            <span style="position: absolute; bottom: 0; right: 10px; padding-left: 10px; background-color: white;">...</span>
         </p>
     </div>
 """, unsafe_allow_html=True)
+
 
 
 
