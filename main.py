@@ -45,8 +45,9 @@ def get_script_descriptions():
                 title = getattr(desc, 'title', 'No title')
                 description = getattr(desc, 'description', 'No description')
                 icon = getattr(desc, 'icon', 'No icon')
+                author = getattr(desc, 'author', '')  # Get the author, or an empty string if it doesn't exist
 
-                descriptions.append((title, description, icon))
+                descriptions.append((title, description, icon, author))
 
     return descriptions
 
@@ -56,27 +57,29 @@ def home_page():
     st.caption("You can search all scripts in the top global search bar")
     st.caption("To contribute to the scripts, please find the github repo [here](https://github.com/lnorman1396/CSI-Automation-Toolset)")
     st.markdown('')
-    st.markdown('**Script Previews**')
+    st.markdown(f'**Script Previews**: {len(descriptions)}')
 
     descriptions = get_script_descriptions()
     for i in range(0, len(descriptions), 3):
         cols = st.columns(3)
         for j in range(3):
             if i + j < len(descriptions):
-                title, description, icon = descriptions[i + j]
+                title, description, icon, author = descriptions[i + j]
                 # Create a preview card for the script
                 cols[j].markdown(f"""
                     <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 150px; overflow: hidden; border-radius: 10px; background-color: #fff;">
                         <div style="display: flex; align-items: center;">
                             <img src="{icon}" alt="icon" style="width: 50px; height: 50px; margin-right: 10px;">
-                            <h6>{title}</h6>
+                            <div>
+                                <h6>{title}</h6>
+                                <p style="font-size: 0.8em;">{author}</p>
+                            </div>
                         </div>
                         <p style="position: relative; height: 80px; overflow: hidden;">
                             <span style="position: absolute; line-height: 1.2em; max-height: 3.6em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
-                            <span style="position: absolute; bottom: 0; right: 0; padding-left: 10px; background-color: white;">...</span>
-                        </p>
-                    </div>
-                """, unsafe_allow_html=True)
+                            <span style="position: absolute; bottom: 0; right: 0; padding-left: 10px; background-color:Sure, I can help you modify the `get_script_descriptions` function to include the author in the tuples it returns, and modify the `home_page` function to display the author in the cards. Here's how you can do it:
+
+                                """, unsafe_allow_html=True)
                 
 
 
