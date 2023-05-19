@@ -15,7 +15,11 @@ from os import getcwd
 from datetime import timedelta
 
 import collections
-import secrets 
+import secrets
+
+class Instructions:
+    instructions = 'Enter the depot name, Paste in schedule 1 and schedule 2, check the domain is supported by the api call, run the script'
+    link = '#'
 
 class Description:
     title = "Schedule Comparison"
