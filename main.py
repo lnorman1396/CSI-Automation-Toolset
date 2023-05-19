@@ -71,7 +71,7 @@ def home_page():
     <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 150px; overflow: hidden; border-radius: 10px; background-color: #fff;">
         <div>
             <div style="display: flex; align-items: center;">
-                <img src="{icon}" alt="icon" style="width: 50px; height: 50px; margin-right: 10px;">
+                <img src="{icon}" alt="icon" style="width: 40px; height: 40px; margin-right: 10px;">
                 <h6>{title}</h6>
             </div>
             <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
