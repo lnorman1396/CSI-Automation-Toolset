@@ -17,6 +17,11 @@ from datetime import timedelta
 import collections
 import secrets 
 
+class Description:
+    title = "My Script"
+    description = "This script does something useful."
+    icon = "https://example.com/my-icon.png"
+
 def run():
     
     #TODO: may need other client names - only have partial set so far 
