@@ -116,6 +116,36 @@ def generate_card(title, description, icon, author):
     """
     return card
 
+def get_script_description(script_name):
+    base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
+    subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
+
+    for subdir in subdirs:
+        subdir_path = os.path.join(base_dir, subdir)
+        py_files = [f for f in os.listdir(subdir_path) if f.endswith(".py") and f != "__init__.py"]
+        
+        if not py_files:
+            continue
+
+        for py_file in py_files:
+            if py_file[:-3] == script_name:
+                module_name = f"pages.{subdir}.{py_file[:-3]}"
+                module_path = os.path.join(subdir_path, py_file)
+                mod = import_module(module_name, module_path)
+
+                # Check if the module has a class named 'Description'
+                if hasattr(mod, 'Description'):
+                    desc = mod.Description()
+                    title = getattr(desc, 'title', 'No title')
+                    description = getattr(desc, 'description', 'No description')
+                    icon = getattr(desc, 'icon', 'No icon')
+                    author = getattr(desc, 'author', '')  # Get the author, or an empty string if it doesn't exist
+
+                    return title, description, icon, author
+
+    return 'No title', 'No description', 'No icon', ''
+
+
                 
 
 
