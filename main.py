@@ -70,12 +70,11 @@ def home_page():
     if len(descriptions) % cards_per_page != 0:
         num_pages += 1
 
-    # Initialize the current page in the session state
-    if 'current_page' not in st.session_state:
-        st.session_state['current_page'] = 0
+    # Create a number input for the current page
+    current_page = st.number_input('Page', min_value=0, max_value=num_pages-1, value=0, step=1)
 
     # Calculate the range of descriptions for the current page
-    start = st.session_state['current_page'] * cards_per_page
+    start = current_page * cards_per_page
     end = start + cards_per_page
 
     # Display the cards for the current page
@@ -85,6 +84,8 @@ def home_page():
             index = i + j
             if index < min(end, len(descriptions)):
                 title, description, icon, author = descriptions[index]
+                # ... existing code to display the card ...
+
                 # ... existing code to display the card ...
 
                 # Create a preview card for the script
