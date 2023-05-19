@@ -76,7 +76,7 @@ def home_page():
             </div>
             <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
         </div>
-        <p style="position: relative; height: 80px; overflow: hidden;">
+        <p style="position: relative; height: 120px; overflow: hidden;">
             <span style="position: absolute; line-height: 1.2em; max-height: 3.6em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
             <span style="position: absolute; bottom: 0; right: 0; padding-left: 10px; background-color: white;">...</span>
         </p>
