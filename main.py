@@ -93,7 +93,7 @@ def home_page():
 
 def generate_card(title, description, icon, author):
     # Calculate the number of lines in the description based on an average of 50 characters per line
-    lines_in_description = len(description) // 50
+    lines_in_description = len(description) // 20
 
     # Calculate the height of the card based on the number of lines in the description
     card_height = max(180, 20 * lines_in_description)  # Adjust these values based on your needs
