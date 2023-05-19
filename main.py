@@ -4,6 +4,7 @@ import streamlit as st
 import traceback
 from typing import List
 from streamlit_searchbox import st_searchbox
+from streamlit_pagination import pagination_component
 
 st.markdown("""
         <style>
@@ -58,10 +59,27 @@ def home_page():
     st.caption("To contribute to the scripts, please find the github repo [here](https://github.com/lnorman1396/CSI-Automation-Toolset)")
     st.markdown('')
     
-
     descriptions = get_script_descriptions()
     st.markdown(f'**Script Previews**: {len(descriptions)}')
-    for i in range(0, len(descriptions), 3):
+
+    # Define the number of cards per page
+    cards_per_page = 6
+
+    # Calculate the number of pages
+    num_pages = len(descriptions) // cards_per_page
+    if len(descriptions) % cards_per_page != 0:
+        num_pages += 1
+
+    # Use the pagination_component to get the current page
+    layout = {'color': "primary", 'style': {'margin-top': '10px'}}
+    current_page = pagination_component(num_pages, layout=layout, key="foo")
+
+    # Calculate the range of descriptions for the current page
+    start = current_page * cards_per_page
+    end = start + cards_per_page
+
+    # Display the cards for the current page
+    for i in range(start, min(end, len(descriptions))):
         cols = st.columns(3)
         for j in range(3):
             if i + j < len(descriptions):
