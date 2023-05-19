@@ -69,12 +69,12 @@ def home_page():
                 # Create a preview card for the script
                 cols[j].markdown(f"""
     <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 150px; overflow: hidden; border-radius: 10px; background-color: #fff;">
-        <div>
-            <div style="display: flex; align-items: center;">
-                <img src="{icon}" alt="icon" style="width: 50px; height: 50px; margin-right: 10px;">
+        <div style="display: flex;">
+            <img src="{icon}" alt="icon" style="width: 50px; height: 50px; margin-right: 10px;">
+            <div>
                 <h6>{title}</h6>
+                <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
             </div>
-            <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
         </div>
         <p style="position: relative; height: 80px; overflow: hidden;">
             <span style="position: absolute; line-height: 1.2em; max-height: 3.6em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
@@ -82,6 +82,7 @@ def home_page():
         </p>
     </div>
 """, unsafe_allow_html=True)
+
 
 
                 
