@@ -212,11 +212,14 @@ def main():
         script_list,
         index=script_list.index(selected_func) if selected_func else 0
     )
+        # Generate and display the card for the selected script
+    if selected_page != "Home":
+        title, description, icon, author = get_script_description(option)  # You'll need to implement this function
+        if title != 'No title':  # Check if a description class was found
+            card = generate_card(title, description, icon, author)
+            st.sidebar.markdown(card, unsafe_allow_html=True)
 
-    # Generate and display the card for the selected script
-    title, description, icon, author = get_script_description(option)  # You'll need to implement this function
-    card = generate_card(title, description, icon, author)
-    st.sidebar.markdown(card, unsafe_allow_html=True)
+    
 
     try:
         options[option]()
