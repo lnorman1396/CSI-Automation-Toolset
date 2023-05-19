@@ -18,8 +18,8 @@ import collections
 import secrets 
 
 class Description:
-    title = "My Script"
-    description = "This script does something useful."
+    title = "Optibus API Schedule Comparison"
+    description = "This is a script that compares schedules from urls and creates a comparison excel file, highlighting the savings between scenarios"
     icon = "https://example.com/my-icon.png"
 
 def run():
