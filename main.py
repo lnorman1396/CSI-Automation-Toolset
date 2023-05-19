@@ -109,12 +109,13 @@ def generate_card(title, description, icon, author):
                 </div>
                 <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
             </div>
-            <p style="position: relative; height: {description_height}px; overflow: hidden;">
-                <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
+            <p style="position: relative; height: {description_height}px;">
+                <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word;">{description}</span>
             </p>
         </div>
     """
     return card
+
 
 
 
