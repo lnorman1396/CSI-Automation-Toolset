@@ -60,7 +60,6 @@ def home_page():
     st.markdown('')
     
     descriptions = get_script_descriptions()
-    st.markdown(f'**Script Previews**: {len(descriptions)}')
 
     # Define the number of cards per page
     cards_per_page = 6
@@ -79,6 +78,10 @@ def home_page():
     # Calculate the range of descriptions for the current page
     start = st.session_state.page_number * cards_per_page
     end = start + cards_per_page
+        
+    num_descriptions_on_current_page = min(end, len(descriptions)) - start
+
+    st.markdown(f'**Script Previews**: {num_descriptions_on_current_page} / {len(descriptions)}')
 
     # Display the cards for the current page
     for i in range(start, min(end, len(descriptions)), 3):
