@@ -25,9 +25,9 @@ def run():
 
         with st.spinner('Writing GTFS zip file output...'):
             zip_file_name = f'{uploaded_file.name[:-4]}_filter_agency_{agencies_to_filter["agency_id"].str.cat(sep="_")}.zip'
-            write_output_GTFS(zip_file_output, zip_file_name)
+            output = write_output_GTFS(zip_file_output)
             st.success('Wrote GTFS zip file output')
-            st.download_button("Download Filtered GTFS", zip_file_name)
+            st.download_button("Download Filtered GTFS", output)
 
 def create_agency_list(a):
     b = []
