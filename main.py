@@ -75,7 +75,7 @@ def home_page():
         st.session_state.page_number = 0
 
     # Add a next button and a previous button
-    prev, _ ,next = st.columns([2, 8, 2])
+    prev ,next = st.columns([.5,1])
 
     if next.button("Next"):
         if st.session_state.page_number + 1 > num_pages - 1:
