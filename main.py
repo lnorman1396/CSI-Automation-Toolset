@@ -55,6 +55,8 @@ def home_page():
     st.caption("This is an application that runs scripts from organised subdirectories within the optibus organisation")
     st.caption("You can search all scripts in the top global search bar")
     st.caption("To contribute to the scripts, please find the github repo [here](https://github.com/lnorman1396/CSI-Automation-Toolset)")
+    st.markdown('')
+    st.markdown('**Script Previews**')
 
     descriptions = get_script_descriptions()
     for i in range(0, len(descriptions), 3):
