@@ -69,7 +69,10 @@ def home_page():
             <img src="{icon}" alt="icon" style="width: 50px; height: 50px; margin-right: 10px;">
             <h6>{title}</h6>
         </div>
-        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{description}</p>
+        <p style="position: relative; height: 80px; overflow: hidden;">
+            <span style="position: absolute; line-height: 1.2em; max-height: 3.6em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
+            <span style="position: absolute; bottom: 0; right: 0; padding-left: 10px; background-color: white;">...</span>
+        </p>
     </div>
 """, unsafe_allow_html=True)
 
