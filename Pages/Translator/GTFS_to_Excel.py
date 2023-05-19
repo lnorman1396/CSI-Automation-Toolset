@@ -15,7 +15,7 @@ def run():
     
     logger = st.expander('logging outputs for debugging')
     def main():
-        st.title('Convert GTFS to Excel')
+       
 
         uploaded_file = st.file_uploader("Select GTFS zip file", type=['zip'])
         if uploaded_file is not None:
