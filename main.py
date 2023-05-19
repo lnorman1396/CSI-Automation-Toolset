@@ -90,13 +90,15 @@ def home_page():
                 """, unsafe_allow_html=True)
 
 
-
 def generate_card(title, description, icon, author):
     # Calculate the number of lines in the description based on an average of 50 characters per line
     lines_in_description = len(description) // 20
 
     # Calculate the height of the card based on the number of lines in the description
     card_height = max(180, 20 * lines_in_description)  # Adjust these values based on your needs
+
+    # Calculate the height of the paragraph containing the description as a percentage of the total card height
+    description_height = int(card_height * 0.6)  # Adjust this value based on your needs
 
     card = f"""
         <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: {card_height}px; overflow: hidden; border-radius: 10px; background-color: #fff;">
@@ -107,12 +109,13 @@ def generate_card(title, description, icon, author):
                 </div>
                 <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
             </div>
-            <p style="position: relative; height: 100px; overflow: hidden;">
+            <p style="position: relative; height: {description_height}px; overflow: hidden;">
                 <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
             </p>
         </div>
     """
     return card
+
 
 
 
