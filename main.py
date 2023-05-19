@@ -70,12 +70,16 @@ def home_page():
     if len(descriptions) % cards_per_page != 0:
         num_pages += 1
 
+    # Initialize the current page in the session state
+    if 'current_page' not in st.session_state:
+        st.session_state['current_page'] = 0
+
     # Use the pagination_component to get the current page
     layout = {'color': "primary", 'style': {'margin-top': '10px'}}
-    current_page = pagination_component(num_pages, layout=layout, key="foo")
+    st.session_state['current_page'] = pagination_component(num_pages, layout=layout, key="foo")
 
     # Calculate the range of descriptions for the current page
-    start = current_page * cards_per_page
+    start = st.session_state['current_page'] * cards_per_page
     end = start + cards_per_page
 
     # Display the cards for the current page
