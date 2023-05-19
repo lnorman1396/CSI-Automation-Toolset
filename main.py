@@ -197,7 +197,7 @@ def get_script_instructions(script_name):
 
                     return instructions, link
 
-    return 'No instructions', 'No link', 'No icon'
+    return 'No instructions', 'No link'
 
 def generate_instructions_card(instructions, link):
     # Use a static icon
