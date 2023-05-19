@@ -13,7 +13,7 @@ import io
 class Description:
     title = "JDf to OGTFS Converter"
     description = "This is a script that converts a JDF zip file into OGTFS to enable you to import into optibus"
-    icon = "https://media.istockphoto.com/id/1251567184/vector/fire-vector-isolated.jpg?s=612x612&w=0&k=20&c=l_BL45O1J5P94wGtfq_k7XxStOwrwSvvGWs8pipUzUI="
+    icon = "https://cdn-icons-png.flaticon.com/512/1322/1322164.png"
 
 
 def run():
