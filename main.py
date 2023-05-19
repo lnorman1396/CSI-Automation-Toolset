@@ -110,14 +110,13 @@ def home_page():
                     </div>
                 """, unsafe_allow_html=True)
             # Create the pagination buttons
-            cols = st.columns(2)
-            if st.session_state['current_page'] > 0:
-                if cols[0].button('Previous'):
-                    st.session_state['current_page'] -= 1
-            if st.session_state['current_page'] < num_pages - 1:
-                if cols[1].button('Next'):
-                    st.session_state['current_page'] += 1
-
+    cols = st.columns(2)
+    if st.session_state['current_page'] > 0:
+        if cols[0].button('Previous', key='previous_page_button'):
+            st.session_state['current_page'] -= 1
+    if st.session_state['current_page'] < num_pages - 1:
+        if cols[1].button('Next', key='next_page_button'):
+            st.session_state['current_page'] += 1
 
 def generate_card(title, description, icon, author):
     # Calculate the number of lines in the description based on an average of 50 characters per line
