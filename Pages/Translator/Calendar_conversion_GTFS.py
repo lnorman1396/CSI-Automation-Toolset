@@ -188,4 +188,6 @@ def run():
                 remove(GTFS_file_name)
         output_zip_file.seek(0)
         return output_zip_file
+    
+    main()
 
