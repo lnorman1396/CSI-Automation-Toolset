@@ -46,9 +46,12 @@ def get_script_descriptions():
                 description = getattr(desc, 'description', 'No description')
                 icon = getattr(desc, 'icon', 'No icon')
 
-                descriptions.append((title, description, icon))
+                # Add the page and script names to the tuple
+                function = {"page": subdir.capitalize(), "script": py_file[:-3]}
+                descriptions.append((title, description, icon, function))
 
     return descriptions
+
 
 def home_page():
     st.write("Welcome to CSI - Automation Toolset!")
@@ -63,7 +66,7 @@ def home_page():
         cols = st.columns(3)
         for j in range(3):
             if i + j < len(descriptions):
-                title, description, icon = descriptions[i + j]
+                title, description, icon, function = descriptions[i + j]
                 # Create a preview card for the script
                 cols[j].markdown(f"""
                     <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 150px; overflow: hidden; border-radius: 10px; background-color: #fff;">
@@ -78,7 +81,9 @@ def home_page():
                     </div>
                 """, unsafe_allow_html=True)
                 if cols[j].button('Run Script'):
-                    function()
+                    selected_page = function["page"]
+                    selected_func = function["script"]
+
 
 
 
