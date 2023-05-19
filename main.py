@@ -64,16 +64,14 @@ def home_page():
                 title, description, icon = descriptions[i + j]
                 # Create a preview card for the script
                 cols[j].markdown(f"""
-                    <div style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
-                        <div>
-                            <h6>{title}</h6>
-                            <p>{description}</p>
-                        </div>
-                        <div>
-                            <img src="{icon}" alt="icon" style="width: 50px; height: 50px;">
-                        </div>
-                    </div>
-                """, unsafe_allow_html=True)
+    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 150px; overflow: hidden;">
+        <div style="display: flex; align-items: center;">
+            <img src="{icon}" alt="icon" style="width: 50px; height: 50px; margin-right: 10px;">
+            <h6>{title}</h6>
+        </div>
+        <p style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{description}</p>
+    </div>
+""", unsafe_allow_html=True)
 
 
 def main():
