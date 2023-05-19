@@ -91,19 +91,12 @@ def home_page():
 
 
 
-
 def generate_card(title, description, icon, author):
-    # Calculate the number of lines in the description
-    lines_in_description = len(description.split('\n'))
+    # Calculate the number of lines in the description based on an average of 50 characters per line
+    lines_in_description = len(description) // 50
 
     # Calculate the height of the card based on the number of lines in the description
     card_height = max(180, 20 * lines_in_description)  # Adjust these values based on your needs
-
-    # Calculate whether the description is too long
-    is_description_too_long = len(description) > 100  # Adjust this value based on your needs
-
-    # Conditionally include the ellipsis in the markdown
-    ellipsis_html = '<span style="position: absolute; bottom: 0; right: 10px; padding-left: 10px; background-color: white;">...</span>' if is_description_too_long else ''
 
     card = f"""
         <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: {card_height}px; overflow: hidden; border-radius: 10px; background-color: #fff;">
@@ -116,11 +109,11 @@ def generate_card(title, description, icon, author):
             </div>
             <p style="position: relative; height: 100px; overflow: hidden;">
                 <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
-                {ellipsis_html}
             </p>
         </div>
     """
     return card
+
 
 
 def get_script_description(script_name):
