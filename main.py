@@ -213,7 +213,7 @@ def generate_instructions_card(instructions, link):
                 <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">{instructions}</p>
             </div>
             <p style="position: relative; height: 100px;">
-                <a href="{link}" target="_blank">Click here</a>
+                <a href="{link}" target="_blank">Confluence Link</a>
             </p>
         </div>
     """
