@@ -74,10 +74,6 @@ def home_page():
     if 'current_page' not in st.session_state:
         st.session_state['current_page'] = 0
 
-    # Use the pagination_component to get the current page
-    layout = {'color': "primary", 'style': {'margin-top': '10px'}}
-    st.session_state['current_page'] = pagination_component(num_pages, layout=layout, key="foo")
-
     # Calculate the range of descriptions for the current page
     start = st.session_state['current_page'] * cards_per_page
     end = start + cards_per_page
@@ -89,6 +85,8 @@ def home_page():
             index = i + j
             if index < min(end, len(descriptions)):
                 title, description, icon, author = descriptions[index]
+                # ... existing code to display the card ...
+
                 # Create a preview card for the script
                 # Calculate whether the description is too long
                 is_description_too_long = len(description) > 100  # Adjust this value based on your needs
@@ -111,6 +109,14 @@ def home_page():
                         </p>
                     </div>
                 """, unsafe_allow_html=True)
+            # Create the pagination buttons
+            cols = st.columns(2)
+            if st.session_state['current_page'] > 0:
+                if cols[0].button('Previous'):
+                    st.session_state['current_page'] -= 1
+            if st.session_state['current_page'] < num_pages - 1:
+                if cols[1].button('Next'):
+                    st.session_state['current_page'] += 1
 
 
 def generate_card(title, description, icon, author):
