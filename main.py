@@ -5,6 +5,7 @@ import traceback
 from typing import List
 from streamlit_searchbox import st_searchbox
 from streamlit_pagination import pagination_component
+import streamlit.components.v1 as components
 
 st.markdown("""
         <style>
@@ -52,6 +53,9 @@ def get_script_descriptions():
 
     return descriptions
 
+
+
+
 def home_page():
     st.write("Welcome to CSI - Automation Toolset!")
     st.caption("This is an application that runs scripts from organised subdirectories within the optibus organisation")
@@ -70,11 +74,12 @@ def home_page():
     if len(descriptions) % cards_per_page != 0:
         num_pages += 1
 
-    # Create a number input for the current page
-    current_page = st.number_input('Page', min_value=0, max_value=num_pages-1, value=0, step=1)
+    # Initialize the current page
+    if 'current_page' not in st.session_state:
+        st.session_state['current_page'] = 0
 
     # Calculate the range of descriptions for the current page
-    start = current_page * cards_per_page
+    start = st.session_state['current_page'] * cards_per_page
     end = start + cards_per_page
 
     # Display the cards for the current page
@@ -85,16 +90,6 @@ def home_page():
             if index < min(end, len(descriptions)):
                 title, description, icon, author = descriptions[index]
                 # ... existing code to display the card ...
-
-                # ... existing code to display the card ...
-
-                # Create a preview card for the script
-                # Calculate whether the description is too long
-                is_description_too_long = len(description) > 100  # Adjust this value based on your needs
-
-                # Conditionally include the ellipsis in the markdown
-                ellipsis_html = '<span style="position: absolute; bottom: 0; right: 10px; padding-left: 10px; background-color: white;">...</span>' if is_description_too_long else ''
-
                 cols[j].markdown(f"""
                     <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
                         <div>
@@ -110,6 +105,38 @@ def home_page():
                         </p>
                     </div>
                 """, unsafe_allow_html=True)
+
+    # Create the pagination component
+    result = components.html("""
+        <div style="display: flex; justify-content: space-between;">
+            <button id="prev" style="display: none;">Previous</button>
+            <div id="page">Page 1 of {num_pages}</div>
+            <button id="next">Next</button>
+        </div>
+        <script>
+            var currentPage = 0;
+            document.getElementById("prev").onclick = function() {
+                currentPage--;
+                updatePage();
+            };
+            document.getElementById("next").onclick = function() {
+                currentPage++;
+                updatePage();
+            };
+            function updatePage() {
+                document.getElementById("page").innerText = "Page " + (currentPage + 1) + " of {num_pages}";
+                document.getElementById("prev").style.display = currentPage > 0 ? "block" : "none";
+                document.getElementById("next").style.display = currentPage < {num_pages} - 1 ? "block" : "none";
+                Streamlit.setComponentValue(currentPage);
+            }
+        </script>
+    """.format(num_pages=num_pages), height=50)
+
+    if result:
+        st.session_state['current_page'] = result
+
+
+                
 
 
 def generate_card(title, description, icon, author):
