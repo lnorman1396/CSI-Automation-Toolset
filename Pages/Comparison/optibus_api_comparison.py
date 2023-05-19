@@ -20,7 +20,7 @@ import secrets
 class Description:
     title = "Optibus API Schedule Comparison"
     description = "This is a script that compares schedules from urls and creates a comparison excel file, highlighting the savings between scenarios"
-    icon = "https://example.com/my-icon.png"
+    icon = "https://media.istockphoto.com/id/1251567184/vector/fire-vector-isolated.jpg?s=612x612&w=0&k=20&c=l_BL45O1J5P94wGtfq_k7XxStOwrwSvvGWs8pipUzUI="
 
 def run():
     
