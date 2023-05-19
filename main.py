@@ -66,17 +66,19 @@ def home_page():
                 title, description, icon = descriptions[i + j]
                 # Create a preview card for the script
                 cols[j].markdown(f"""
-    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 150px; overflow: hidden; border-radius: 10px; background-color: #fff;">
-        <div style="display: flex; align-items: center;">
-            <img src="{icon}" alt="icon" style="width: 50px; height: 50px; margin-right: 10px;">
-            <h6>{title}</h6>
-        </div>
-        <p style="position: relative; height: 80px; overflow: hidden;">
-            <span style="position: absolute; line-height: 1.2em; max-height: 3.6em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
-            <span style="position: absolute; bottom: 0; right: 0; padding-left: 10px; background-color: white;">...</span>
-        </p>
-    </div>
-""", unsafe_allow_html=True)
+                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 150px; overflow: hidden; border-radius: 10px; background-color: #fff;">
+                        <div style="display: flex; align-items: center;">
+                            <img src="{icon}" alt="icon" style="width: 50px; height: 50px; margin-right: 10px;">
+                            <h6>{title}</h6>
+                        </div>
+                        <p style="position: relative; height: 80px; overflow: hidden;">
+                            <span style="position: absolute; line-height: 1.2em; max-height: 3.6em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
+                            <span style="position: absolute; bottom: 0; right: 0; padding-left: 10px; background-color: white;">...</span>
+                        </p>
+                    </div>
+                """, unsafe_allow_html=True)
+                if cols[j].button('Run Script'):
+                    function()
 
 
 
