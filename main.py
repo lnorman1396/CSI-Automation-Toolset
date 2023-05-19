@@ -66,7 +66,7 @@ def home_page():
                 cols[j].markdown(f"""
                     <div style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
                         <div>
-                            <h3>{title}</h3>
+                            <h6>{title}</h6>
                             <p>{description}</p>
                         </div>
                         <div>
