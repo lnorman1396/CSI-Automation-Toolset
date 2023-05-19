@@ -57,19 +57,23 @@ def home_page():
     st.caption("To contribute to the scripts, please find the github repo [here](https://github.com/lnorman1396/CSI-Automation-Toolset)")
 
     descriptions = get_script_descriptions()
-    for title, description, icon in descriptions:
-        # Create a preview card for the script
-        st.markdown(f"""
-            <div style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
-                <div>
-                    <h3>{title}</h3>
-                    <p>{description}</p>
-                </div>
-                <div>
-                    <img src="{icon}" alt="icon" style="width: 50px; height: 50px;">
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
+    for i in range(0, len(descriptions), 3):
+        cols = st.columns(3)
+        for j in range(3):
+            if i + j < len(descriptions):
+                title, description, icon = descriptions[i + j]
+                # Create a preview card for the script
+                cols[j].markdown(f"""
+                    <div style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;">
+                        <div>
+                            <h3>{title}</h3>
+                            <p>{description}</p>
+                        </div>
+                        <div>
+                            <img src="{icon}" alt="icon" style="width: 50px; height: 50px;">
+                        </div>
+                    </div>
+                """, unsafe_allow_html=True)
 
 
 def main():
