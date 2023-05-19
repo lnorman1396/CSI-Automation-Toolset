@@ -67,21 +67,28 @@ def home_page():
             if i + j < len(descriptions):
                 title, description, icon, author = descriptions[i + j]
                 # Create a preview card for the script
+                # Calculate whether the description is too long
+                is_description_too_long = len(description) > 100  # Adjust this value based on your needs
+
+                # Conditionally include the ellipsis in the markdown
+                ellipsis_html = '<span style="position: absolute; bottom: 0; right: 10px; padding-left: 10px; background-color: white;">...</span>' if is_description_too_long else ''
+
                 cols[j].markdown(f"""
-    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
-        <div>
-            <div style="display: flex; align-items: center;">
-                <img src="{icon}" alt="icon" style="width: 40px; height: 40px; margin-right: 10px;">
-                <h6>{title}</h6>
-            </div>
-            <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
-        </div>
-        <p style="position: relative; height: 100px; overflow: hidden;">
-            <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
-            <span style="position: absolute; bottom: 0; right: 10px; padding-left: 10px; background-color: white;">...</span>
-        </p>
-    </div>
-""", unsafe_allow_html=True)
+                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
+                        <div>
+                            <div style="display: flex; align-items: center;">
+                                <img src="{icon}" alt="icon" style="width: 40px; height: 40px; margin-right: 10px;">
+                                <h6>{title}</h6>
+                            </div>
+                            <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
+                        </div>
+                        <p style="position: relative; height: 100px; overflow: hidden;">
+                            <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
+                            {ellipsis_html}
+                        </p>
+                    </div>
+                """, unsafe_allow_html=True)
+
 
 
 
