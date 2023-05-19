@@ -57,9 +57,10 @@ def home_page():
     st.caption("You can search all scripts in the top global search bar")
     st.caption("To contribute to the scripts, please find the github repo [here](https://github.com/lnorman1396/CSI-Automation-Toolset)")
     st.markdown('')
-    st.markdown(f'**Script Previews**: {len(descriptions)}')
+    
 
     descriptions = get_script_descriptions()
+    st.markdown(f'**Script Previews**: {len(descriptions)}')
     for i in range(0, len(descriptions), 3):
         cols = st.columns(3)
         for j in range(3):
