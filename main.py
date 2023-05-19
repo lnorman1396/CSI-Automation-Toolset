@@ -74,20 +74,7 @@ def home_page():
     if 'page_number' not in st.session_state:
         st.session_state.page_number = 0
 
-    # Add a next button and a previous button
-    prev ,next = st.columns([.1,1])
-
-    if next.button("Next"):
-        if st.session_state.page_number + 1 > num_pages - 1:
-            st.session_state.page_number = 0
-        else:
-            st.session_state.page_number += 1
-
-    if prev.button("Back"):
-        if st.session_state.page_number - 1 < 0:
-            st.session_state.page_number = num_pages - 1
-        else:
-            st.session_state.page_number -= 1
+   
 
     # Calculate the range of descriptions for the current page
     start = st.session_state.page_number * cards_per_page
@@ -127,6 +114,20 @@ def home_page():
                         </p>
                     </div>
                 """, unsafe_allow_html=True)
+     # Add a next button and a previous button
+    prev ,next = st.columns([.1,1])
+
+    if next.button("Next"):
+        if st.session_state.page_number + 1 > num_pages - 1:
+            st.session_state.page_number = 0
+        else:
+            st.session_state.page_number += 1
+
+    if prev.button("Back"):
+        if st.session_state.page_number - 1 < 0:
+            st.session_state.page_number = num_pages - 1
+        else:
+            st.session_state.page_number -= 1
 
 
 def generate_card(title, description, icon, author):
