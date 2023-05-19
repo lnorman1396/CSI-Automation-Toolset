@@ -30,11 +30,10 @@ def run():
                 zip_file_output = consolidate_function(zip_ref)
             logger.write('Processing...')
             output_filename = 'condenced_calendar.zip'
-            write_output_GTFS(zip_file_output, output_filename)
-            logger.write('Done! You can download the file from the link below.')
+            output_bytes = write_output_GTFS(zip_file_output)
             st.download_button(
                 label="Download output file",
-                data=output_filename,
+                data=output_bytes.getvalue(),
                 file_name="condenced_calendar.zip",
                 mime="application/zip"
             )
