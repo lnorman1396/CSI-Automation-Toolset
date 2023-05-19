@@ -70,11 +70,27 @@ def home_page():
     if len(descriptions) % cards_per_page != 0:
         num_pages += 1
 
-    # Create a number input for the current page
-    current_page = st.number_input('Page', min_value=0, max_value=num_pages-1, value=0, step=1)
+    # Initialize page_number in Session State
+    if 'page_number' not in st.session_state:
+        st.session_state.page_number = 0
+
+    # Add a next button and a previous button
+    prev, _ ,next = st.columns([1, 10, 1])
+
+    if next.button("Next"):
+        if st.session_state.page_number + 1 > num_pages - 1:
+            st.session_state.page_number = 0
+        else:
+            st.session_state.page_number += 1
+
+    if prev.button("Previous"):
+        if st.session_state.page_number - 1 < 0:
+            st.session_state.page_number = num_pages - 1
+        else:
+            st.session_state.page_number -= 1
 
     # Calculate the range of descriptions for the current page
-    start = current_page * cards_per_page
+    start = st.session_state.page_number * cards_per_page
     end = start + cards_per_page
 
     # Display the cards for the current page
@@ -84,6 +100,7 @@ def home_page():
             index = i + j
             if index < min(end, len(descriptions)):
                 title, description, icon, author = descriptions[index]
+
                 # ... existing code to display the card ...
 
                 # ... existing code to display the card ...
