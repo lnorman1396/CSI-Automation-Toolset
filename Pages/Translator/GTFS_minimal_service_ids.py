@@ -6,17 +6,19 @@ from zipfile import ZipFile, ZIP_DEFLATED
 from datetime import datetime
 from io import BytesIO
 
+class Instructions:
+    instructions = 'Upload the GTFS File and run the script to download the file with minimal service IDs, this is linked with the calendar GTFS script'
+    link = 'https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts'
+
+class Description:
+    title = "GTFS Minimal Service IDs"
+    description = "This is a script that condenses the GTFS File to use minimal service ids to optmise the file for import"
+    icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_rAMPHgKnSi6hQF6admmxyaaCXzYLRDmLg&usqp=CAU"
+    author = 'Lior Zachs'
+
 def run():
 
-    class Instructions:
-        instructions = 'Upload the GTFS File and run the script to download the file with minimal service IDs, this is linked with the calendar GTFS script'
-        link = 'https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts'
 
-    class Description:
-        title = "GTFS Minimal Service IDs"
-        description = "This is a script that condenses the GTFS File to use minimal service ids to optmise the file for import"
-        icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_rAMPHgKnSi6hQF6admmxyaaCXzYLRDmLg&usqp=CAU"
-        author = 'Lior Zachs'
 
     logger = st.expander('log debugging messages')
 
