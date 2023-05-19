@@ -68,7 +68,7 @@ def home_page():
                 title, description, icon, author = descriptions[i + j]
                 # Create a preview card for the script
                 cols[j].markdown(f"""
-    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 150px; overflow: hidden; border-radius: 10px; background-color: #fff;">
+    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
         <div>
             <div style="display: flex; align-items: center;">
                 <img src="{icon}" alt="icon" style="width: 40px; height: 40px; margin-right: 10px;">
