@@ -93,6 +93,12 @@ def home_page():
 
 
 def generate_card(title, description, icon, author):
+    # Calculate the number of lines in the description
+    lines_in_description = len(description.split('\n'))
+
+    # Calculate the height of the card based on the number of lines in the description
+    card_height = max(180, 20 * lines_in_description)  # Adjust these values based on your needs
+
     # Calculate whether the description is too long
     is_description_too_long = len(description) > 100  # Adjust this value based on your needs
 
@@ -100,7 +106,7 @@ def generate_card(title, description, icon, author):
     ellipsis_html = '<span style="position: absolute; bottom: 0; right: 10px; padding-left: 10px; background-color: white;">...</span>' if is_description_too_long else ''
 
     card = f"""
-        <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
+        <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: {card_height}px; overflow: hidden; border-radius: 10px; background-color: #fff;">
             <div>
                 <div style="display: flex; align-items: center;">
                     <img src="{icon}" alt="icon" style="width: 40px; height: 40px; margin-right: 10px;">
@@ -115,6 +121,7 @@ def generate_card(title, description, icon, author):
         </div>
     """
     return card
+
 
 def get_script_description(script_name):
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
