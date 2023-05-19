@@ -115,7 +115,9 @@ def home_page():
                     </div>
                 """, unsafe_allow_html=True)
      # Add a next button and a previous button
-    prev ,next = st.columns([.1,1])
+    prev ,next, page_indicator = st.columns([.1,.1, .8])
+        
+    page_indicator.write(f"Page: {st.session_state.page_number + 1} of {num_pages}")
 
     if next.button("Next"):
         if st.session_state.page_number + 1 > num_pages - 1:
