@@ -71,7 +71,7 @@ def home_page():
         num_pages += 1
 
     # Create a number input for the current page
-    current_page = st.number_input('Page', min_value=0, max_value=num_pages-1, value=0, step=1, disabled=True)
+    current_page = st.number_input('Page', min_value=0, max_value=num_pages-1, value=0, step=1)
 
     # Calculate the range of descriptions for the current page
     start = current_page * cards_per_page
