@@ -72,7 +72,7 @@ def auth():
             }}
         </style>
         <div style="display: flex; justify-content: center;">
-            <a href="{authorization_url}" target="_self" class="google-login-btn" title="Login with Google">
+            <a href="{authorization_url}" target="_top" class="google-login-btn" title="Login with Google">
                 <i class="fab fa-google" style="font-size: 2rem; color: #FFFFFF;"></i>
             </a>
         </div>
