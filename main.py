@@ -258,6 +258,9 @@ def main():
     elif "optibus" not in email:
         st.error("You must have an Optibus email to use this app.")
         return
+
+    full_name = ' '.join([part.capitalize() for part in email.split('@')[0].split('.')])
+    st.sidebar.caption(f"Welcome: {full_name}")
     st.sidebar.subheader("CSI - Automation Toolset")
 
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
