@@ -9,7 +9,7 @@ from google.oauth2.credentials import Credentials
 
 
 # Load environment variables
-load_dotenv()
+
 
 # Google OAuth2
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
