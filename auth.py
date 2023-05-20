@@ -39,7 +39,8 @@ def auth():
         authorization_url, state = google.authorization_url(authorization_base_url)
 
         # Display login link
-        st.markdown(f'[Login with Google]({authorization_url})')
+        st.markdown(f'<a href="{authorization_url}" target="_self">Login with Google</a>', unsafe_allow_html=True)
+
 
         code = st.experimental_get_query_params().get("code")
 
