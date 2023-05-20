@@ -21,6 +21,10 @@ scope = ["openid", "https://www.googleapis.com/auth/userinfo.email"]
 
 def auth():
     
+    google_client_id = st.secrets["google"]["client_id"]
+    google_client_secret = st.secrets["google"]["client_secret"]
+    google_redirect_uri = st.secrets["google"]["redirect_uri"]
+    
     # Check if user is authenticated
     authenticated = False
     token = st.session_state.get("token")
