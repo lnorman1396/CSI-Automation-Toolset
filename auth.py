@@ -1,7 +1,6 @@
 import os
 import json
 import requests
-from dotenv import load_dotenv
 from requests_oauthlib import OAuth2Session
 from oauthlib.oauth2.rfc6749.errors import InvalidGrantError
 from google.auth.transport.requests import Request
