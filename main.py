@@ -255,6 +255,9 @@ def main():
     if email is None:
         st.error("You must be authenticated to use this app.")
         return
+    elif "optibus" not in email:
+        st.error("You must have an Optibus email to use this app.")
+        return
     st.sidebar.subheader("CSI - Automation Toolset")
 
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
