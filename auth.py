@@ -6,8 +6,7 @@ from oauthlib.oauth2.rfc6749.errors import InvalidGrantError
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
+
 
 # Load environment variables
 load_dotenv()
