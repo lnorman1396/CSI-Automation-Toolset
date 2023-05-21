@@ -92,10 +92,6 @@ def home_page():
             if index < min(end, len(descriptions)):
                 title, description, icon, author = descriptions[index]
 
-                # ... existing code to display the card ...
-
-                # ... existing code to display the card ...
-
                 # Create a preview card for the script
                 # Calculate whether the description is too long
                 is_description_too_long = len(description) > 100  # Adjust this value based on your needs
@@ -242,10 +238,6 @@ def generate_instructions_card(instructions, link):
         </div>
     """
     return card
-
-
-
-                
 
 
 
