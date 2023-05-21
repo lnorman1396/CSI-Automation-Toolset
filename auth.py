@@ -9,8 +9,6 @@ import streamlit as st
 
 
 
-# Load environment variables
-
 
 # Google OAuth2
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
