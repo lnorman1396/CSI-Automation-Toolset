@@ -175,7 +175,7 @@ def run():
         if 'calendar.txt' in input_file_list:
             df.pop('calendar_temp')
         return df
-        # ... Your converting_function code here ...
+        
 
     def write_output_GTFS(df):
         output_zip_file = io.BytesIO()
