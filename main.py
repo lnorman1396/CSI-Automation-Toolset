@@ -245,7 +245,6 @@ def main():
    
     email = auth()
     if email is None:
-        st.error("You must be authenticated to use this app.")
         return
     elif "optibus" not in email:
         st.error("You must have an Optibus email to use this app.")
