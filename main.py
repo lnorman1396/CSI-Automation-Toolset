@@ -100,23 +100,23 @@ def home_page():
                 ellipsis_html = '<span style="position: absolute; bottom: 0; right: 10px; padding-left: 10px; background-color: white;">...</span>' if is_description_too_long else ''
 
                 # Calculate font size based on the length of the description
-                font_size = max(0.8, 10 / len(description))
+                if len(description) > 120:
+                    description = description[:120] + "..."
 
                 cols[j].markdown(f"""
-                    <div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
-                        <div>
-                            <div style="display: flex; align-items: center; padding: 3px;">
-                                <img src="{icon}" alt="icon" style="width: 30px; height: 30px; margin-right: 10px;">
-                                <h6>{title}</h6>
+                            <div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
+                                <div>
+                                    <div style="display: flex; align-items: center; padding: 3px;">
+                                        <img src="{icon}" alt="icon" style="width: 30px; height: 30px; margin-right: 10px;">
+                                        <h6>{title}</h6>
+                                    </div>
+                                    <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
+                                </div>
+                                <p style="position: relative; font-size: 0.9em; height: 100px;">
+                                    <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; padding-bottom:10px;">{description}</span>
+                                </p>
                             </div>
-                            <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
-                        </div>
-                        <p style="position: relative; font-size: {font_size}em; height: 100px;">
-                            <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; padding-bottom:10px;">{description}</span>
-                            {ellipsis_html}
-                        </p>
-                    </div>
-                """, unsafe_allow_html=True)
+                        """, unsafe_allow_html=True)
 
      # Add a next button and a previous button
     prev ,next, page_indicator = st.columns([.1,.1, .8])
