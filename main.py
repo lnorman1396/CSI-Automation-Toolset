@@ -119,23 +119,7 @@ def home_page():
                     </div>
                 """, unsafe_allow_html=True)
 
-                '''if len(description) > 110:
-                    description = description[:110] + "..."
-
-                cols[j].markdown(f"""
-                            <div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
-                                <div>
-                                    <div style="display: flex; align-items: center; padding: 3px;">
-                                        <img src="{icon}" alt="icon" style="width: 30px; height: 30px; margin-right: 10px;">
-                                         <h6 style="font-size: 0.8em;">{title}
-                                    </div>
-                                    <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
-                                </div>
-                                <p style="position: relative; font-size: 0.8em; height: 100px;">
-                                    <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; padding-bottom:10px;">{description}</span>
-                                </p>
-                            </div>
-                        """, unsafe_allow_html=True)'''
+    
 
      # Add a next button and a previous button
     prev ,next, page_indicator = st.columns([.1,.1, .8])
