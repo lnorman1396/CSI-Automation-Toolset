@@ -100,7 +100,7 @@ def home_page():
                 ellipsis_html = '<span style="position: absolute; bottom: 0; right: 10px; padding-left: 10px; background-color: white;">...</span>' if is_description_too_long else ''
 
                 cols[j].markdown(f"""
-                    <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
+                    <div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
                         <div>
                             <div style="display: flex; align-items: center; padding: 3px;">
                                 <img src="{icon}" alt="icon" style="width: 30px; height: 30px; margin-right: 10px;">
