@@ -73,9 +73,9 @@ def auth():
                 if email:
                     authenticated = True
                     # Clear the vertical space and login card
-                    top_space_placeholder.empty()
+                    
                     row_placeholder.empty()
-                    bottom_space_placeholder.empty()
+                    
                      
             except InvalidGrantError:
                 pass  # Do nothing, effectively ignoring the error.
