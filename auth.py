@@ -46,7 +46,7 @@ def auth():
         # Display login card
         
                 # Display vertical space and login card
-        top_space_placeholder.markdown("<div style='padding: 15vh 0px;'></div>", unsafe_allow_html=True)
+        top_space_placeholder.markdown("<div style='padding: 30vh 0px;'></div>", unsafe_allow_html=True)
         login_card = f"""
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #ddd; padding: 20px; border-radius: 10px; background-color: #fff;">
             <h6>Sign in: Automation Toolset</h6>
