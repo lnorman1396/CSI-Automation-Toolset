@@ -252,7 +252,7 @@ def main():
 
     full_name = ' '.join([part.capitalize() for part in email.split('@')[0].split('.')])
     sidebar_logo = """
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px;">
              <img src="https://softr-assets-eu-prod.s3.eu-central-1.amazonaws.com/applications/8f7af9fb-a550-425d-b327-48195c193a5f/assets/4c301aa0-5435-4c45-be89-dffc52dab690.svg" alt="Optibus Logo" style="width: 50px; height: auto; margin-bottom: 20px;">
          </div>
                 """
