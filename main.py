@@ -240,16 +240,7 @@ def generate_instructions_card(instructions, link):
 
 
 def main():
-    st.markdown("""
-        <style>
-               .block-container {
-                    padding-top: 2rem;
-                    padding-bottom: 0rem;
-                    padding-left: 0rem;
-                    padding-right: 0rem;
-                }
-        </style>
-        """, unsafe_allow_html=True)
+   
    
     email = auth()
     if email is None:
@@ -257,6 +248,20 @@ def main():
     elif "optibus" not in email:
         st.error("You must have an Optibus email to use this app.")
         return
+    
+    if not st.session_state.get('markdown_added', False):
+        st.markdown("""
+            <style>
+                   .block-container {
+                        padding-top: 2rem;
+                        padding-bottom: 0rem;
+                        padding-left: 0rem;
+                        padding-right: 0rem;
+                    }
+            </style>
+            """, unsafe_allow_html=True)
+        # Set the flag to True
+        st.session_state.markdown_added = True
 
     
 
