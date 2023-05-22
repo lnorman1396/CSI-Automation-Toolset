@@ -50,12 +50,13 @@ def auth():
                 # Display vertical space and login card
         top_space_placeholder.markdown("<div style='padding: 15vh 0px;'></div>", unsafe_allow_html=True)
         login_card = f"""
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #ddd; padding: 30px; border-radius: 10px; background-color: #fff;">
-            <h6 style="text-align: center;">Automation Toolset</h6>
-            <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic; text-align: center;">You must have an Optibus email account to sign into this application</p>
-            <a href="{authorization_url}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #4285F4; color: #fff; text-decoration: none; border-radius: 5px;">Login with Google</a>
-        </div>
-        """
+         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #0033A0; padding: 30px; border-radius: 10px; background-color: #fff;">
+             <img src="URL_TO_LOGO" alt="Optibus Logo" style="width: 100px; height: auto; margin-bottom: 20px;">
+             <h6 style="text-align: center; color: #0033A0;">Automation Toolset</h6>
+             <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic; text-align: center;">You must have an Optibus email account to sign into this application</p>
+             <a href="{authorization_url}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #00A1DE; color: #fff; text-decoration: none; border-radius: 5px;">Login with Google</a>
+         </div>
+         """
         login_card_placeholder.markdown(login_card, unsafe_allow_html=True)
         bottom_space_placeholder.markdown("<div style='padding: 20vh 0px;'></div>", unsafe_allow_html=True)
         
