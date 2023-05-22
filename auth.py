@@ -33,9 +33,11 @@ def auth():
         if email:
             authenticated = True
             
-    top_space_placeholder = st.empty()
-    login_card_placeholder = st.empty()
-    bottom_space_placeholder = st.empty()
+    row_placeholder = st.empty()
+            
+    top_space_placeholder = row_placeholder.empty()
+    left_column, login_card_placeholder, right_column = row_placeholder.columns([1, 2, 1])
+    bottom_space_placeholder = row_placeholder.empty()
 
     if not authenticated:
         google = OAuth2Session(st.secrets["google"]["client_id"], scope=scope, redirect_uri=st.secrets["google"]["redirect_uri"])
@@ -46,7 +48,7 @@ def auth():
                 # Display vertical space and login card
         top_space_placeholder.markdown("<div style='padding: 15vh 0px;'></div>", unsafe_allow_html=True)
         login_card = f"""
-        <div style="width: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #ddd; padding: 20px; border-radius: 10px; background-color: #fff;">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #ddd; padding: 20px; border-radius: 10px; background-color: #fff;">
             <h6>Sign in: Automation Toolset</h6>
             <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">You must have an Optibus email account to sign into this application</p>
             <a href="{authorization_url}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #4285F4; color: #fff; text-decoration: none; border-radius: 5px;">Login with Google</a>
@@ -72,7 +74,7 @@ def auth():
                     authenticated = True
                     # Clear the vertical space and login card
                     top_space_placeholder.empty()
-                    login_card_placeholder.empty()
+                    row_placeholder.empty()
                     bottom_space_placeholder.empty()
                      
             except InvalidGrantError:
