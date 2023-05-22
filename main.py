@@ -240,17 +240,7 @@ def generate_instructions_card(instructions, link):
 
 
 def main():
-   
-   
-    email = auth()
-    if email is None:
-        return
-    elif "optibus" not in email:
-        st.error("You must have an Optibus email to use this app.")
-        return
-    
-    if not st.session_state.get('markdown_added', False):
-        st.markdown("""
+    st.markdown("""
             <style>
                    .block-container {
                         padding-top: 2rem;
@@ -260,11 +250,15 @@ def main():
                     }
             </style>
             """, unsafe_allow_html=True)
-        # Set the flag to True
-        st.session_state.markdown_added = True
-
+   
+   
+    email = auth()
+    if email is None:
+        return
+    elif "optibus" not in email:
+        st.error("You must have an Optibus email to use this app.")
+        return
     
-
     full_name = ' '.join([part.capitalize() for part in email.split('@')[0].split('.')])
     sidebar_logo = """
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 30px;">
