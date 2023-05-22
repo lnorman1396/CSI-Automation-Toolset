@@ -57,7 +57,7 @@ def auth():
              <a href="{authorization_url}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #00A1DE; color: #fff; text-decoration: none; border-radius: 5px;">Login with Google</a>
          </div>
          """
-         login_card_placeholder.markdown(login_card, unsafe_allow_html=True)
+        login_card_placeholder.markdown(login_card, unsafe_allow_html=True)
         bottom_space_placeholder.markdown("<div style='padding: 20vh 0px;'></div>", unsafe_allow_html=True)
         
         
