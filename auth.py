@@ -54,11 +54,11 @@ def auth():
              <img src="https://softr-assets-eu-prod.s3.eu-central-1.amazonaws.com/applications/8f7af9fb-a550-425d-b327-48195c193a5f/assets/4c301aa0-5435-4c45-be89-dffc52dab690.svg" alt="Optibus Logo" style="width: 50px; height: auto; margin-bottom: 20px;">
              <h5 style="text-align: center; color: #FFFFFF;">Automation Toolset</h5>
              <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic; text-align: center; color: #FFFFFF;">You must have an Optibus email account to sign into this application</p>
-             <a href="{authorization_url}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #c27d15; color: #fff; text-decoration: none; border-radius: 5px;">Login with Google</a>
+             <a href="{authorization_url}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #e39622; color: #fff; text-decoration: none; border-radius: 5px;">Login with Google</a>
          </div>
          """
          
-        #e39622
+        
         login_card_placeholder.markdown(login_card, unsafe_allow_html=True)
         bottom_space_placeholder.markdown("<div style='padding: 20vh 0px;'></div>", unsafe_allow_html=True)
         
