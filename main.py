@@ -252,15 +252,13 @@ def main():
 
     full_name = ' '.join([part.capitalize() for part in email.split('@')[0].split('.')])
     sidebar_logo = """
-        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px;">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 30px;">
              <img src="https://softr-assets-eu-prod.s3.eu-central-1.amazonaws.com/applications/8f7af9fb-a550-425d-b327-48195c193a5f/assets/4c301aa0-5435-4c45-be89-dffc52dab690.svg" alt="Optibus Logo" style="width: 50px; height: auto; margin-bottom: 20px;">
          </div>
                 """
 
     st.sidebar.markdown(sidebar_logo, unsafe_allow_html=True)
     st.sidebar.caption(f"Welcome: {full_name}")
-    st.sidebar.subheader("CSI - Automation Toolset")
-
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
     subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
 
