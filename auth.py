@@ -18,6 +18,7 @@ scope = ["openid", "https://www.googleapis.com/auth/userinfo.email"]
 
 
 def auth():
+   
     
     google_client_id = st.secrets["google"]["client_id"]
     google_client_secret = st.secrets["google"]["client_secret"]
@@ -31,6 +32,8 @@ def auth():
         email = get_user_email(token)
         if email:
             authenticated = True
+            
+    login_card_placeholder = st.empty()
 
     if not authenticated:
         google = OAuth2Session(st.secrets["google"]["client_id"], scope=scope, redirect_uri=st.secrets["google"]["redirect_uri"])
@@ -45,7 +48,8 @@ def auth():
             <a href="{authorization_url}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #4285F4; color: #fff; text-decoration: none; border-radius: 5px;">Login with Google</a>
         </div>
         """
-        st.markdown(login_card, unsafe_allow_html=True)
+        
+        login_card_placeholder.markdown(login_card, unsafe_allow_html=True)
 
 
         code = st.experimental_get_query_params().get("code")
@@ -60,6 +64,7 @@ def auth():
 
                 if email:
                     authenticated = True
+                    login_card_placeholder.empty()  # Clear the login card
             except InvalidGrantError:
                 pass  # Do nothing, effectively ignoring the error.
 
