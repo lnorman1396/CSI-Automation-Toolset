@@ -259,7 +259,7 @@ def main():
     st.markdown("""
     <style>
     .sidebar .sidebar-content {
-        background-color: #fff;
+        background-color: #eb4034;
     }
     </style>
     """, unsafe_allow_html=True)
