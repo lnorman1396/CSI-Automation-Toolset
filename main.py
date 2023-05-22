@@ -101,8 +101,8 @@ def home_page():
 
                 # Calculate font size based on the length of the description
                 
-                description_tooltip = description if len(description) > 120 else ""
-                description_display = description[:120] + "..." if len(description) > 120 else description
+                description_tooltip = description if len(description) > 110 else ""
+                description_display = description[:110] + "..." if len(description) > 110 else description
 
                 cols[j].markdown(f"""
                     <div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 10px; height: 180px; overflow: hidden; border-radius: 10px; background-color: #fff;">
