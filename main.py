@@ -256,7 +256,13 @@ def main():
              <img src="https://softr-assets-eu-prod.s3.eu-central-1.amazonaws.com/applications/8f7af9fb-a550-425d-b327-48195c193a5f/assets/4c301aa0-5435-4c45-be89-dffc52dab690.svg" alt="Optibus Logo" style="width: 50px; height: auto; margin-bottom: 20px;">
          </div>
                 """
-
+    st.markdown("""
+    <style>
+    .sidebar .sidebar-content {
+        background-color: #fff;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     st.sidebar.markdown(sidebar_logo, unsafe_allow_html=True)
     st.sidebar.caption(f"Welcome: {full_name}")
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
