@@ -108,7 +108,7 @@ def home_page():
                             </div>
                             <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
                         </div>
-                        <p style="position: relative; height: 100px; overflow: hidden;">
+                        <p style="position: relative; font-size: 0.9em; height: 100px; overflow: hidden;">
                             <span style="position: absolute; line-height: 1.2em; max-height: 4.8em; display: inline-block; word-wrap: break-word; overflow: hidden;">{description}</span>
                             {ellipsis_html}
                         </p>
