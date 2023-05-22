@@ -108,7 +108,7 @@ def home_page():
                                 <div>
                                     <div style="display: flex; align-items: center; padding: 3px;">
                                         <img src="{icon}" alt="icon" style="width: 30px; height: 30px; margin-right: 10px;">
-                                        <h6>{title}</h6>
+                                         <h6 style="font-size: 0.8em;">{title}
                                     </div>
                                     <p style="font-size: 0.8em; margin: 0; opacity: 0.7; font-style: italic;">Author: {author}</p>
                                 </div>
