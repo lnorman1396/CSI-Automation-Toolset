@@ -33,7 +33,9 @@ def auth():
         if email:
             authenticated = True
             
+    top_space_placeholder = st.empty()
     login_card_placeholder = st.empty()
+    bottom_space_placeholder = st.empty()
 
     if not authenticated:
         google = OAuth2Session(st.secrets["google"]["client_id"], scope=scope, redirect_uri=st.secrets["google"]["redirect_uri"])
@@ -41,6 +43,8 @@ def auth():
 
         # Display login card
         
+                # Display vertical space and login card
+        top_space_placeholder.markdown("<div style='padding: 20vh 0px;'></div>", unsafe_allow_html=True)
         login_card = f"""
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #ddd; padding: 20px; border-radius: 10px; background-color: #fff;">
             <h6>Sign in: Automation Toolset</h6>
@@ -48,8 +52,10 @@ def auth():
             <a href="{authorization_url}" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #4285F4; color: #fff; text-decoration: none; border-radius: 5px;">Login with Google</a>
         </div>
         """
-        
         login_card_placeholder.markdown(login_card, unsafe_allow_html=True)
+        bottom_space_placeholder.markdown("<div style='padding: 20vh 0px;'></div>", unsafe_allow_html=True)
+        
+        
 
 
         code = st.experimental_get_query_params().get("code")
@@ -64,7 +70,11 @@ def auth():
 
                 if email:
                     authenticated = True
-                    login_card_placeholder.empty()  # Clear the login card
+                    # Clear the vertical space and login card
+                    top_space_placeholder.empty()
+                    login_card_placeholder.empty()
+                    bottom_space_placeholder.empty()
+                     
             except InvalidGrantError:
                 pass  # Do nothing, effectively ignoring the error.
 
