@@ -33,11 +33,13 @@ def auth():
         if email:
             authenticated = True
             
+    top_row_placeholder = st.empty()
     row_placeholder = st.empty()
+    bottom_row_placeholder = st.empty()
             
-    top_space_placeholder = st.empty()
+    lt, top_space_placeholder, rt = top_row_placeholder.columns([1, 2, 1])
     left_column, login_card_placeholder, right_column = row_placeholder.columns([1, 2, 1])
-    bottom_space_placeholder =st.empty()
+    lb, bottom_space_placeholder, rb = bottom_row_placeholder.columns([1, 2, 1])
 
     if not authenticated:
         google = OAuth2Session(st.secrets["google"]["client_id"], scope=scope, redirect_uri=st.secrets["google"]["redirect_uri"])
@@ -73,10 +75,10 @@ def auth():
                 if email:
                     authenticated = True
                     # Clear the vertical space and login card
-                    top_space_placeholder.empty()
+                    top_row_placeholder.empty()
                     
                     row_placeholder.empty()
-                    bottom_space_placeholder.empty()
+                    bottom_row_placeholder.empty()
                     
                      
             except InvalidGrantError:
