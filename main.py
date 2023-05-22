@@ -7,16 +7,7 @@ from streamlit_searchbox import st_searchbox
 from streamlit_pagination import pagination_component
 from auth import auth
 
-st.markdown("""
-        <style>
-               .block-container {
-                    padding-top: 2rem;
-                    padding-bottom: 0rem;
-                    padding-left: 0rem;
-                    padding-right: 0rem;
-                }
-        </style>
-        """, unsafe_allow_html=True)
+
 
 def import_module(module_name, module_path):
     spec = importlib.util.spec_from_file_location(module_name, module_path)
@@ -256,6 +247,17 @@ def main():
     elif "optibus" not in email:
         st.error("You must have an Optibus email to use this app.")
         return
+
+    st.markdown("""
+        <style>
+               .block-container {
+                    padding-top: 2rem;
+                    padding-bottom: 0rem;
+                    padding-left: 0rem;
+                    padding-right: 0rem;
+                }
+        </style>
+        """, unsafe_allow_html=True)
 
     full_name = ' '.join([part.capitalize() for part in email.split('@')[0].split('.')])
     sidebar_logo = """
