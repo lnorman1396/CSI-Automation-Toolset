@@ -240,14 +240,6 @@ def generate_instructions_card(instructions, link):
 
 
 def main():
-   
-    email = auth()
-    if email is None:
-        return
-    elif "optibus" not in email:
-        st.error("You must have an Optibus email to use this app.")
-        return
-
     st.markdown("""
         <style>
                .block-container {
@@ -258,6 +250,15 @@ def main():
                 }
         </style>
         """, unsafe_allow_html=True)
+   
+    email = auth()
+    if email is None:
+        return
+    elif "optibus" not in email:
+        st.error("You must have an Optibus email to use this app.")
+        return
+
+    
 
     full_name = ' '.join([part.capitalize() for part in email.split('@')[0].split('.')])
     sidebar_logo = """
