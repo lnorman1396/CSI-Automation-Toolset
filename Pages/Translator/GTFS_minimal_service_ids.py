@@ -14,7 +14,7 @@ class Description:
     title = "GTFS Minimal Service IDs"
     description = "This is a script that condenses the GTFS File to use minimal service ids to optmise the file for import"
     icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_rAMPHgKnSi6hQF6admmxyaaCXzYLRDmLg&usqp=CAU"
-    author = 'Lior Zachs'
+    author = 'Lior Zacks'
 
 def run():
 
