@@ -15,7 +15,7 @@ class Description:
     title = "GTFS - Filter Routes"
     description = "This is a script that enables you to filter routes on the uploaded GTFS file"
     icon = "https://cdn-icons-png.flaticon.com/512/1032/1032914.png"
-    author = 'Lior Zachs'
+    author = 'Lior Zacks'
 
 def run():
     logger= st.expander('Logging debugging info')
