@@ -14,7 +14,7 @@ class Description:
     title = "JDf to OGTFS Converter"
     description = "This is a script that converts a JDF zip file into OGTFS to enable you to import into optibus"
     icon = "https://cdn-icons-png.flaticon.com/512/1322/1322164.png"
-    author = "Lior Zachs"
+    author = "Lior Zacks"
 
 
 def run():
