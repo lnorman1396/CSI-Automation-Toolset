@@ -10,7 +10,7 @@ class Description:
     title = "Calendar Conversion GTFS"
     description = "The script converts the calendar_dates.txt file into a calendar.txt file and adds the relevant service IDs to the service IDs that already exist in the calendar.txt file if there are any."
     icon = "https://cdn-icons-png.flaticon.com/512/1869/1869397.png"
-    author = 'Lior Zachs'
+    author = 'Lior Zacks'
 
 def run():
     logger = st.expander('Log Debugging info')
