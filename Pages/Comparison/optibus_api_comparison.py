@@ -145,7 +145,7 @@ def run():
 
     def create_json_list(get_services_json, token, domain_name, stat_properties):
         emp_list = []
-        exclude = ['NWD', '#SCH', 'NSCH', german_secelct]
+        exclude = ['NWD', '#SCH', 'NSCH', 'HO', german_secelct]
         for d in get_services_json:
             if not any(substring in d['name'] for substring in exclude):
                 emp_list.append(api_meta_response(token, domain_name, d['id'], stat_properties))
