@@ -11,7 +11,8 @@ streamlit-pagination==0.0.3
 requests-oauthlib==1.3.0
 oauthlib==3.1.1
 google-auth==2.3.3
-
-
+beautifulsoup4==4.11.1
+webdriver-manager==3.8.5
+selenium==4.7.2
 
 
