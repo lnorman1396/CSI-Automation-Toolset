@@ -6,6 +6,7 @@ from os import chdir
 from os.path import dirname, basename
 from zipfile import ZipFile,ZIP_DEFLATED
 import streamlit as st
+import io
 
 class Instructions:
     instructions = 'Upload the Hastus File and run the script to download a Dataset file'
@@ -26,10 +27,7 @@ def run():
         logger.write(f'Packages imported in {(time() - start_time):.1f} seconds')
         time_0 = time()
         input_file = st.file_uploader('Select Hastus ZipFile',type=['zip'])
-        if input_file!=None:
-            
-            chdir(dirname(input_file))
-            output_name = basename(input_file)[:-4]+'_Dataset'
+        if input_file!=None:           
             JDF_dict={}
             places = creating_places_file(ZipFile(input_file, 'r'))
             logger.write(f'\ncreating_places_file in {(time() - time_0):.1f} seconds')
@@ -43,7 +41,8 @@ def run():
             VehicleTypes = creating_VehicleTypes_file(ZipFile(input_file, 'r'))
             logger.write(f'\ncreating_VehicleTypes in {(time() - time_0):.1f} seconds')
             JDF_dict['VehicleTypes']=VehicleTypes
-            write_excel(JDF_dict, output_name + '.xlsx')
+            excel_data=write_excel(JDF_dict)
+            st.download_button('Download File',data=excel_data,file_name='output.xlsx',mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
             logger.write(f'\nScript ran in {(time() - time_0):.1f} seconds')
 
     def creating_places_file(zip_file):
@@ -268,10 +267,11 @@ def run():
         VehicleTypes.columns=['Id','short_name']
         return VehicleTypes
 
-    def write_excel(table_array, output_file_name):
+    def write_excel(table_array):
         time_0 = time()
         logger.write('\nWriting excel output')
-        excel = ExcelWriter(output_file_name, engine='xlsxwriter')
+        output=io.BytesIO()
+        excel = ExcelWriter(output, engine='xlsxwriter')
         header_format = excel.book.add_format({'bold': True, 'text_wrap': False, 'align': 'left'})
         for i in table_array:
             table_array[i].to_excel(excel, sheet_name=i, merge_cells=False, freeze_panes=[1, 0], index=False)
@@ -280,7 +280,9 @@ def run():
                 excel.sheets[i].set_column(col_num, col_num,
                                            max(table_array[i][value].astype(str).str.len().max(), len(value) + 2))
         excel.save()
+        output.seek(0)
         logger.write(f'Wrote excel output in {(time() - time_0):.1f} seconds')
+        return output
     main()
 
 
