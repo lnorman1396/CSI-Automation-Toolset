@@ -14,7 +14,7 @@ import csv
 import io
 import openpyxl
 
-
+encoding = 'iso-8859-1'
 logger = st.expander('Logger for debugging')
 
 class Instructions:
