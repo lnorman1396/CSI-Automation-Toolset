@@ -19,29 +19,32 @@ class Description:
 
 def run():
     logger=st.expander('Dubugging Info')
+  
 
 
     def main():
         logger.write(f'Packages imported in {(time() - start_time):.1f} seconds')
         time_0 = time()
         input_file = st.file_uploader('Select Hastus ZipFile',type=['zip'])
-        chdir(dirname(input_file))
-        output_name = basename(input_file)[:-4]+'_Dataset'
-        JDF_dict={}
-        places = creating_places_file(ZipFile(input_file, 'r'))
-        logger.write(f'\ncreating_places_file in {(time() - time_0):.1f} seconds')
-        JDF_dict['Places']=places
-        StopTimes = creating_StopTimes_file(ZipFile(input_file, 'r'))
-        logger.write(f'\ncreating_StopTimes_file in {(time() - time_0):.1f} seconds')
-        JDF_dict['StopTimes']=StopTimes
-        trips = creating_trips_file(ZipFile(input_file, 'r'))
-        logger.write(f'\ncreating_trips_file in {(time() - time_0):.1f} seconds')
-        JDF_dict['Trips']=trips
-        VehicleTypes = creating_VehicleTypes_file(ZipFile(input_file, 'r'))
-        logger.write(f'\ncreating_VehicleTypes in {(time() - time_0):.1f} seconds')
-        JDF_dict['VehicleTypes']=VehicleTypes
-        write_excel(JDF_dict, output_name + '.xlsx')
-        logger.write(f'\nScript ran in {(time() - time_0):.1f} seconds')
+        if input_file!=None:
+            
+            chdir(dirname(input_file))
+            output_name = basename(input_file)[:-4]+'_Dataset'
+            JDF_dict={}
+            places = creating_places_file(ZipFile(input_file, 'r'))
+            logger.write(f'\ncreating_places_file in {(time() - time_0):.1f} seconds')
+            JDF_dict['Places']=places
+            StopTimes = creating_StopTimes_file(ZipFile(input_file, 'r'))
+            logger.write(f'\ncreating_StopTimes_file in {(time() - time_0):.1f} seconds')
+            JDF_dict['StopTimes']=StopTimes
+            trips = creating_trips_file(ZipFile(input_file, 'r'))
+            logger.write(f'\ncreating_trips_file in {(time() - time_0):.1f} seconds')
+            JDF_dict['Trips']=trips
+            VehicleTypes = creating_VehicleTypes_file(ZipFile(input_file, 'r'))
+            logger.write(f'\ncreating_VehicleTypes in {(time() - time_0):.1f} seconds')
+            JDF_dict['VehicleTypes']=VehicleTypes
+            write_excel(JDF_dict, output_name + '.xlsx')
+            logger.write(f'\nScript ran in {(time() - time_0):.1f} seconds')
 
     def creating_places_file(zip_file):
         input_file_list = zip_file.namelist()
