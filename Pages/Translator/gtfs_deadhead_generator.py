@@ -50,6 +50,12 @@ def run():
             stops_input = zip_ref.open('stops.txt')
             stop_times_input = zip_ref.open('stop_times.txt')
         stops = pd.read_csv(stops_input)
+        stop_times = pd.read_csv(stop_times_input)
+        stop_times_grouped = stop_times.groupby('trip_id')
+        stop_times_ids = pd.concat([stop_times_grouped.nth(0)[['stop_id']], stop_times_grouped.nth(-1)[['stop_id']]])[
+            'stop_id'].drop_duplicates().tolist()
+        stops = stops[stops.stop_id.isin(stop_times_ids)]
+
         st.dataframe(stops)
 
         stop_times = pd.read_csv(stop_times_input)
@@ -63,17 +69,17 @@ def run():
         client = MapboxValhalla(api_key=api_key)
         coords = [[lat, lon] for lat, lon in lat_lon.values.tolist()]
         combinations = pd.DataFrame([p for p in itertools.product(coords, repeat=2)])
-        st.write(combinations.head(5))    
+        st.write(combinations.head(5))
 
         combinations = combinations[combinations[0] != combinations[1]]  # Exclude pairs with the same coordinates
-        st.write(combinations.head(5))    
+        st.write(combinations.head(5))
 
         combinations = combinations.apply(lambda x: tuple(sorted([tuple(x[0]), tuple(x[1])])),
                                           axis=1)  # Sort pairs and convert to tuple
         combinations = pd.DataFrame(combinations.tolist()).drop_duplicates()  # Remove duplicates
-        st.write(combinations.head(5))    
+        st.write(combinations.head(5))
         results = []
-        
+
         st.write("Progress")
         progress_bar = st.progress(0)
         total_combinations = len(combinations)
@@ -91,7 +97,7 @@ def run():
 
             except Exception as e:
                 pass
-        
+
         results_df = pd.DataFrame(results, columns=['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance'])
 
         columns = ['Start Time Range', 'End Time Range', 'Generate Time', 'Route Id', 'Origin Stop Name',
