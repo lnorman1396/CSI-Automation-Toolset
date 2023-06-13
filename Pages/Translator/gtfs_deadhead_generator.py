@@ -40,10 +40,6 @@ def run():
                 stops.stop_lon == destination_lon)].stop_id.values[0]
         return [origin_id, destination_id, int(route.duration / 60), route.distance / 1000]
 
-    def crow_distance(origin, destination):
-        origin_lat, origin_lon = origin[1], origin[0]
-        destination_lat, destination_lon = destination[1], destination[0]
-        return geopy.distance.geodesic((origin_lat, origin_lon), (destination_lat, destination_lon)).km
 
     if uploaded_file is not None:
         # Save the uploaded file to a temporary location
@@ -71,15 +67,10 @@ def run():
                                           axis=1)  # Sort pairs and convert to tuple
         combinations = pd.DataFrame(combinations.tolist()).drop_duplicates()  # Remove duplicates
         st.write(combinations.head(5))
-        results = []
 
         st.write("Progress")
-        progress_bar = st.progress(0)
-        total_combinations = len(combinations)
 
-        combinations[
-            ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
-            lambda x: get_routing(x), axis=1, result_type='expand')
+        combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(lambda x: get_routing(x), axis=1, result_type='expand')
         columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
                    'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
