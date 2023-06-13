@@ -74,7 +74,7 @@ def run():
         st.write("Progress")
         progress_bar = st.progress(0)
         total_combinations = len(combinations)
-
+        result = 0
         for i, row in combinations.iterrows():
             try:
                 result = get_routing(row, client)
