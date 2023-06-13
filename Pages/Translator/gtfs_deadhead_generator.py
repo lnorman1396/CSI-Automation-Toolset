@@ -62,11 +62,14 @@ def run():
 
         client = MapboxValhalla(api_key=api_key)
         coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
-        combinations = pd.DataFrame(
-            [p for p in itertools.product(coords, repeat=2)])
+
+        combinations = pd.DataFrame([p for p in itertools.product(coords, repeat=2)])
+        combinations = combinations[combinations[0] != combinations[1]]  # Exclude pairs with the same coordinates
+        combinations = combinations.apply(lambda x: tuple(sorted([tuple(x[0]), tuple(x[1])])),
+                                          axis=1)  # Sort pairs and convert to tuple
+        combinations = pd.DataFrame(combinations.tolist()).drop_duplicates()  # Remove duplicates
         st.dataframe(combinations)
 
-        combinations = combinations[combinations[0] != combinations[1]]
         with st.spinner('Running...'):
 
             combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations(
