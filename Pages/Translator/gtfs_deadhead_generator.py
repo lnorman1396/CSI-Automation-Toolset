@@ -52,18 +52,9 @@ def run():
         stops = pd.read_csv(stops_input)
         stop_times = pd.read_csv(stop_times_input)
         stop_times_grouped = stop_times.groupby('trip_id')
-        stop_times_ids = pd.concat([stop_times_grouped.nth(0)[['stop_id']], stop_times_grouped.nth(-1)[['stop_id']]])[
-            'stop_id'].drop_duplicates().tolist()
+        stop_times_ids = pd.concat([stop_times_grouped.nth(0)[['stop_id']], stop_times_grouped.nth(-1)[['stop_id']]])['stop_id'].drop_duplicates().tolist()
         stops = stops[stops.stop_id.isin(stop_times_ids)]
 
-        st.dataframe(stops)
-
-        stop_times = pd.read_csv(stop_times_input)
-
-        stop_times_grouped = stop_times.groupby('trip_id')
-        stop_times_ids = pd.concat([stop_times_grouped.nth(0)[['stop_id']], stop_times_grouped.nth(-1)[['stop_id']]])[
-            'stop_id'].drop_duplicates().tolist()
-        stops = stops[stops.stop_id.isin(stop_times_ids)]
         lat_lon = stops[['stop_lat', 'stop_lon']].drop_duplicates()
 
         client = MapboxValhalla(api_key=api_key)
