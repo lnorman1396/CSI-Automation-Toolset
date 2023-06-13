@@ -79,7 +79,7 @@ def run():
                             combinations[0] != combinations[1])]
         else:
             combinations = combinations[(combinations[0] != combinations[1])]
-        combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = st.progress(
+        combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = st.progress_apply(
             lambda x: get_routing(x), axis=1, result_type='expand')
         columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
