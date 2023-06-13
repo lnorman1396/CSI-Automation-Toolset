@@ -59,21 +59,10 @@ def run():
         coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
         combinations = pd.DataFrame(
             [p for p in itertools.product(coords, repeat=2)])
-        st.write(
-            )
 
-        use_threshold = st.selectbox('Do you want to use maximum and minimum distance threshold to reduce the size of the deadhead catalog (YES or NO):',('YES', 'NO'))
 
-        if use_threshold == 'YES':
-            vec_crow_distance = np.vectorize(crow_distance())
-            combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
-            max_threshold = st.number_input('Please enter the maximum distance threshold between 2 points you want to use (km):')
-            min_threshold = st.number_input('Please enter the minimum distance threshold between 2 points you want to use (km):')
-            combinations = combinations[
-                (combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (
-                            combinations[0] != combinations[1])]
-        else:
-            combinations = combinations[(combinations[0] != combinations[1])]
+
+        combinations = combinations[(combinations[0] != combinations[1])]
         with st.spinner('Running...'):
 
             combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations(
@@ -85,14 +74,9 @@ def run():
                    'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
                    'updatedAt']
         combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
-        if use_threshold == 'YES':
-            output = combinations.drop([0, 1, 'crow_distance'], axis=1).to_excel(
-                'deadhead_catalog.xlsx', index=False, sheet_name='Deadheads')
-            download = 1
-        else:
-            output = combinations.drop([0, 1], axis=1).to_excel(
-                'deadhead_catalog.xlsx', index=False, sheet_name='Deadheads')
-            download = 1
+        output = combinations.drop([0, 1], axis=1).to_excel(
+            'deadhead_catalog.xlsx', index=False, sheet_name='Deadheads')
+        download = 1
 
         with output as f:
             if download == 1:
