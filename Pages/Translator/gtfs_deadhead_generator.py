@@ -59,14 +59,14 @@ def run():
             'stop_id'].drop_duplicates().tolist()
         stops = stops[stops.stop_id.isin(stop_times_ids)]
         lat_lon = stops[['stop_lat', 'stop_lon']].drop_duplicates()
-        
+
         client = MapboxValhalla(api_key=api_key)
         coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
         combinations = pd.DataFrame(
             [p for p in itertools.product(coords, repeat=2)])
         st.dataframe(combinations)
 
-        combinations = combinations[(combinations[0] != combinations[1])]
+        combinations = combinations[combinations[0] != combinations[1]]
         with st.spinner('Running...'):
 
             combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations(
