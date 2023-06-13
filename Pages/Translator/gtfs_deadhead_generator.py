@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import io
 import zipfile
 import pandas as pd
 from routingpy import MapboxValhalla
@@ -61,32 +62,53 @@ def run():
         lat_lon = stops[['stop_lat', 'stop_lon']].drop_duplicates()
 
         client = MapboxValhalla(api_key=api_key)
-        coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
-
+        coords = [[lat, lon, ort_nr] for lat, lon, ort_nr in lat_lon.values.tolist()]
         combinations = pd.DataFrame([p for p in itertools.product(coords, repeat=2)])
         combinations = combinations[combinations[0] != combinations[1]]  # Exclude pairs with the same coordinates
         combinations = combinations.apply(lambda x: tuple(sorted([tuple(x[0]), tuple(x[1])])),
                                           axis=1)  # Sort pairs and convert to tuple
         combinations = pd.DataFrame(combinations.tolist()).drop_duplicates()  # Remove duplicates
-        st.dataframe(combinations)
 
-        with st.spinner('Running...'):
+        results = []
 
-            combinations[
-                ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.progress_apply(
-                lambda x: get_routing(x), axis=1, result_type='expand')
-        st.success('Combinations finished!')
+        st.write("Progress")
+        progress_bar = st.progress(0)
+        total_combinations = len(combinations)
 
-        columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
+        for i, row in combinations.iterrows():
+            try:
+                result = get_routing(row, client)
+            except Exception as e:
+                pass
+            results.append(result)
+
+            # Update the progress bar
+            try:
+                progress_bar.progress((i + 1) / (total_combinations + 1))
+
+            except Exception as e:
+                pass
+
+        results_df = pd.DataFrame(results, columns=['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance'])
+
+        columns = ['Start Time Range', 'End Time Range', 'Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
                    'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
                    'updatedAt']
-        combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
-        output = combinations.drop([0, 1], axis=1).to_excel(
-            'deadhead_catalog.xlsx', index=False, sheet_name='Deadheads')
-        download = 1
 
-        with output as f:
+        combinations = pd.concat([results_df, pd.DataFrame(columns=columns)])
+
+        # Write DataFrame to BytesIO object
+        output = io.BytesIO()
+        download = 0
+        with pd.ExcelWriter(output, engine='openpyxl') as writer:
+            combinations.to_excel(writer, index=False, sheet_name='Deadheads')
+            download = 1
+        # Retrieve the BytesIO object's content
+        excel_data = output.getvalue()
+        
+        
+        with excel_data as f:
             if download == 1:
                 st.download_button(
                     label='Download the updated GTFS zip file',
