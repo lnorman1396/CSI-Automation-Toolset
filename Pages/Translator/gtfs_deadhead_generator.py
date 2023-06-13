@@ -5,6 +5,8 @@ import zipfile
 import pandas as pd
 from routingpy import MapboxValhalla
 import itertools
+from tqdm import tqdm
+
 import geopy.distance
 import numpy as np
 import tempfile
@@ -74,29 +76,15 @@ def run():
         st.write("Progress")
         progress_bar = st.progress(0)
         total_combinations = len(combinations)
-        result = 0
-        for i, row in combinations.iterrows():
-            try:
-                result = get_routing(row, client)
-            except Exception as e:
-                pass
-            results.append(result)
 
-            # Update the progress bar
-            try:
-                progress_bar.progress((i + 1) / (total_combinations + 1))
-
-            except Exception as e:
-                pass
-
-        results_df = pd.DataFrame(results, columns=['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance'])
-
-        columns = ['Start Time Range', 'End Time Range', 'Generate Time', 'Route Id', 'Origin Stop Name',
+        combinations[
+            ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.progress_apply(
+            lambda x: get_routing(x), axis=1, result_type='expand')
+        columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
                    'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
                    'updatedAt']
-
-        combinations = pd.concat([results_df, pd.DataFrame(columns=columns)])
+        combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
 
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
