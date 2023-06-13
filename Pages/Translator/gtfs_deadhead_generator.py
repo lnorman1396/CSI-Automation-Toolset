@@ -67,10 +67,8 @@ def run():
         if use_threshold == 'YES':
             vec_crow_distance = np.vectorize(crow_distance())
             combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
-            max_threshold = float(
-                st.number_input('Please enter the maximum distance threshold between 2 points you want to use (km):'))
-            min_threshold = float(
-                st.number_input('Please enter the minimum distance threshold between 2 points you want to use (km):'))
+            max_threshold = st.number_input('Please enter the maximum distance threshold between 2 points you want to use (km):')
+            min_threshold = st.number_input('Please enter the minimum distance threshold between 2 points you want to use (km):')
             combinations = combinations[
                 (combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (
                             combinations[0] != combinations[1])]
