@@ -28,11 +28,11 @@ def run():
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
     if uploaded_file is not None:
         # Save the uploaded file to a temporary location
-        
+
         with zipfile.ZipFile(uploaded_file, 'r') as zip_ref:
             stops_input = zip_ref.open('stops.txt')
             stop_times_input = zip_ref.open('stop_times.txt')
-            
+
     def get_routing(row):
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
@@ -59,16 +59,22 @@ def run():
         coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
         combinations = pd.DataFrame(
             [p for p in itertools.product(coords, repeat=2)])
-        use_threshold = str(input('Do you want to use maximum and minimum distance threshold to reduce the size of the deadhead catalog (YES or NO):'))
+        st.write('Do you want to use maximum and minimum distance threshold to reduce the size of the deadhead catalog (YES or NO):')
+
+        agree = st.checkbox('YES')
+        if agree:
+            use_threshold = 'YES'
+        else:
+            use_threshold = 'NO'
         if use_threshold == 'YES':
             vec_crow_distance = np.vectorize(crow_distance)
             combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
-            max_threshold = float(input('Please enter the maximum distance threshold between 2 points you want to use (km):'))
-            min_threshold = float(input('Please enter the minimum distance threshold between 2 points you want to use (km):'))
+            max_threshold = float(st.number_input('Please enter the maximum distance threshold between 2 points you want to use (km):'))
+            min_threshold = float(st.number_input('Please enter the minimum distance threshold between 2 points you want to use (km):'))
             combinations = combinations[(combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (combinations[0] != combinations[1])]
         else:
             combinations = combinations[(combinations[0] != combinations[1])]
-        combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.progress_apply(
+        combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = st.progress(
             lambda x: get_routing(x), axis=1, result_type='expand')
         columns = ['Start Time Range', 'End Time Range', '	Generate Time',	'Route Id'	, 'Origin Stop Name'	, 'Destination Stop Name',
                    'Days Of Week',	'Direction'	, 'Purpose'	, 'Alignment',	'Pre-Layover Time',	'Post-Layover Time',	'updatedAt']
@@ -81,7 +87,7 @@ def run():
             output = combinations.drop([0, 1], axis=1).to_excel(
             'deadhead_catalog.xlsx', index=False, sheet_name='Deadheads')
             download = 1
-    
+
         with output as f:
             if download == 1:
                 st.download_button(
