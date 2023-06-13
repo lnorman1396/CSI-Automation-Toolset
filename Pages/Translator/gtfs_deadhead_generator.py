@@ -78,7 +78,7 @@ def run():
         total_combinations = len(combinations)
 
         combinations[
-            ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.progress_apply(
+            ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
             lambda x: get_routing(x), axis=1, result_type='expand')
         columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
