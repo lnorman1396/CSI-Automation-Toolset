@@ -49,18 +49,22 @@ def run():
             stops_input = zip_ref.open('stops.txt')
             stop_times_input = zip_ref.open('stop_times.txt')
         stops = pd.read_csv(stops_input)
+        st.dataframe(stops)
+
         stop_times = pd.read_csv(stop_times_input)
+        st.dataframe(stop_times)
+
         stop_times_grouped = stop_times.groupby('trip_id')
         stop_times_ids = pd.concat([stop_times_grouped.nth(0)[['stop_id']], stop_times_grouped.nth(-1)[['stop_id']]])[
             'stop_id'].drop_duplicates().tolist()
         stops = stops[stops.stop_id.isin(stop_times_ids)]
         lat_lon = stops[['stop_lat', 'stop_lon']].drop_duplicates()
+        
         client = MapboxValhalla(api_key=api_key)
         coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
         combinations = pd.DataFrame(
             [p for p in itertools.product(coords, repeat=2)])
-
-
+        st.dataframe(combinations)
 
         combinations = combinations[(combinations[0] != combinations[1])]
         with st.spinner('Running...'):
