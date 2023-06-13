@@ -72,7 +72,8 @@ def run():
 
         with st.spinner('Running...'):
 
-            combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations(
+            combinations[
+                ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.progress_apply(
                 lambda x: get_routing(x), axis=1, result_type='expand')
         st.success('Combinations finished!')
 
