@@ -41,7 +41,7 @@ def run():
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
         return geopy.distance.geodesic((origin_lat, origin_lon), (destination_lat, destination_lon)).km
-    
+
     if uploaded_file is not None:
         # Save the uploaded file to a temporary location
 
@@ -60,13 +60,10 @@ def run():
         combinations = pd.DataFrame(
             [p for p in itertools.product(coords, repeat=2)])
         st.write(
-            'Do you want to use maximum and minimum distance threshold to reduce the size of the deadhead catalog (YES or NO):')
+            )
 
-        agree = st.checkbox('YES')
-        if agree:
-            use_threshold = 'YES'
-        else:
-            use_threshold = 'NO'
+        use_threshold = st.selectbox('Do you want to use maximum and minimum distance threshold to reduce the size of the deadhead catalog (YES or NO):',('YES', 'NO'))
+
         if use_threshold == 'YES':
             vec_crow_distance = np.vectorize(crow_distance())
             combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
@@ -79,8 +76,12 @@ def run():
                             combinations[0] != combinations[1])]
         else:
             combinations = combinations[(combinations[0] != combinations[1])]
-        combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = st.progress_apply(
-            lambda x: get_routing(x), axis=1, result_type='expand')
+        with st.spinner('Running...'):
+
+            combinations[['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations(
+                lambda x: get_routing(x), axis=1, result_type='expand')
+        st.success('Combinations finished!')
+
         columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
                    'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
