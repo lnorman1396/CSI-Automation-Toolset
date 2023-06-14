@@ -30,6 +30,64 @@ def run():
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
 
+    def execute():
+        if uploaded_file is not None:
+            # Save the uploaded file to a temporary location
+
+            with zipfile.ZipFile(uploaded_file, 'r') as zip_ref:
+                stops_input = zip_ref.open('stops.txt')
+                stop_times_input = zip_ref.open('stop_times.txt')
+            stops = pd.read_csv(stops_input)
+            stop_times = pd.read_csv(stop_times_input)
+            stop_times_grouped = stop_times.groupby('trip_id')
+            stop_times_ids = \
+            pd.concat([stop_times_grouped.nth(0)[['stop_id']], stop_times_grouped.nth(-1)[['stop_id']]])[
+                'stop_id'].drop_duplicates().tolist()
+            stops = stops[stops.stop_id.isin(stop_times_ids)]
+            lat_lon = stops[['stop_lat', 'stop_lon']].drop_duplicates()
+            client = MapboxValhalla(api_key=api_key)
+            coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
+            combinations = pd.DataFrame(
+                [p for p in itertools.product(coords, repeat=2)])
+            vec_crow_distance = np.vectorize(crow_distance)
+            combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
+            combinations = combinations[
+                (combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (
+                            combinations[0] != combinations[1])]
+            st.write(combinations.head(5))
+            # combinations = combinations[(combinations[0] != combinations[1])]
+            combinations[
+                ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
+                lambda x: get_routing(x), axis=1, result_type='expand')
+            st.write('Combinations finished')
+            columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
+                       'Destination Stop Name',
+                       'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
+                       'updatedAt']
+            st.write('Columns finished')
+
+            combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
+            st.write('Combinations concat finished')
+
+            st.write('Combinations drop finished')
+            combinations = combinations.drop([0, 1, 'crow_distance'], axis=1)
+            # Write DataFrame to BytesIO object
+            output = io.BytesIO()
+
+            with pd.ExcelWriter(output, engine='openpyxl') as writer:
+                combinations.to_excel(writer, index=False, sheet_name='Deadheads')
+
+            # Retrieve the BytesIO object's content
+            excel_data = output.getvalue()
+
+            st.write('Excel finished')
+            download = 1
+            if download == 1:
+                st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx',
+                                   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    if st.button('Run'):
+        execute()
+
     def crow_distance(origin, destination):
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
@@ -47,55 +105,5 @@ def run():
                 stops.stop_lon == destination_lon)].stop_id.values[0]
         return [origin_id, destination_id, int(route.duration / 60), route.distance / 1000]
 
-
-    if uploaded_file is not None:
-        # Save the uploaded file to a temporary location
-
-        with zipfile.ZipFile(uploaded_file, 'r') as zip_ref:
-            stops_input = zip_ref.open('stops.txt')
-            stop_times_input = zip_ref.open('stop_times.txt')
-        stops = pd.read_csv(stops_input)
-        stop_times = pd.read_csv(stop_times_input)
-        stop_times_grouped = stop_times.groupby('trip_id')
-        stop_times_ids = pd.concat([stop_times_grouped.nth(0)[['stop_id']], stop_times_grouped.nth(-1)[['stop_id']]])[
-            'stop_id'].drop_duplicates().tolist()
-        stops = stops[stops.stop_id.isin(stop_times_ids)]
-        lat_lon = stops[['stop_lat', 'stop_lon']].drop_duplicates()
-        client = MapboxValhalla(api_key=api_key)
-        coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
-        combinations = pd.DataFrame(
-            [p for p in itertools.product(coords, repeat=2)])
-        vec_crow_distance = np.vectorize(crow_distance)
-        combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
-        combinations = combinations[(combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (combinations[0] != combinations[1])]
-        st.write(combinations.head(5))
-        # combinations = combinations[(combinations[0] != combinations[1])]
-        combinations[
-            ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
-            lambda x: get_routing(x), axis=1, result_type='expand')
-        st.write('Combinations finished')
-        columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
-                   'Destination Stop Name',
-                   'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
-                   'updatedAt']
-        st.write('Columns finished')
-
-        combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
-        st.write('Combinations concat finished')
-
-
-        st.write('Combinations drop finished')
-        combinations = combinations.drop([0, 1, 'crow_distance'], axis=1)
-        # Write DataFrame to BytesIO object
-        output = io.BytesIO()
-
-        with pd.ExcelWriter(output, engine='openpyxl') as writer:
-            combinations.to_excel(writer, index=False, sheet_name='Deadheads')
-
-        # Retrieve the BytesIO object's content
-        excel_data = output.getvalue()
-
-        st.write('Excel finished')
-        download = 1
-        if download == 1:
-            st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    @st.cache_data
+    
