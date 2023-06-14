@@ -8,7 +8,6 @@ import itertools
 import numpy as np
 import geopy
 import time
-import stqdm
 
 class Instructions:
     instructions = 'Upload the VDV452 File and run the scripts to perform different Actions for VDV452'
@@ -74,12 +73,11 @@ def run():
         combinations = combinations[(combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (combinations[0] != combinations[1])]
         st.write(combinations.head(5))
         # combinations = combinations[(combinations[0] != combinations[1])]
-        stqdm.pandas()
 
         try:
 
             combinations[
-                ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.progress_apply(
+                ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
                 lambda x: get_routing(x), axis=1, result_type='expand')
 
         except Exception as e:
