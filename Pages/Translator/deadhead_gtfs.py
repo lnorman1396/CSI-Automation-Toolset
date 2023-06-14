@@ -19,6 +19,10 @@ class Description:
     icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/GTFS_SVG_Icon_01.svg/1200px-GTFS_SVG_Icon_01.svg.png"
     author = 'Zacharie Chebance'
 
+
+index = 0
+maxVal = 0
+
 def run():
     api_key = 'pk.eyJ1IjoiemFjaGFyaWVjaGViYW5jZSIsImEiOiJja3FodjU3d2gwMGdoMnhxM2ZmNjZkYXc5In0.CSFfUFU-zyK_K-wwYGyQ0g'
     max_threshold = 10
@@ -26,8 +30,7 @@ def run():
     st.title('GTFS Deadhead Generator')
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
-    index = 0
-    maxVal = 0
+
     my_bar = st.progress(0, text='Progress')
 
     def crow_distance(origin, destination):
@@ -38,8 +41,9 @@ def run():
     def get_routing(row):
         global index
         index = index +1
+        
         progress = index / maxVal
-        my_bar.progress(progress + 1, text='Progress')
+        my_bar.progress(progress, text='Progress')
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
