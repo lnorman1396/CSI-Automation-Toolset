@@ -37,7 +37,6 @@ def run():
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
-        st.write(row)
         time.sleep(0.2)
         route = client.directions(locations=[origin, destination], profile='bus')
         origin_id = stops[(stops.stop_lat == origin_lat) & (
@@ -74,37 +73,37 @@ def run():
         st.write(combinations.head(5))
         # combinations = combinations[(combinations[0] != combinations[1])]
         try:
-
+    
             combinations[
                 ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
                 lambda x: get_routing(x), axis=1, result_type='expand')
-
+    
         except Exception as e:
             st.write(e)
             pass
-
+    
         st.write('Combinations finished')
         columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
                    'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
                    'updatedAt']
         st.write('Columns finished')
-
+    
         combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
         st.write('Combinations concat finished')
-
-
+    
+    
         st.write('Combinations drop finished')
         combinations = combinations.drop([0, 1, 'crow_distance'], axis=1)
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
-
+    
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
             combinations.to_excel(writer, index=False, sheet_name='Deadheads')
-
+    
         # Retrieve the BytesIO object's content
         excel_data = output.getvalue()
-
+    
         st.write('Excel finished')
         download = 1
         if download == 1:
