@@ -24,12 +24,13 @@ class Description:
 
 def run():
     api_key = 'pk.eyJ1IjoiemFjaGFyaWVjaGViYW5jZSIsImEiOiJja3FodjU3d2gwMGdoMnhxM2ZmNjZkYXc5In0.CSFfUFU-zyK_K-wwYGyQ0g'
-    max_threshold_input = st.number_input('Insert a min number')
-    min_threshold_input = st.number_input('Insert a max number')
+
     st.title('GTFS Deadhead Generator')
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
-
+    max_threshold_input = st.number_input('Insert a min number')
+    min_threshold_input = st.number_input('Insert a max number')
+    
     def crow_distance(origin, destination):
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
