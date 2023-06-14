@@ -71,6 +71,7 @@ def run():
                         combinations[0] != combinations[1])]
         st.write(combinations.head(5))
         # combinations = combinations[(combinations[0] != combinations[1])]
+        result = 0
         results = []
 
         st.write("Progress")
