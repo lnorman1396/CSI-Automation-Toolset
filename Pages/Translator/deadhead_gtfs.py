@@ -19,16 +19,15 @@ class Description:
     title = "GFTS Deadhead Generator"
     description = "This is a toolset which enables you to create a Deadhead Catalog from a GTFS file"
     icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/GTFS_SVG_Icon_01.svg/1200px-GTFS_SVG_Icon_01.svg.png"
-    author = 'Zacharie Chebance, adapted by Janco Loenneker'
+    author = 'Zacharie Chebance'
 
 
 def run():
     api_key = 'pk.eyJ1IjoiemFjaGFyaWVjaGViYW5jZSIsImEiOiJja3FodjU3d2gwMGdoMnhxM2ZmNjZkYXc5In0.CSFfUFU-zyK_K-wwYGyQ0g'
+    max_threshold = 10
+    min_threshold = 0.1
     st.title('GTFS Deadhead Generator')
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
-    st.write('')
-    max_threshold = st.number_input('Insert a max Threshold (Default 0.1)', value=0.1)
-    min_threshold = st.number_input('Insert a min Threshold (Default 10', value=10)
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
 
     def crow_distance(origin, destination):
@@ -51,7 +50,7 @@ def run():
     if st.button('Create Deadhead Catalog'):
         if uploaded_file is not None:
             # Save the uploaded file to a temporary location
-
+    
             with zipfile.ZipFile(uploaded_file, 'r') as zip_ref:
                 stops_input = zip_ref.open('stops.txt')
                 stop_times_input = zip_ref.open('stop_times.txt')
@@ -80,22 +79,23 @@ def run():
                        'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
                        'updatedAt']
             st.write('Columns finished')
-
+    
             combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
             st.write('Combinations concat finished')
-
-
+    
+    
             st.write('Combinations drop finished')
             combinations = combinations.drop([0, 1, 'crow_distance'], axis=1)
             # Write DataFrame to BytesIO object
             output = io.BytesIO()
-
+    
             with pd.ExcelWriter(output, engine='openpyxl') as writer:
                 combinations.to_excel(writer, index=False, sheet_name='Deadheads')
-
+    
             # Retrieve the BytesIO object's content
             excel_data = output.getvalue()
-
+    
             st.write('Excel finished')
-
+            download = 1
+    
             st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
