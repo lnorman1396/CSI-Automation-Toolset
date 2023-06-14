@@ -8,7 +8,7 @@ import itertools
 import numpy as np
 import geopy
 import time
-
+import stqdm
 
 class Instructions:
     instructions = 'Upload the VDV452 File and run the scripts to perform different Actions for VDV452'
@@ -27,6 +27,7 @@ def run():
     st.title('GTFS Deadhead Generator')
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
+    index = 0
 
     def crow_distance(origin, destination):
         origin_lat, origin_lon = origin[1], origin[0]
@@ -34,6 +35,7 @@ def run():
         return geopy.distance.geodesic((origin_lat, origin_lon), (destination_lat, destination_lon)).km
 
     def get_routing(row):
+        st.write(index)
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
@@ -72,38 +74,40 @@ def run():
         combinations = combinations[(combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (combinations[0] != combinations[1])]
         st.write(combinations.head(5))
         # combinations = combinations[(combinations[0] != combinations[1])]
+        stqdm.pandas()
+
         try:
-    
+
             combinations[
-                ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
+                ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.progress_apply(
                 lambda x: get_routing(x), axis=1, result_type='expand')
-    
+
         except Exception as e:
             st.write(e)
             pass
-    
+
         st.write('Combinations finished')
         columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
                    'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
                    'updatedAt']
         st.write('Columns finished')
-    
+
         combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
         st.write('Combinations concat finished')
-    
-    
+
+
         st.write('Combinations drop finished')
         combinations = combinations.drop([0, 1, 'crow_distance'], axis=1)
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
-    
+
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
             combinations.to_excel(writer, index=False, sheet_name='Deadheads')
-    
+
         # Retrieve the BytesIO object's content
         excel_data = output.getvalue()
-    
+
         st.write('Excel finished')
         download = 1
         if download == 1:
