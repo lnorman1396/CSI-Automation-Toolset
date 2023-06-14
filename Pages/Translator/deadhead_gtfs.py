@@ -29,7 +29,7 @@ def run():
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
     st.session_state.output = None
-    
+
     def crow_distance(origin, destination):
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
@@ -47,14 +47,14 @@ def run():
                 stops.stop_lon == destination_lon)].stop_id.values[0]
         return [origin_id, destination_id, int(route.duration / 60), route.distance / 1000]
 
-    
+
 
     if uploaded_file is not None:
         # Save the uploaded file to a temporary location
         st.session_state.output = uploaded_file
 
     if st.session_state.output is not None:
-        with zipfile.ZipFile(uploaded_file, 'r') as zip_ref:
+        with zipfile.ZipFile(st.session_state.output, 'r') as zip_ref:
             stops_input = zip_ref.open('stops.txt')
             stop_times_input = zip_ref.open('stop_times.txt')
         stops = pd.read_csv(stops_input)
