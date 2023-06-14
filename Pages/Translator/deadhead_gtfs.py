@@ -30,6 +30,23 @@ def run():
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
 
+    def crow_distance(origin, destination):
+        origin_lat, origin_lon = origin[1], origin[0]
+        destination_lat, destination_lon = destination[1], destination[0]
+        return geopy.distance.geodesic((origin_lat, origin_lon), (destination_lat, destination_lon)).km
+
+    def get_routing(row):
+        origin, destination = row[0], row[1]
+        origin_lat, origin_lon = origin[1], origin[0]
+        destination_lat, destination_lon = destination[1], destination[0]
+        time.sleep(0.5)
+        route = client.directions(locations=[origin, destination], profile='bus')
+        origin_id = stops[(stops.stop_lat == origin_lat) & (
+                stops.stop_lon == origin_lon)].stop_id.values[0]
+        destination_id = stops[(stops.stop_lat == destination_lat) & (
+                stops.stop_lon == destination_lon)].stop_id.values[0]
+        return [origin_id, destination_id, int(route.duration / 60), route.distance / 1000]
+    @st.cache_data
     def execute():
         if uploaded_file is not None:
             # Save the uploaded file to a temporary location
@@ -88,22 +105,7 @@ def run():
     if st.button('Run'):
         execute()
 
-    def crow_distance(origin, destination):
-        origin_lat, origin_lon = origin[1], origin[0]
-        destination_lat, destination_lon = destination[1], destination[0]
-        return geopy.distance.geodesic((origin_lat, origin_lon), (destination_lat, destination_lon)).km
 
-    def get_routing(row):
-        origin, destination = row[0], row[1]
-        origin_lat, origin_lon = origin[1], origin[0]
-        destination_lat, destination_lon = destination[1], destination[0]
-        time.sleep(0.5)
-        route = client.directions(locations=[origin, destination], profile='bus')
-        origin_id = stops[(stops.stop_lat == origin_lat) & (
-                stops.stop_lon == origin_lon)].stop_id.values[0]
-        destination_id = stops[(stops.stop_lat == destination_lat) & (
-                stops.stop_lon == destination_lon)].stop_id.values[0]
-        return [origin_id, destination_id, int(route.duration / 60), route.distance / 1000]
 
-    @st.cache_data
+    
     
