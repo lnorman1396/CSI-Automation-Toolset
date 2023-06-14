@@ -30,7 +30,6 @@ def run():
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
 
-    my_bar = st.progress(0, text='Progress')
 
     def crow_distance(origin, destination):
         origin_lat, origin_lon = origin[1], origin[0]
@@ -42,7 +41,8 @@ def run():
         index = index +1
 
         progress = index / maxVal
-        my_bar.progress(progress, text='Progress')
+        text = str(index + maxVal)
+        my_bar.progress(progress, text=text)
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
@@ -84,18 +84,18 @@ def run():
         # combinations = combinations[(combinations[0] != combinations[1])]
         max_val  = combinations.shape[0]*0.5
         st.write('Estimated time:', max_val)
+        my_bar = st.progress(0, text='Progress')
 
-        with st.spinner('Running...'):
 
-            try:
+        try:
 
-                combinations[
-                    ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
-                    lambda x: get_routing(x, max_val), axis=1, result_type='expand')
+            combinations[
+                ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
+                lambda x: get_routing(x, max_val), axis=1, result_type='expand')
 
-            except Exception as e:
-                st.write(e)
-                pass
+        except Exception as e:
+            st.write(e)
+            pass
 
         st.write('Combinations finished')
         columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
