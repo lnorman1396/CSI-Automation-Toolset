@@ -41,7 +41,7 @@ def run():
         index = index +1
 
         progress = index / maxVal
-        text = str(index + maxVal)
+        text = str(index) + str('/') + str(maxVal)
         my_bar.progress(progress, text=text)
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
