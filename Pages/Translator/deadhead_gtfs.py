@@ -90,7 +90,7 @@ def run():
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
-            combinations.to_excel(writer, index=False, sheet_name='Deadheads')
+            combinations.drop([0, 1], axis=1).to_excel(writer, index=False, sheet_name='Deadheads')
 
         # Retrieve the BytesIO object's content
         excel_data = output.getvalue()
