@@ -83,13 +83,12 @@ def run():
         combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
         st.write('Combinations concat finished')
 
-        combinations.drop([0, 1], axis=1).to_excel(
-                'deadhead_catalog.xlsx', index=False, sheet_name='Deadheads')
+        
         st.write('Combinations drop finished')
-
+        combinations = combinations.drop([0, 1], axis=1)
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
-        combinations.drop(['0', '1', 'crow_distance'], axis=1)
+        
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
             combinations.to_excel(writer, index=False, sheet_name='Deadheads')
 
@@ -98,5 +97,5 @@ def run():
 
         st.write('Excel finished')
         download = 1
-        
+
         st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
