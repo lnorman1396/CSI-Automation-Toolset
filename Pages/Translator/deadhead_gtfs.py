@@ -38,7 +38,7 @@ def run():
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
-        time.sleep(0.25)
+        time.sleep(0.5)
         route = client.directions(locations=[origin, destination], profile='bus')
         origin_id = stops[(stops.stop_lat == origin_lat) & (
                 stops.stop_lon == origin_lon)].stop_id.values[0]
@@ -74,7 +74,7 @@ def run():
         st.write(combinations.head(5))
         st.write(combinations.shape[0])
         # combinations = combinations[(combinations[0] != combinations[1])]
-        est_time = combinations.shape[0]*0.2
+        est_time = combinations.shape[0]*0.5
         st.write('Estimated time:', est_time)
 
         with st.spinner('Running...'):
