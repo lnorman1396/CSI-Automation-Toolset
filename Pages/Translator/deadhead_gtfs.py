@@ -23,6 +23,7 @@ class Description:
 
 def run():
     api_key = 'pk.eyJ1IjoiemFjaGFyaWVjaGViYW5jZSIsImEiOiJja3FodjU3d2gwMGdoMnhxM2ZmNjZkYXc5In0.CSFfUFU-zyK_K-wwYGyQ0g'
+    client = MapboxValhalla(api_key=api_key)
     max_threshold = 10
     min_threshold = 0.1
     st.title('GTFS Deadhead Generator')
@@ -35,7 +36,7 @@ def run():
         destination_lat, destination_lon = destination[1], destination[0]
         return geopy.distance.geodesic((origin_lat, origin_lon), (destination_lat, destination_lon)).km
 
-    def get_routing(row):
+    def get_routing(row, stops):
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
@@ -64,7 +65,6 @@ def run():
             'stop_id'].drop_duplicates().tolist()
         stops = stops[stops.stop_id.isin(stop_times_ids)]
         lat_lon = stops[['stop_lat', 'stop_lon']].drop_duplicates()
-        client = MapboxValhalla(api_key=api_key)
         coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
         combinations = pd.DataFrame(
             [p for p in itertools.product(coords, repeat=2)])
@@ -76,7 +76,7 @@ def run():
         try:
             combinations[
                 ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
-                lambda x: get_routing(x), axis=1, result_type='expand')
+                lambda x: get_routing(x, stops), axis=1, result_type='expand')
 
         except Exception as e:
             st.write(e)
@@ -108,7 +108,7 @@ def run():
         download = 1
         if download == 1:
             st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-
+            
     if uploaded_file is not None:
         # Save the uploaded file to a temporary location
         st.session_state.output = uploaded_file
