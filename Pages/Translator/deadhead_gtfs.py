@@ -89,14 +89,15 @@ def run():
 
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
-        download = 0
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
             combinations.to_excel(writer, index=False, sheet_name='Deadheads')
-            download = 1
+
         # Retrieve the BytesIO object's content
         excel_data = output.getvalue()
-
-
+        
+        st.write('Excel finished')
+        download = 1
+        
         with excel_data as f:
             if download == 1:
                 st.download_button(
