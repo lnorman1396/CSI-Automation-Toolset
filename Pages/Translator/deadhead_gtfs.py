@@ -97,5 +97,5 @@ def run():
 
         st.write('Excel finished')
         download = 1
-
-        st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        if download == 1:
+            st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
