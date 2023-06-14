@@ -89,13 +89,14 @@ def run():
 
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
+        combinations.drop(['0', '1', 'crow_distance'], axis=1)
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
-            combinations.drop([0, 1], axis=1).to_excel(writer, index=False, sheet_name='Deadheads')
+            combinations.to_excel(writer, index=False, sheet_name='Deadheads')
 
         # Retrieve the BytesIO object's content
         excel_data = output.getvalue()
 
         st.write('Excel finished')
         download = 1
-
+        
         st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
