@@ -53,67 +53,67 @@ def run():
         with zipfile.ZipFile(uploaded_file, 'r') as zip_ref:
             stops_input = zip_ref.open('stops.txt')
             stop_times_input = zip_ref.open('stop_times.txt')
-        stops = pd.read_csv(stops_input)
-        stop_times = pd.read_csv(stop_times_input)
+    stops = pd.read_csv(stops_input)
+    stop_times = pd.read_csv(stop_times_input)
 
-        stop_times_grouped = stop_times.groupby('trip_id')
-        stop_times_ids = pd.concat([stop_times_grouped.nth(0)[['stop_id']], stop_times_grouped.nth(-1)[['stop_id']]])[
-            'stop_id'].drop_duplicates().tolist()
-        stops = stops[stops.stop_id.isin(stop_times_ids)]
-        lat_lon = stops[['stop_lat', 'stop_lon']].drop_duplicates()
-        coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
-        combinations = pd.DataFrame(
-            [p for p in itertools.product(coords, repeat=2)])
-        vec_crow_distance = np.vectorize(crow_distance)
-        combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
-        combinations = combinations[
-            (combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (
-                        combinations[0] != combinations[1])]
-        st.write(combinations.head(5))
-        # combinations = combinations[(combinations[0] != combinations[1])]
-        result = 0
-        results = []
+    stop_times_grouped = stop_times.groupby('trip_id')
+    stop_times_ids = pd.concat([stop_times_grouped.nth(0)[['stop_id']], stop_times_grouped.nth(-1)[['stop_id']]])[
+        'stop_id'].drop_duplicates().tolist()
+    stops = stops[stops.stop_id.isin(stop_times_ids)]
+    lat_lon = stops[['stop_lat', 'stop_lon']].drop_duplicates()
+    coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
+    combinations = pd.DataFrame(
+        [p for p in itertools.product(coords, repeat=2)])
+    vec_crow_distance = np.vectorize(crow_distance)
+    combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
+    combinations = combinations[
+        (combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (
+                    combinations[0] != combinations[1])]
+    st.write(combinations.head(5))
+    # combinations = combinations[(combinations[0] != combinations[1])]
+    result = 0
+    results = []
 
-        st.write("Progress")
-        progress_bar = st.progress(0)
-        total_combinations = len(combinations)
+    st.write("Progress")
+    progress_bar = st.progress(0)
+    total_combinations = len(combinations)
 
-        for i, row in combinations.iterrows():
-            try:
-                result = get_routing(row, client)
-            except Exception as e:
-                pass
-            results.append(result)
+    for i, row in combinations.iterrows():
+        try:
+            result = get_routing(row, client)
+        except Exception as e:
+            pass
+        results.append(result)
 
-            # Update the progress bar
-            try:
-                progress_bar.progress((i + 1) / (total_combinations + 1))
+        # Update the progress bar
+        try:
+            progress_bar.progress((i + 1) / (total_combinations + 1))
 
-            except Exception as e:
-                pass
+        except Exception as e:
+            pass
 
-        results_df = pd.DataFrame(results, columns=['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance'])
+    results_df = pd.DataFrame(results, columns=['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance'])
 
-        columns = ['Start Time Range', 'End Time Range', 'Generate Time', 'Route Id', 'Origin Stop Name',
-                   'Destination Stop Name',
-                   'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
-                   'updatedAt']
+    columns = ['Start Time Range', 'End Time Range', 'Generate Time', 'Route Id', 'Origin Stop Name',
+               'Destination Stop Name',
+               'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
+               'updatedAt']
 
-        combinations = pd.concat([results_df, pd.DataFrame(columns=columns)])
+    combinations = pd.concat([results_df, pd.DataFrame(columns=columns)])
 
-        # Write DataFrame to BytesIO object
-        output = io.BytesIO()
+    # Write DataFrame to BytesIO object
+    output = io.BytesIO()
 
-        with pd.ExcelWriter(output, engine='openpyxl') as writer:
-            combinations.to_excel(writer, index=False, sheet_name='Deadheads')
+    with pd.ExcelWriter(output, engine='openpyxl') as writer:
+        combinations.to_excel(writer, index=False, sheet_name='Deadheads')
 
-        # Retrieve the BytesIO object's content
-        excel_data = output.getvalue()
+    # Retrieve the BytesIO object's content
+    excel_data = output.getvalue()
 
-        st.write('Excel finished')
-        download = 1
-        if download == 1:
-            st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx',
-                               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    st.write('Excel finished')
+    download = 1
+    if download == 1:
+        st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx',
+                           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 
