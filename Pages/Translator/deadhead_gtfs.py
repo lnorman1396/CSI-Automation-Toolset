@@ -20,7 +20,7 @@ class Description:
     author = 'Zacharie Chebance'
 
 
-index = 0
+index = -1
 
 def run():
     api_key = 'pk.eyJ1IjoiemFjaGFyaWVjaGViYW5jZSIsImEiOiJja3FodjU3d2gwMGdoMnhxM2ZmNjZkYXc5In0.CSFfUFU-zyK_K-wwYGyQ0g'
@@ -40,7 +40,7 @@ def run():
         global index
         index = index +1
 
-        progress = index / maxVal
+        progress = index / maxVal   
         text = str(index) + str('/') + str(maxVal)
         my_bar.progress(progress, text=text)
         origin, destination = row[0], row[1]
@@ -82,7 +82,7 @@ def run():
         st.write(combinations.head(5))
         st.write(combinations.shape[0])
         # combinations = combinations[(combinations[0] != combinations[1])]
-        max_val  = combinations.shape[0]*0.5
+        max_val  = combinations.shape[0]
         st.write('Estimated time:', max_val)
         my_bar = st.progress(0, text='Progress')
 
