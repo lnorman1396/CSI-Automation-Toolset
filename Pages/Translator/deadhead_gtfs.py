@@ -6,6 +6,7 @@ import pandas as pd
 from routingpy import MapboxValhalla
 import itertools
 import numpy as np
+import geopy
 import time
 
 logger = st.expander('Logger for debugging')
@@ -23,9 +24,17 @@ class Description:
 
 def run():
     api_key = 'pk.eyJ1IjoiemFjaGFyaWVjaGViYW5jZSIsImEiOiJja3FodjU3d2gwMGdoMnhxM2ZmNjZkYXc5In0.CSFfUFU-zyK_K-wwYGyQ0g'
+    max_threshold = 10
+    min_threshold = 0.1
     st.title('GTFS Deadhead Generator')
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
+
+    def crow_distance(origin, destination):
+        origin_lat, origin_lon = origin[1], origin[0]
+        destination_lat, destination_lon = destination[1], destination[0]
+        return geopy.distance.geodesic((origin_lat, origin_lon), (destination_lat, destination_lon)).km
+
     def get_routing(row):
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
@@ -56,8 +65,11 @@ def run():
         coords = [[lon, lat] for lat, lon in lat_lon.values.tolist()]
         combinations = pd.DataFrame(
             [p for p in itertools.product(coords, repeat=2)])
+        vec_crow_distance = np.vectorize(crow_distance)
+        combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
+        combinations = combinations[(combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (combinations[0] != combinations[1])]
 
-        combinations = combinations[(combinations[0] != combinations[1])]
+        # combinations = combinations[(combinations[0] != combinations[1])]
         combinations[
             ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
             lambda x: get_routing(x), axis=1, result_type='expand')
