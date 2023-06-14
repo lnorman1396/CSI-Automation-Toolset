@@ -73,13 +73,19 @@ def run():
         combinations[
             ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
             lambda x: get_routing(x), axis=1, result_type='expand')
+        st.write('Combinations finished')
         columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
                    'Days Of Week', 'Direction', 'Purpose', 'Alignment', 'Pre-Layover Time', 'Post-Layover Time',
                    'updatedAt']
+        st.write('Columns finished')
+
         combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
+        st.write('Combinations concat finished')
+
         combinations.drop([0, 1], axis=1).to_excel(
                 'deadhead_catalog.xlsx', index=False, sheet_name='Deadheads')
+        st.write('Combinations drop finished')
 
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
