@@ -21,7 +21,7 @@ class Description:
     icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/GTFS_SVG_Icon_01.svg/1200px-GTFS_SVG_Icon_01.svg.png"
     author = 'Zacharie Chebance'
 
-
+@st.cache_data
 def run():
     api_key = 'pk.eyJ1IjoiemFjaGFyaWVjaGViYW5jZSIsImEiOiJja3FodjU3d2gwMGdoMnhxM2ZmNjZkYXc5In0.CSFfUFU-zyK_K-wwYGyQ0g'
     max_threshold = 10
