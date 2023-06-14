@@ -46,7 +46,7 @@ def run():
                 stops.stop_lon == destination_lon)].stop_id.values[0]
         return [origin_id, destination_id, int(route.duration / 60), route.distance / 1000]
 
-    
+
     if uploaded_file is not None:
         # Save the uploaded file to a temporary location
 
@@ -69,9 +69,15 @@ def run():
         combinations = combinations[(combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (combinations[0] != combinations[1])]
         st.write(combinations.head(5))
         # combinations = combinations[(combinations[0] != combinations[1])]
-        combinations[
-            ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
-            lambda x: get_routing(x), axis=1, result_type='expand')
+        try:
+            combinations[
+                ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
+                lambda x: get_routing(x), axis=1, result_type='expand')
+
+        except Exception as e:
+            st.write(e)
+            pass
+
         st.write('Combinations finished')
         columns = ['Start Time Range', 'End Time Range', '	Generate Time', 'Route Id', 'Origin Stop Name',
                    'Destination Stop Name',
