@@ -94,20 +94,8 @@ def run():
 
         # Retrieve the BytesIO object's content
         excel_data = output.getvalue()
-        
+
         st.write('Excel finished')
         download = 1
-        
-        with excel_data as f:
-            if download == 1:
-                st.download_button(
-                    label='Download the updated GTFS zip file',
-                    data=f,
-                    file_name='gtfs_updated.zip',
-                    mime='application/zip'
-                )
 
-
-
-
-
+        st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
