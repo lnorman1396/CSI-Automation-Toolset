@@ -37,7 +37,8 @@ def run():
         origin, destination = row[0], row[1]
         origin_lat, origin_lon = origin[1], origin[0]
         destination_lat, destination_lon = destination[1], destination[0]
-        time.sleep(0.19)
+        st.write(row)
+        time.sleep(0.2)
         route = client.directions(locations=[origin, destination], profile='bus')
         origin_id = stops[(stops.stop_lat == origin_lat) & (
                 stops.stop_lon == origin_lon)].stop_id.values[0]
