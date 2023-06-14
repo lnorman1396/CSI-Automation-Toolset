@@ -48,9 +48,11 @@ def run():
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
 
     if uploaded_file is not None:
-        # Save the uploaded file to a temporary location
-
-        with zipfile.ZipFile(uploaded_file, 'r') as zip_ref:
+        # Save the uploaded file to a temporary location       
+        temp_path = 'temp.zip'
+        with open(temp_path, 'wb') as f:
+            f.write(uploaded_file.getbuffer())
+        with zipfile.ZipFile(temp_path, 'r') as zip_ref:
             stops_input = zip_ref.open('stops.txt')
             stop_times_input = zip_ref.open('stop_times.txt')
     stops = pd.read_csv(stops_input)
