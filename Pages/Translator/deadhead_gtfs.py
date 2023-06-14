@@ -83,12 +83,12 @@ def run():
         combinations = pd.concat([combinations, pd.DataFrame(columns=columns)])
         st.write('Combinations concat finished')
 
-        
+
         st.write('Combinations drop finished')
-        combinations = combinations.drop([0, 1], axis=1)
+        combinations = combinations.drop([0, 1, 2], axis=1)
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
-        
+
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
             combinations.to_excel(writer, index=False, sheet_name='Deadheads')
 
