@@ -41,7 +41,7 @@ def run():
     def get_routing(row):
         global index
         index = index +1
-        
+
         progress = index / maxVal
         my_bar.progress(progress, text='Progress')
         origin, destination = row[0], row[1]
@@ -83,8 +83,9 @@ def run():
         st.write(combinations.head(5))
         st.write(combinations.shape[0])
         # combinations = combinations[(combinations[0] != combinations[1])]
-        est_time = combinations.shape[0]*0.5
-        st.write('Estimated time:', est_time)
+        global max_val
+        max_val  = combinations.shape[0]*0.5
+        st.write('Estimated time:', max_val)
 
         with st.spinner('Running...'):
 
