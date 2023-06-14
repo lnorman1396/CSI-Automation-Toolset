@@ -49,11 +49,9 @@ def run():
 
 
 
-    if uploaded_file is not None:
-        # Save the uploaded file to a temporary location
-        st.session_state.output = uploaded_file
 
-    if st.session_state.output is not None:
+
+    def main():
         with zipfile.ZipFile(st.session_state.output, 'r') as zip_ref:
             stops_input = zip_ref.open('stops.txt')
             stop_times_input = zip_ref.open('stop_times.txt')
@@ -110,3 +108,8 @@ def run():
         download = 1
         if download == 1:
             st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+    if uploaded_file is not None:
+        # Save the uploaded file to a temporary location
+        st.session_state.output = uploaded_file
+        main()
