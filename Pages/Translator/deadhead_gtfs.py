@@ -72,6 +72,7 @@ def run():
         combinations['crow_distance'] = vec_crow_distance(combinations[0].values, combinations[1].values)
         combinations = combinations[(combinations.crow_distance < max_threshold) & (combinations.crow_distance > min_threshold) & (combinations[0] != combinations[1])]
         st.write(combinations.head(5))
+        st.write(combinations.shape[0])
         # combinations = combinations[(combinations[0] != combinations[1])]
 
         try:
