@@ -27,10 +27,8 @@ def run():
     st.title('GTFS Deadhead Generator')
     st.caption('You can use this tools to create a deadhead Catalogue. Please note, that the GTFS file must be directly compressed. If there is an extra folder in the .zip Archive it will fail and not find the files.')
     st.write('')
-    min_threshold = 0.1
-    max_threshold = 10
-    max_threshold = st.number_input('Insert a max Threshold (Default 0.1)')
-    min_threshold = st.number_input('Insert a min Threshold (Default 10')
+    max_threshold = st.number_input('Insert a max Threshold (Default 0.1)', value=0.1)
+    min_threshold = st.number_input('Insert a min Threshold (Default 10', value=10)
     uploaded_file = st.file_uploader('Upload a GTFS zip file:', type=['zip'])
 
     def crow_distance(origin, destination):
