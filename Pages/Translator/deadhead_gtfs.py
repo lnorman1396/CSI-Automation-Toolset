@@ -85,7 +85,7 @@ def run():
 
 
         st.write('Combinations drop finished')
-        combinations = combinations.drop([0, 1, 2], axis=1)
+        combinations = combinations.drop([0, 1, 'crow_distance'], axis=1)
         # Write DataFrame to BytesIO object
         output = io.BytesIO()
 
