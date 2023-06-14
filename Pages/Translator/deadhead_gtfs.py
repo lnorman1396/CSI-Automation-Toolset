@@ -21,7 +21,6 @@ class Description:
 
 
 index = 0
-maxVal = 0
 
 def run():
     api_key = 'pk.eyJ1IjoiemFjaGFyaWVjaGViYW5jZSIsImEiOiJja3FodjU3d2gwMGdoMnhxM2ZmNjZkYXc5In0.CSFfUFU-zyK_K-wwYGyQ0g'
@@ -38,7 +37,7 @@ def run():
         destination_lat, destination_lon = destination[1], destination[0]
         return geopy.distance.geodesic((origin_lat, origin_lon), (destination_lat, destination_lon)).km
 
-    def get_routing(row):
+    def get_routing(row, maxVal):
         global index
         index = index +1
 
@@ -83,7 +82,6 @@ def run():
         st.write(combinations.head(5))
         st.write(combinations.shape[0])
         # combinations = combinations[(combinations[0] != combinations[1])]
-        global max_val
         max_val  = combinations.shape[0]*0.5
         st.write('Estimated time:', max_val)
 
@@ -93,7 +91,7 @@ def run():
 
                 combinations[
                     ['Origin Stop Id', 'Destination Stop Id', 'Travel Time', 'Distance']] = combinations.apply(
-                    lambda x: get_routing(x), axis=1, result_type='expand')
+                    lambda x: get_routing(x, max_val), axis=1, result_type='expand')
 
             except Exception as e:
                 st.write(e)
