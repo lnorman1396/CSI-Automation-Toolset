@@ -40,7 +40,7 @@ def run():
         global index
         index = index +1
 
-        progress = index / maxVal   
+        progress = index / maxVal
         text = str(index) + str('/') + str(maxVal)
         my_bar.progress(progress, text=text)
         origin, destination = row[0], row[1]
@@ -120,6 +120,6 @@ def run():
         excel_data = output.getvalue()
 
         st.write('Excel finished')
-        download = 1
-        if download == 1:
-            st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    st.download_button("Download Excel File", output, 'Deadhead_Catalog' + '.xlsx',
+                           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
