@@ -15,7 +15,7 @@ def run():
 
     def process_imports(imports):
         lines = imports.split('\n')
-        new_imports = []
+        new_imports = ["from custom_import_method import _import"]
         for line in lines:
             if line.startswith('import'):
                 modules = line[7:].split(',')
