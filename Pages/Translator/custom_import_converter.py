@@ -20,15 +20,15 @@ def run():
         for line in lines:
             # Handle import with alias
             if " as " in line:
-                alias, package = line.split(" as ")
-                processed_imports.append(f"{alias.strip()} = _import('{package.strip()}')")
+                module, alias = line.split(" as ")
+                processed_imports.append(f"{alias.strip()} = _import('{module.split('import ')[-1].strip()}')")
             # Handle normal import
             elif "import " in line:
                 package = line.split("import ")[-1]
                 processed_imports.append(f"{package.strip()} = _import('{package.strip()}')")
             # Handle from-import statement
             elif "from " in line:
-                path, name = line.split("from ")[-1].split(" import ")
+                path, name = line.split(" from ")[-1].split(" import ")
                 processed_imports.append(f"{name.strip()} = _import('{path.strip()}.{name.strip()}')")
     
         return "\n".join(processed_imports)
