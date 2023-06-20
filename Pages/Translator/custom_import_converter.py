@@ -2,7 +2,7 @@
 import streamlit as st
 
 class Instructions:
-    instructions = 'Enter the depot name, Paste in schedule 1 and schedule 2, check the domain is supported by the api call, run the script'
+    instructions = 'Enter your existing imports by pasting into text area, Click the button to convert, and paste the output back into your code including the custom import method at the top'
     link = '#'
 
 class Description:
