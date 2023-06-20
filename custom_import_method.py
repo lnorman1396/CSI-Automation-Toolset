@@ -1,6 +1,10 @@
-# logger.py
+
 import streamlit as st
-def _import(full_name, expander):
+
+expander = st.sidebar.expander('log')
+
+def _import(full_name):
+    global expander
     try:
         parts = full_name.split('.')
         module = __import__(parts[0])
