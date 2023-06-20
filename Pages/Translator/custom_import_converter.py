@@ -6,9 +6,9 @@ class Instructions:
     link = '#'
 
 class Description:
-    title = "Schedule Comparison"
-    description = "This is a script that uses the Optibus API amd compares schedules from optibus urls to create an excel file, highlighting the savings between scenarios"
-    icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmaLtoRAJT4nxBOCBs_mQapmWJv3gxDjaYIQ&usqp=CAU"
+    title = "Custom Import"
+    description = "This is a script translates your imports into special imports handled by this script"
+    icon = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ftriumph.com.au%2Fsolutions%2Fsolutions-by-industry%2Fimport-export%2F&psig=AOvVaw3nUd_4YYXydWFnc1GMtBWq&ust=1687354987583000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCODaqKr90f8CFQAAAAAdAAAAABAD"
     author = 'Luke Norman'
 
 def run():
