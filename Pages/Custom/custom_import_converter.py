@@ -33,7 +33,13 @@ def run():
                 path, names = line.split(" from ")[-1].split(" import ")
                 names = [name.strip() for name in names.split(',')]
                 for name in names:
-                    processed_imports.append(f"{name} = _import('{path.strip()}.{name}')")
+                    if name == path.split('.')[-1]:  # if module and name are the same (e.g., datetime)
+                        processed_imports.append(f"{name} = _import('{path.strip()}')")
+                    else:
+                        processed_imports.append(f"{name} = _import('{path.strip()}.{name}')")
+    
+        return "\n".join(processed_imports)
+
 
   
     
