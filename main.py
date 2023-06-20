@@ -341,6 +341,12 @@ def main():
 
     
 
+    # main.py
+    from logger import get_logger
+
+    logger = get_logger('streamlit_logger')
+    logger.setLevel(logging.ERROR)
+
     try:
         # Set logger level to INFO when running a script
         logger.setLevel(logging.INFO)
