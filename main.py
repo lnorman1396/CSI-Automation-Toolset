@@ -360,8 +360,8 @@ def main():
         st.error(f"An error occurred while running the script: {e}")
         st.error("Please check the script and try again.")
         traceback.print_exc()
-    except ImportException as e:
-        st.sidebar.expander.write(e)
+    except ImportError:
+        st.write('test')
             
         
 if __name__ == "__main__":
