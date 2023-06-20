@@ -268,8 +268,6 @@ def main():
     
     
 
-    logger = get_logger('streamlit_logger')
-    logger.setLevel(logging.ERROR)
     
     full_name = ' '.join([part.capitalize() for part in email.split('@')[0].split('.')])
     sidebar_logo = """
@@ -354,16 +352,23 @@ def main():
     
 
     # main.py
+    logger, handler = get_logger('streamlit_logger')
     
 
     try:
         # Set logger level to INFO when running a script
         logger.setLevel(logging.INFO)
+
+        # Clear the logs before running the script
+        handler.clear_logs()
+
         options[option]()
+
         # Set logger level back to ERROR afterwards
         logger.setLevel(logging.ERROR)
+
         # Get the log messages
-        log_messages = get_log_messages()
+        log_messages = handler.get_logs()
 
         # Write the log messages to the Streamlit UI
         with st.sidebar.expander("Logs"):
