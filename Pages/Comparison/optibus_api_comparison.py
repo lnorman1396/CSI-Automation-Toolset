@@ -1,13 +1,19 @@
 def try_import(full_name):
     try:
-        module_parts = full_name.split('.')
-        module = __import__(full_name)
-        for part in module_parts[1:]:
+        parts = full_name.split('.')
+        module = __import__(parts[0])
+
+        for part in parts[1:]:
             module = getattr(module, part)
+
         return module
     except ImportError:
-        st.write(f"Module {full_name} not found.")
+        print(f"Module {full_name} not found.")
         return None
+    except AttributeError:
+        print(f"Attribute {parts[-1]} in {parts[0]} not found.")
+        return None
+
 
 
 st = try_import('streamlit')
