@@ -42,11 +42,6 @@ def run():
         return "\n".join(processed_imports)
 
 
-
-  
-    
-        return "\n".join(processed_imports)
-
     user_input = st.text_area("Paste your standard Python import statements here:", height=200, placeholder='import streamlit as st')
 
     if st.button('Convert'):
