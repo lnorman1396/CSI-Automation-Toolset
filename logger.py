@@ -2,6 +2,10 @@
 import logging
 import streamlit as st
 
+# define global log_messages as a list
+global log_messages
+log_messages = []
+
 class StreamlitLogger(logging.Logger):
     def __init__(self, name):
         super().__init__(name)
