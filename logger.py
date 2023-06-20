@@ -9,10 +9,10 @@ class StreamlitHandler(logging.Handler):
 
 def get_logger(name):
     logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
 
-    # Prevent Streamlit's rerun from adding multiple handlers
-    if not logger.hasHandlers():
-        logger.setLevel(logging.DEBUG)
+    # Check if StreamlitHandler is already in logger.handlers
+    if not any(isinstance(handler, StreamlitHandler) for handler in logger.handlers):
         handler = StreamlitHandler()
         handler.setLevel(logging.INFO)
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
