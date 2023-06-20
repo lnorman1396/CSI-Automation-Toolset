@@ -13,11 +13,9 @@ def try_import(full_name):
         return module
     except ImportError:
        
-        logger.info(f"Module {full_name} not found.")
         return None
     except AttributeError:
         
-        logger.info(f"Attribute {parts[-1]} in {parts[0]} not found.")
         return None
 
 
