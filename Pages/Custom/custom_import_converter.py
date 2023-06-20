@@ -30,12 +30,14 @@ def run():
                 processed_imports.append(f"{package.strip()} = _import('{package.strip()}')")
             # Handle from-import statement
             elif "from " in line:
-                path, names = line.split(" from ")[-1].split(" import ")
+                path, names = line.split("from ")[-1].split(" import ")
+                path = path.strip()
                 names = [name.strip() for name in names.split(',')]
                 for name in names:
-                    processed_imports.append(f"{name} = _import('{path.strip()}.{name}')")
+                    processed_imports.append(f"{name} = _import('{path}.{name}')")
     
         return "\n".join(processed_imports)
+
 
 
 
