@@ -23,7 +23,7 @@ def run():
                 module, alias = line.split(" as ")
                 processed_imports.append(f"{alias.strip()} = _import('{module.split('import ')[-1].strip()}')")
             # Handle normal import
-            elif "import " in line:
+            elif "import " in line and "from" not in line:
                 package = line.split("import ")[-1]
                 processed_imports.append(f"{package.strip()} = _import('{package.strip()}')")
             # Handle from-import statement
