@@ -1,6 +1,4 @@
-from logger import get_logger
 
-logger = get_logger(__name__)
 
 def try_import(full_name):
     try:
