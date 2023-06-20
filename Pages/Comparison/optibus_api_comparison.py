@@ -1,21 +1,31 @@
-import streamlit as st
-import requests
-import json
-import logging
-import time
-import streamlit as st
-import re
-import pandas as pd 
-from pandas import  ExcelWriter
-from io import BytesIO
-from datetime import date
-import numpy as np
-import os
-from os import getcwd
-from datetime import timedelta
+def try_import(full_name):
+    try:
+        module_parts = full_name.split('.')
+        module = __import__(full_name)
+        for part in module_parts[1:]:
+            module = getattr(module, part)
+        return module
+    except ImportError:
+        st.write(f"Module {full_name} not found.")
+        return None
 
-import collections
-import secrets
+
+st = try_import('streamlit')
+requests = try_import('requests')
+json = try_import('json')
+logging = try_import('logging')
+time = try_import('time')
+re = try_import('re')
+pd = try_import('pandas')
+ExcelWriter = try_import('pandas.ExcelWriter')
+BytesIO = try_import('io.BytesIO')
+date = try_import('datetime.date')
+np = try_import('numpy')
+os = try_import('os')
+getcwd = try_import('os.getcwd')
+timedelta = try_import('datetime.timedelta')
+collections = try_import('collections')
+secrets = try_import('secrets')
 
 class Instructions:
     instructions = 'Enter the depot name, Paste in schedule 1 and schedule 2, check the domain is supported by the api call, run the script'
