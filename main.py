@@ -6,6 +6,7 @@ from typing import List
 from streamlit_searchbox import st_searchbox
 from streamlit_pagination import pagination_component
 from auth import auth
+import logging
 
 
 
