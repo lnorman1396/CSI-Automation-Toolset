@@ -33,13 +33,10 @@ def run():
                 path, names = line.split(" from ")[-1].split(" import ")
                 names = [name.strip() for name in names.split(',')]
                 for name in names:
-                    # Special case: module and object have the same name
-                    if path == name:
-                        processed_imports.append(f"{name} = _import('{path}')")
-                    else:
-                        processed_imports.append(f"{name} = _import('{path}.{name}')")
+                    processed_imports.append(f"{name} = _import('{path.strip()}.{name}')")
     
         return "\n".join(processed_imports)
+
 
 
     user_input = st.text_area("Paste your standard Python import statements here:", height=200, placeholder='import streamlit as st')
