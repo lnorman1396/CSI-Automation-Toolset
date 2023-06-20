@@ -260,6 +260,11 @@ def main():
         st.error("You must have an Optibus email to use this app.")
         return
     
+    from logger import get_logger
+
+    logger = get_logger('streamlit_logger')
+    logger.setLevel(logging.ERROR)
+    
     full_name = ' '.join([part.capitalize() for part in email.split('@')[0].split('.')])
     sidebar_logo = """
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding-bottom: 30px;">
@@ -342,10 +347,7 @@ def main():
     
 
     # main.py
-    from logger import get_logger
-
-    logger = get_logger('streamlit_logger')
-    logger.setLevel(logging.ERROR)
+    
 
     try:
         # Set logger level to INFO when running a script
