@@ -1,15 +1,6 @@
-# Define a custom logger
-import logging
-class StreamlitLogger(logging.Logger):
-    def __init__(self, name):
-        super().__init__(name)
+from logger import get_logger
 
-    def emit(self, record):
-        st.write(self.format(record))
-
-# Get an instance of the logger
-logger = logging.getLogger('streamlit_logger')
-logger.setLevel(logging.INFO)
+logger = get_logger(__name__)
 
 def try_import(full_name):
     try:
