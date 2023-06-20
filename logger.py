@@ -6,6 +6,7 @@ class StreamlitLogger(logging.Logger):
     def __init__(self, name):
         super().__init__(name)
 
+class StreamlitHandler(logging.Handler):
     def emit(self, record):
         log_message = self.format(record)
         # Instead of writing the log message to Streamlit, add it to a global list
