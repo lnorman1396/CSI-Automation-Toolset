@@ -8,7 +8,7 @@ class Instructions:
 class Description:
     title = "Custom Import"
     description = "This is a script translates your imports into special imports handled by this script"
-    icon = "https://www.google.com/url?sa=i&url=https%3A%2F%2Ftriumph.com.au%2Fsolutions%2Fsolutions-by-industry%2Fimport-export%2F&psig=AOvVaw3nUd_4YYXydWFnc1GMtBWq&ust=1687354987583000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCODaqKr90f8CFQAAAAAdAAAAABAD"
+    icon = "https://triumph.com.au/wp-content/uploads/2020/08/import-export-icon-17.png"
     author = 'Luke Norman'
 
 def run():
