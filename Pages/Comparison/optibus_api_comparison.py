@@ -38,7 +38,7 @@ getcwd = try_import('os.getcwd')
 timedelta = try_import('datetime.timedelta')
 collections = try_import('collections')
 secrets = try_import('secrets')
-import polars as pl
+pl = try_import('polars')
 
 class Instructions:
     instructions = 'Enter the depot name, Paste in schedule 1 and schedule 2, check the domain is supported by the api call, run the script'
