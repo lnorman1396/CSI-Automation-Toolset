@@ -356,10 +356,12 @@ def main():
 
 
     except Exception as e:
-        with st.sidebar.beta_expander('Error Logs', expanded=True):
-            st.error(f"An error occurred while running the script: {e}")
-            st.error("Please check the script and try again.")
-            traceback.print_exc()
+        
+        st.error(f"An error occurred while running the script: {e}")
+        st.error("Please check the script and try again.")
+        traceback.print_exc()
+    except ImportException as e:
+        st.sidebar.expander.write(e)
             
         
 if __name__ == "__main__":
