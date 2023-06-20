@@ -342,7 +342,11 @@ def main():
     
 
     try:
+        # Set logger level to INFO when running a script
+        logger.setLevel(logging.INFO)
         options[option]()
+        # Set logger level back to ERROR afterwards
+        logger.setLevel(logging.ERROR)
     except Exception as e:
         st.error(f"An error occurred while running the script: {e}")
         st.error("Please check the script and try again.")
