@@ -9,9 +9,6 @@ from auth import auth
 import logging
 
 
-from logger import get_logger, get_log_messages
-
-
 
 
 
@@ -350,30 +347,14 @@ def main():
             st.sidebar.markdown(card, unsafe_allow_html=True)
 
     
-
-    # main.py
-    logger, handler = get_logger('streamlit_logger')
     
 
     try:
-        # Set logger level to INFO when running a script
-        logger.setLevel(logging.INFO)
 
-        # Clear the logs before running the script
-        handler.clear_logs()
 
         options[option]()
 
-        # Set logger level back to ERROR afterwards
-        logger.setLevel(logging.ERROR)
 
-        # Get the log messages
-        log_messages = handler.get_logs()
-
-        # Write the log messages to the Streamlit UI
-        with st.sidebar.expander("Logs"):
-            for log_message in log_messages:
-                st.text(log_message)
     except Exception as e:
         with st.sidebar.beta_expander('Error Logs', expanded=True):
             st.error(f"An error occurred while running the script: {e}")
