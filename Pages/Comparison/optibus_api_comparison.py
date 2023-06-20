@@ -1,5 +1,13 @@
 
 
+class ImportException(Exception):
+    """Custom exception for import errors"""
+    def __init__(self, module_name, original_exception):
+        self.module_name = module_name
+        self.original_exception = original_exception
+        super().__init__(f"Error importing {self.module_name}: {self.original_exception}")
+
+
 def try_import(full_name):
     try:
         parts = full_name.split('.')
@@ -9,12 +17,10 @@ def try_import(full_name):
             module = getattr(module, part)
 
         return module
-    except ImportError:
-       
-        return None
-    except AttributeError:
-        
-        return None
+    except ImportError as e:
+        raise ImportException(full_name, e)
+    except AttributeError as e:
+        raise ImportException(full_name, e
 
 
 
