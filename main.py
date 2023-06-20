@@ -360,9 +360,7 @@ def main():
             st.error(f"An error occurred while running the script: {e}")
             st.error("Please check the script and try again.")
             traceback.print_exc()
-            # Display the log messages in the expander
-            for log_message in log_messages:
-                st.text(log_message)
+            
         
 if __name__ == "__main__":
     main()
