@@ -20,7 +20,7 @@ def try_import(full_name):
     except ImportError as e:
         raise ImportException(full_name, e)
     except AttributeError as e:
-        raise ImportException(full_name, e
+        raise ImportException(full_name, e)
 
 
 
