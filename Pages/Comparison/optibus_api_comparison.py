@@ -55,9 +55,9 @@ def run():
         }
     )
     if attribute_error is not None:
-        st.error(f"Attribute {parts[-1]} in {parts[0]} not found.")
+        st.error(attribute_error)
     if import_error is not None: 
-        st.error(f"Module {full_name} not found.")
+        st.error(import_error)
     #TODO: may need other client names - only have partial set so far 
     clients_dict = {
         'arriva-uk-bus': 'Arriva UK', 
