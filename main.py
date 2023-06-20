@@ -360,8 +360,7 @@ def main():
         st.error(f"An error occurred while running the script: {e}")
         st.error("Please check the script and try again.")
         traceback.print_exc()
-    except ModuleNotFoundError:
-        st.write('test')
+   
             
         
 if __name__ == "__main__":
