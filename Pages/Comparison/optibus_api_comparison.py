@@ -1,3 +1,6 @@
+# Global flag to check if a script is being run
+is_script_running = False
+
 def try_import(full_name):
     try:
         parts = full_name.split('.')
@@ -8,10 +11,12 @@ def try_import(full_name):
 
         return module
     except ImportError:
-        import_error = f"Module {full_name} not found."
+        if is_script_running:
+            st.write(f"Module {full_name} not found.")
         return None
     except AttributeError:
-        attribute_error = f"Attribute {parts[-1]} in {parts[0]} not found."
+        if is_script_running:
+            st.write(f"Attribute {parts[-1]} in {parts[0]} not found.")
         return None
 
 
@@ -54,10 +59,7 @@ def run():
         "cars": ["beetle", "audi", "beetle", "beetle", "beetle"],   
         }
     )
-    if attribute_error is not None:
-        st.error(attribute_error)
-    if import_error is not None: 
-        st.error(import_error)
+   
     #TODO: may need other client names - only have partial set so far 
     clients_dict = {
         'arriva-uk-bus': 'Arriva UK', 
