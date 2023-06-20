@@ -37,4 +37,4 @@ def run():
 
     if st.button('Convert'):
         result = process_imports(user_input)
-        st.code(f"from custom_import_method import _import\n\n{result})
+        st.code(f"from custom_import_method import _import\n\n{result}")
