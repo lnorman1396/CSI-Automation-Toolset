@@ -279,9 +279,7 @@ def main():
                 """
     st.sidebar.markdown(sidebar_logo, unsafe_allow_html=True)
     st.sidebar.caption(f"Welcome: {full_name}")
-    # in your main method
-    with st.sidebar.expander("View log"):
-        st.write("\n".join(get_log_messages()))
+    
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
     subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
 
@@ -364,6 +362,13 @@ def main():
         options[option]()
         # Set logger level back to ERROR afterwards
         logger.setLevel(logging.ERROR)
+        # Get the log messages
+        log_messages = get_log_messages()
+
+        # Write the log messages to the Streamlit UI
+        with st.sidebar.expander("Logs"):
+            for log_message in log_messages:
+                st.text(log_message)
     except Exception as e:
         with st.sidebar.beta_expander('Error Logs', expanded=True):
             st.error(f"An error occurred while running the script: {e}")
