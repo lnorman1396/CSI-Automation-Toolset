@@ -1,5 +1,14 @@
-# Global flag to check if a script is being run
-is_script_running = False
+# Define a custom logger
+class StreamlitLogger(logging.Logger):
+    def __init__(self, name):
+        super().__init__(name)
+
+    def emit(self, record):
+        st.write(self.format(record))
+
+# Get an instance of the logger
+logger = logging.getLogger('streamlit_logger')
+logger.setLevel(logging.INFO)
 
 def try_import(full_name):
     try:
@@ -12,11 +21,11 @@ def try_import(full_name):
         return module
     except ImportError:
        
-        st.write(f"Module {full_name} not found.")
+        logger.info(f"Module {full_name} not found.")
         return None
     except AttributeError:
         
-        st.write(f"Attribute {parts[-1]} in {parts[0]} not found.")
+        logger.info(f"Attribute {parts[-1]} in {parts[0]} not found.")
         return None
 
 
