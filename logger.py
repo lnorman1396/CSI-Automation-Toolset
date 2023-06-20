@@ -8,27 +8,16 @@ class StreamlitHandler(logging.Handler):
         st.write(msg)
 
 def get_logger(name):
-    # Create a logger
     logger = logging.getLogger(name)
-    # We set the logger level to the "lowest" possible, 
-    # as level control will be handled by the handler
-    logger.setLevel(logging.DEBUG)
 
-    # Create our custom handler
-    streamlit_handler = StreamlitHandler()
-    streamlit_handler.setLevel(logging.INFO)
-
-    # We create a formatter
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-    # We link the formatter to our handler
-    streamlit_handler.setFormatter(formatter)
-
-    # We link the handler to our logger
-    logger.addHandler(streamlit_handler)
-
-    # Prevent logger from propagating messages to the parent logger
-    logger.propagate = False
+    # Prevent Streamlit's rerun from adding multiple handlers
+    if not logger.hasHandlers():
+        logger.setLevel(logging.DEBUG)
+        handler = StreamlitHandler()
+        handler.setLevel(logging.INFO)
+        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        logger.propagate = False
 
     return logger
-
