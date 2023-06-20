@@ -8,10 +8,10 @@ def try_import(full_name):
 
         return module
     except ImportError:
-        st.write(f"Module {full_name} not found.")
+        raise ImportError(f"Module {full_name} not found.")
         return None
     except AttributeError:
-        st.write(f"Attribute {parts[-1]} in {parts[0]} not found.")
+        raise AttributeError(f"Attribute {parts[-1]} in {parts[0]} not found.")
         return None
 
 
