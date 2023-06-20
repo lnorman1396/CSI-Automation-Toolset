@@ -2,10 +2,15 @@
 import logging
 import streamlit as st
 
-class StreamlitHandler(logging.Handler):
+class StreamlitLogger(logging.Logger):
+    def __init__(self, name):
+        super().__init__(name)
+
     def emit(self, record):
-        msg = self.format(record)
-        st.write(msg)
+        log_message = self.format(record)
+        # Instead of writing the log message to Streamlit, add it to a global list
+        global log_messages
+        log_messages.append(log_message)
 
 def get_logger(name):
     logger = logging.getLogger(name)
