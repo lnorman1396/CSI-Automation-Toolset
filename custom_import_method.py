@@ -1,7 +1,7 @@
 
 import streamlit as st
 
-def _import(full_name, error_messages):
+def _import(full_name):
     try:
         parts = full_name.split('.')
         module = __import__(parts[0])
