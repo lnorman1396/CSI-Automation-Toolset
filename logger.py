@@ -32,3 +32,7 @@ def get_logger(name):
     logger.propagate = False
 
     return logger
+
+# Function to get the log messages
+def get_log_messages():
+    return log_messages
