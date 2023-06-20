@@ -2,7 +2,7 @@
 
 
 
-def try_import(full_name):
+def _import(full_name):
     try:
         parts = full_name.split('.')
         module = __import__(parts[0])
@@ -22,23 +22,23 @@ def try_import(full_name):
 
 
 
-st = try_import('streamlit')
-requests = try_import('requests')
-json = try_import('json')
-logging = try_import('logging')
-time = try_import('time')
-re = try_import('re')
-pd = try_import('pandas')
-ExcelWriter = try_import('pandas.ExcelWriter')
-BytesIO = try_import('io.BytesIO')
-date = try_import('datetime.date')
-np = try_import('numpy')
-os = try_import('os')
-getcwd = try_import('os.getcwd')
-timedelta = try_import('datetime.timedelta')
-collections = try_import('collections')
-secrets = try_import('secrets')
-pl = try_import('polars')
+st = _import('streamlit')
+requests = _import('requests')
+json = _import('json')
+logging = _import('logging')
+time = _import('time')
+re = _import('re')
+pd = _import('pandas')
+ExcelWriter = _import('pandas.ExcelWriter')
+BytesIO = _import('io.BytesIO')
+date = _import('datetime.date')
+np = _import('numpy')
+os = _import('os')
+getcwd = _import('os.getcwd')
+timedelta = _import('datetime.timedelta')
+collections = _import('collections')
+secrets = _import('secrets')
+pl = _import('polars')
 
 class Instructions:
     instructions = 'Enter the depot name, Paste in schedule 1 and schedule 2, check the domain is supported by the api call, run the script'
