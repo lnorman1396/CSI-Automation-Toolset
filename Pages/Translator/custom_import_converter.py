@@ -31,7 +31,7 @@ def run():
                     new_imports.append(f'{sub} = _import("{module}.{sub}")')
         return '\n'.join(new_imports)
 
-    user_input = st.text_area("Paste your standard Python import statements here:", height=100, placeholder='**import streamlit as st**')
+    user_input = st.text_area("Paste your standard Python import statements here:", height=200, placeholder='import streamlit as st')
 
     if st.button('Convert'):
         result = process_imports(user_input)
