@@ -342,11 +342,15 @@ def main():
     
 
     try:
+        global is_script_running
+        is_script_running = True
         options[option]()
+        is_script_running = False
     except Exception as e:
         st.error(f"An error occurred while running the script: {e}")
         st.error("Please check the script and try again.")
         traceback.print_exc()
+        is_script_running = False
 
 if __name__ == "__main__":
     main()
