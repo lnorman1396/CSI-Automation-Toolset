@@ -8,11 +8,12 @@ from streamlit_pagination import pagination_component
 from auth import auth
 import logging
 
-# main.py
-from logger import get_logger
 
-# Initialize the global list to store log messages
-log_messages = []
+from logger import get_logger, get_log_messages
+
+
+
+
 
 def import_module(module_name, module_path):
     spec = importlib.util.spec_from_file_location(module_name, module_path)
@@ -278,6 +279,9 @@ def main():
                 """
     st.sidebar.markdown(sidebar_logo, unsafe_allow_html=True)
     st.sidebar.caption(f"Welcome: {full_name}")
+    # in your main method
+    with st.sidebar.expander("View log"):
+        st.write("\n".join(get_log_messages()))
     base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Pages")
     subdirs = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d)) and d != "tests"]
 
