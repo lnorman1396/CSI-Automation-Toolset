@@ -12,9 +12,13 @@ def try_import(full_name):
 
         return module
     except ImportError as e:
-        st.sidebar.expander.write(module)
+        expander = st.sidebar.expander('log')
+        expander.write(module)
+        return None
     except AttributeError as e:
-        st.sidebar.expander.write(parts)
+        expander = st.sidebar.expander('log')
+        expander.write(module)
+        return None
 
 
 
