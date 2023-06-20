@@ -31,6 +31,7 @@ def auth():
     if token:
         email = get_user_email(token)
         if email:
+            st.session_state.token = token
             authenticated = True
             
     top_row_placeholder = st.empty()
