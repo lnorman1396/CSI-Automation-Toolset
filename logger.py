@@ -4,19 +4,17 @@ import streamlit as st
 
 
 
-# define log_messages as a list
-log_messages = []
-
 class StreamlitLogger(logging.Logger):
     def __init__(self, name):
         super().__init__(name)
 
 class StreamlitHandler(logging.Handler):
+    log_messages = []  # make log_messages a class variable
+
     def emit(self, record):
-        global log_messages  # this is necessary to access the variable within the class method
         log_message = self.format(record)
-        # Instead of writing the log message to Streamlit, add it to a global list
-        log_messages.append(log_message)
+        # append log_message to log_messages list
+        StreamlitHandler.log_messages.append(log_message)
 
 # Function to get the logger
 def get_logger(name):
@@ -29,6 +27,6 @@ def get_logger(name):
 
 # Function to get the log messages
 def get_log_messages():
-    global log_messages  # this is necessary to access the variable within the function
-    return log_messages
+    # access log_messages through the class
+    return StreamlitHandler.log_messages
 
