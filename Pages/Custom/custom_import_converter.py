@@ -35,7 +35,7 @@ def run():
                 for name in names:
                     processed_imports.append(f"{name} = _import('{path.strip()}.{name}')")
 
-    return "\n".join(processed_imports)
+  
     
         return "\n".join(processed_imports)
 
