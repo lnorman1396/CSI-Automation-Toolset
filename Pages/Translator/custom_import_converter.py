@@ -12,7 +12,7 @@ class Description:
     author = 'Luke Norman'
 
 def run():
-    st.info("**This is specific to this app only**"
+    st.info("**This is specific to this app only**")
 
     def process_imports(raw_imports):
         lines = raw_imports.split("\n")
