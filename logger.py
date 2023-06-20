@@ -7,7 +7,6 @@ class StreamlitHandler(logging.Handler):
         msg = self.format(record)
         st.write(msg)
 
-# Function to get the logger
 def get_logger(name):
     # Create a logger
     logger = logging.getLogger(name)
@@ -27,6 +26,9 @@ def get_logger(name):
 
     # We link the handler to our logger
     logger.addHandler(streamlit_handler)
+
+    # Prevent logger from propagating messages to the parent logger
+    logger.propagate = False
 
     return logger
 
