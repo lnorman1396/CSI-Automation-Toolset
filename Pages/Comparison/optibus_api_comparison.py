@@ -17,7 +17,7 @@ def try_import(full_name):
         return None
     except AttributeError as e:
         expander = st.sidebar.expander('log') 
-        expander.write(f"Failed to import: {full_name}")
+        expander.write(f"Failed to import: {parts}")
         return None
 
 
