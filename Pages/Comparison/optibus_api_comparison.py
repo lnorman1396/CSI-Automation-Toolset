@@ -1,11 +1,5 @@
 
 
-class ImportException(Exception):
-    """Custom exception for import errors"""
-    def __init__(self, module_name, original_exception):
-        self.module_name = module_name
-        self.original_exception = original_exception
-        super().__init__(f"Error importing {self.module_name}: {self.original_exception}")
 
 
 def try_import(full_name):
@@ -18,9 +12,9 @@ def try_import(full_name):
 
         return module
     except ImportError as e:
-        raise ImportException(full_name, e)
+        st.sidebar.expander.write(module)
     except AttributeError as e:
-        raise ImportException(full_name, e)
+        st.sidebar.expander.write(parts)
 
 
 
