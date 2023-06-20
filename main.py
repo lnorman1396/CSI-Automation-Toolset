@@ -8,7 +8,11 @@ from streamlit_pagination import pagination_component
 from auth import auth
 import logging
 
+# main.py
+from logger import get_logger
 
+# Initialize the global list to store log messages
+log_messages = []
 
 def import_module(module_name, module_path):
     spec = importlib.util.spec_from_file_location(module_name, module_path)
@@ -261,7 +265,7 @@ def main():
         st.error("You must have an Optibus email to use this app.")
         return
     
-    from logger import get_logger
+    
 
     logger = get_logger('streamlit_logger')
     logger.setLevel(logging.ERROR)
@@ -357,9 +361,13 @@ def main():
         # Set logger level back to ERROR afterwards
         logger.setLevel(logging.ERROR)
     except Exception as e:
-        st.error(f"An error occurred while running the script: {e}")
-        st.error("Please check the script and try again.")
-        traceback.print_exc()
+        with st.sidebar.beta_expander('Error Logs', expanded=True):
+            st.error(f"An error occurred while running the script: {e}")
+            st.error("Please check the script and try again.")
+            traceback.print_exc()
+            # Display the log messages in the expander
+            for log_message in log_messages:
+                st.text(log_message)
         
 if __name__ == "__main__":
     main()
