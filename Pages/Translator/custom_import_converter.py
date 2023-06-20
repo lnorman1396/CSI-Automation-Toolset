@@ -14,24 +14,24 @@ class Description:
 def run():
 
     def process_imports(raw_imports):
-    lines = raw_imports.split("\n")
-    processed_imports = []
-
-    for line in lines:
-        # Handle import with alias
-        if " as " in line:
-            alias, package = line.split(" as ")
-            processed_imports.append(f"{alias.strip()} = _import('{package.strip()}')")
-        # Handle normal import
-        elif "import " in line:
-            package = line.split("import ")[-1]
-            processed_imports.append(f"{package.strip()} = _import('{package.strip()}')")
-        # Handle from-import statement
-        elif "from " in line:
-            path, name = line.split("from ")[-1].split(" import ")
-            processed_imports.append(f"{name.strip()} = _import('{path.strip()}.{name.strip()}')")
-
-    return "\n".join(processed_imports)
+        lines = raw_imports.split("\n")
+        processed_imports = []
+    
+        for line in lines:
+            # Handle import with alias
+            if " as " in line:
+                alias, package = line.split(" as ")
+                processed_imports.append(f"{alias.strip()} = _import('{package.strip()}')")
+            # Handle normal import
+            elif "import " in line:
+                package = line.split("import ")[-1]
+                processed_imports.append(f"{package.strip()} = _import('{package.strip()}')")
+            # Handle from-import statement
+            elif "from " in line:
+                path, name = line.split("from ")[-1].split(" import ")
+                processed_imports.append(f"{name.strip()} = _import('{path.strip()}.{name.strip()}')")
+    
+        return "\n".join(processed_imports)
 
     user_input = st.text_area("Paste your standard Python import statements here:", height=200, placeholder='import streamlit as st')
 
