@@ -350,9 +350,11 @@ def main():
     
 
     try:
+        if option == 'feedback_form':
+            options[option](full_name)
+        else:
+            options[option]()
 
-
-        options[option]()
 
 
     except Exception as e:
