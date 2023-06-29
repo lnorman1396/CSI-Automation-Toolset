@@ -29,8 +29,6 @@ def run():
         time_0 = time()
         input_file = st.file_uploader('Select JDF Zip File',type=['zip'])
         if input_file!=None:
-            chdir(dirname(input_file))
-            output_name = basename(input_file)[:-4]+'_Dataset'
             JDF_dict={}
             places = creating_places_file(ZipFile(input_file, 'r'))
             logger.write(f'\ncreating_places_file in {(time() - time_0):.1f} seconds')
