@@ -7,13 +7,13 @@ from datetime import datetime
 from io import BytesIO
 
 class Instructions:
-    instructions = 'Upload the GTFS File and run the script to download the file with minimal service IDs, this is linked with the calendar GTFS script'
+    instructions = 'Upload the GTFS File and run the script to download the file with minimal service ID, if you have calendar_dates.txt file in your GTFS, you have to run first calendar GTFS script'
     link = 'https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts'
 
 class Description:
     title = "GTFS Minimal Service IDs"
-    description = "This is a script that condenses the GTFS File to use minimal service ids to optmise the file for import"
-    icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ_rAMPHgKnSi6hQF6admmxyaaCXzYLRDmLg&usqp=CAU"
+    description = "This is a script that condenses the GTFS File to use minimal service ids to optimise the file for import, for more info click on the Confluence link"
+    icon = "https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts#4.-Minimal-number-of-service-IDs"
     author = 'Lior Zacks'
 
 def run():
