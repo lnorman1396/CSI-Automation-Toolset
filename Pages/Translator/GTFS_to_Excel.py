@@ -43,7 +43,7 @@ def run():
         for index, row in df.iterrows():
             if zip_file_input.getinfo(row['file_name']).file_size > 0:
                 logger.write(f'Reading {row["file_type"]} file')
-                table = pd.read_csv(zip_file_input.open(row['file_name']), header=0, dtype=str)
+                table = pd.read_csv(zip_file_input.open(row['file_name']), header=0, dtype=str, encoding= 'unicode_escape')
                 if len(table) > 1048574:
                     logger.write(f'{row["file_name"]} file has {len(table)} rows and will be saved as a csv file')
                     table.to_csv(f'{output_name}_{row["file_type"]}.csv')
