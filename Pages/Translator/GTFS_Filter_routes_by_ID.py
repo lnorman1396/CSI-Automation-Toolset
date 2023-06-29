@@ -13,7 +13,7 @@ class Instructions:
 
 class Description:
     title = "GTFS - Filter Routes By Route ID"
-    description = "This is a script that enables you to filter routes on the uploaded GTFS file, the output is a new GTFS file only with the desired route/routes, for more info clock on the Conlfunce link"
+    description = "This is a script that enables you to filter routes on the uploaded GTFS file, the output is a new GTFS file only with the desired route/routes, for more info click on the Conlfunce link"
     icon = "https://cdn-icons-png.flaticon.com/512/1032/1032914.png"
     author = 'Lior Zacks'
 
