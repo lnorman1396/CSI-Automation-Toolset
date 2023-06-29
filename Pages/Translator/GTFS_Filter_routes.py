@@ -8,12 +8,12 @@ from time import time
 import io
 
 class Instructions:
-    instructions = 'Upload the GTFS File and run the script to download the with filtered routes'
-    link = 'https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts'
+    instructions = 'Upload the GTFS File and run the script to download the new GTFS with a filtered routes'
+    link = 'https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts#5.-GTFS-Route-Filtering(by-route_id)'
 
 class Description:
-    title = "GTFS - Filter Routes"
-    description = "This is a script that enables you to filter routes on the uploaded GTFS file"
+    title = "GTFS - Filter Routes By Route ID"
+    description = "This is a script that enables you to filter routes on the uploaded GTFS file, the output is a new GTFS file only with the desired route/routes, for more info clock on the Conlfunce link"
     icon = "https://cdn-icons-png.flaticon.com/512/1032/1032914.png"
     author = 'Lior Zacks'
 
