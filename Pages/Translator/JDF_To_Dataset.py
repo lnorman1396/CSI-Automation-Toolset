@@ -369,6 +369,6 @@ def run():
         output.seek(0)
         logger.write(f'Wrote excel output in {(time() - time_0):.1f} seconds')
         return output
-main()
+    main()
 
 
