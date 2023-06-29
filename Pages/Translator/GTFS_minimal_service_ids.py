@@ -13,7 +13,7 @@ class Instructions:
 class Description:
     title = "GTFS Minimal Service IDs"
     description = "This is a script that condenses the GTFS File to use minimal service ids to optimise the file for import, for more info click on the Confluence link"
-    icon = "https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts#4.-Minimal-number-of-service-IDs"
+    icon = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/GTFS_SVG_Icon_01.svg/512px-GTFS_SVG_Icon_01.svg.png?20180425071334"
     author = 'Lior Zacks'
 
 def run():
