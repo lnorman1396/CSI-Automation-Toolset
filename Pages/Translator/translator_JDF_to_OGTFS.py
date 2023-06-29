@@ -9,6 +9,9 @@ import streamlit as st
 import os
 import io
 
+class Instructions:
+    instructions = 'Upload the JDF Zip File and run the script to download an OGTFS file, for more info click on the Confluence link.'
+    link = 'https://optibus.atlassian.net/wiki/spaces/OP/pages/3117940752/JDF+Converting+Scripts#JDF-to-OGTFS'
 
 class Description:
     title = "JDf to OGTFS Converter"
