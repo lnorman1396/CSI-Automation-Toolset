@@ -6,10 +6,13 @@ from zipfile import ZipFile, ZIP_DEFLATED
 from datetime import datetime
 import io
 
+class Instructions:
+    instructions = 'Upload the GTFS File and run the script'
+    link='https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts#3.-Convert-calendar_dates-into-a-calendar'
+    
 class Description:
     title = "Calendar Conversion GTFS"
     description = "The script converts the GTFS calendar_dates.txt file into a calendar.txt file and adds the relevant service IDs to the service IDs that already exist in the calendar.txt file if there are any."
-    link='https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts#3.-Convert-calendar_dates-into-a-calendar'
     icon = "https://cdn-icons-png.flaticon.com/512/1869/1869397.png"
     author = 'Lior Zacks'
 
