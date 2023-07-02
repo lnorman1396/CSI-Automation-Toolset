@@ -53,8 +53,8 @@ def run():
         if 'trips.txt' not in input_file_list:
             st.error('\nThere is no trips file in this folder. Aborting.\n')
         logger.write('Reading trips file')
-        df['trips'] = read_csv(zip_file.open('trips.txt'), header=0, dtype=str).join(df_routes, on='route_short_name', how='inner').reset_index(drop=True)
-        trips = read_csv(zip_file.open('trips.txt'), header=0, dtype=str).join(df_routes, on='route_short_name',how='inner').reset_index(drop=True)
+        df['trips'] = read_csv(zip_file.open('trips.txt'), header=0, dtype=str).join(df_routes, on='route_id', how='inner').reset_index(drop=True)
+        trips = read_csv(zip_file.open('trips.txt'), header=0, dtype=str).join(df_routes, on='route_id',how='inner').reset_index(drop=True)
         df_trip_ids=trips['trip_id']
         trip_list=df_trip_ids.values.tolist()
         df_trips = DataFrame(trip_list, columns=['trip_id'], dtype=str)
