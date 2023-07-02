@@ -132,4 +132,4 @@ def run():
 		output_bytes.seek(0)
 		return output_bytes
 
-	main()
+		main()
