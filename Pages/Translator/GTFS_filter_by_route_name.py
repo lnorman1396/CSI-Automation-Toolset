@@ -8,11 +8,11 @@ import io
 
 class Instructions:
     instructions = 'Upload the GTFS File and run the script to download the new GTFS with a filtered routes'
-    link = 'https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts#5.-GTFS-Route-Filtering(by-route_id)'
+    link = 'https://optibus.atlassian.net/wiki/spaces/OP/pages/2123595829/GTFS+Scripts#5.-GTFS-Route-Filtering(by-route_short_name)'
 
 class Description:
-    title = "GTFS - Filter Routes By Route ID"
-    description = "This is a script that enables you to filter routes on the uploaded GTFS file, the output is a new GTFS file only with the desired route/routes, for more info click on the Conlfunce link"
+    title = "GTFS - Filter Routes By Route Name"
+    description = "This is a script that enables you to filter routes on the uploaded GTFS file, the output is a new GTFS file only with the desired route/routes, for more info click on the Confluence link"
     icon = "https://cdn-icons-png.flaticon.com/512/1032/1032914.png"
     author = 'Lior Zacks'
 
@@ -25,10 +25,10 @@ def run():
         if input_file is not None:
             zip_file = ZipFile(input_file, 'r')
             routes_df = read_csv(zip_file.open('routes.txt'), header=0, dtype=str)
-            routes_to_filter = st.multiselect("Select route_id (within routes.txt) to filter", routes_df['route_id'].unique().tolist())
+            routes_to_filter = st.multiselect("Select route_short_name (within routes.txt) to filter", routes_df['route_short_name'].unique().tolist())
             
-            routes_to_filter = DataFrame(routes_to_filter, columns=['route_id'], dtype=str)
-            zip_file_output = gtfs_filtering(zip_file, routes_to_filter.set_index('route_id'))
+            routes_to_filter = DataFrame(routes_to_filter, columns=['route_short_name'], dtype=str)
+            zip_file_output = gtfs_filtering(zip_file, routes_to_filter.set_index('route_short_name'))
             output_bytes = write_output_GTFS(zip_file_output, f'{input_file.name[:-4]}_filter_routes.zip')
             st.download_button(
                 label="Download output file",
@@ -41,7 +41,7 @@ def run():
         b = []
         for i in a.split(','):
             b.append(i.strip())
-        return(DataFrame(b, columns=['route_id'], dtype=str))
+        return(DataFrame(b, columns=['route_short_name'], dtype=str))
 
     def gtfs_filtering(zip_file, df_routes):
         input_file_list = zip_file.namelist()
@@ -49,12 +49,12 @@ def run():
         if 'routes.txt' not in input_file_list:
             st.error('\nThere is no routes file in this folder. Aborting.\n')
         logger.write('Reading routes file')
-        df['routes'] = read_csv(zip_file.open('routes.txt'), header=0, dtype=str).join(df_routes, on='route_id', how='inner').reset_index(drop=True)
+        df['routes'] = read_csv(zip_file.open('routes.txt'), header=0, dtype=str).join(df_routes, on='route_short_name', how='inner').reset_index(drop=True)
         if 'trips.txt' not in input_file_list:
             st.error('\nThere is no trips file in this folder. Aborting.\n')
         logger.write('Reading trips file')
-        df['trips'] = read_csv(zip_file.open('trips.txt'), header=0, dtype=str).join(df_routes, on='route_id', how='inner').reset_index(drop=True)
-        trips = read_csv(zip_file.open('trips.txt'), header=0, dtype=str).join(df_routes, on='route_id',																				 how='inner').reset_index(drop=True)
+        df['trips'] = read_csv(zip_file.open('trips.txt'), header=0, dtype=str).join(df_routes, on='route_short_name', how='inner').reset_index(drop=True)
+        trips = read_csv(zip_file.open('trips.txt'), header=0, dtype=str).join(df_routes, on='route_short_name',how='inner').reset_index(drop=True)
         df_trip_ids=trips['trip_id']
         trip_list=df_trip_ids.values.tolist()
         df_trips = DataFrame(trip_list, columns=['trip_id'], dtype=str)
