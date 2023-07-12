@@ -18,6 +18,7 @@ collections = _import('collections')
 secrets = _import('secrets')
 pl = _import('polars')
 
+
 class Instructions:
     instructions = 'Enter the depot name, Paste in schedule 1 and schedule 2, check the domain is supported by the api call, run the script'
     link = '#'
@@ -28,16 +29,11 @@ class Description:
     icon = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmaLtoRAJT4nxBOCBs_mQapmWJv3gxDjaYIQ&usqp=CAU"
     author = 'Luke Norman'
 
+
+
 def run():
 
-    df = pl.DataFrame(
-        {
-        "A": [1, 2, 3, 4, 5],
-        "fruits": ["banana", "banana", "apple", "apple", "banana"],      
-        "B": [5, 4, 3, 2, 1],        
-        "cars": ["beetle", "audi", "beetle", "beetle", "beetle"],   
-        }
-    )
+
    
     #TODO: may need other client names - only have partial set so far 
     clients_dict = {
