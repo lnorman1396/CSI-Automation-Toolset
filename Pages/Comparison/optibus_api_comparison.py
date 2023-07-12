@@ -950,7 +950,7 @@ def run():
                 depot_name = 'Optimisation Comparison - ' + depot_name
                 buffer3 = BytesIO()
                 with ExcelWriter(buffer3,engine='xlsxwriter') as writer:
-                    merged_df.to_excel(writer,sheet_name='Results',index=0, startcol=1, startrow=5)
+                    merged_df.to_excel(writer,sheet_name='Results',index=False, startcol=1, startrow=5)
                     merged_df_duty_types.to_excel(writer, sheet_name='Duty Types', startrow=1, startcol=1)
                     workbook = writer.book # Access the workbook
                     worksheet= writer.sheets['Results']
