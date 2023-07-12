@@ -946,7 +946,7 @@ def run():
                     arriva_df['Paid Hours'] = round(arriva_df['Paid Hours']/60,2)
                     arriva_df['Platform Hours'] = round(arriva_df['Platform Hours']/60,2)
                     return arriva_df
-
+                merged_df = merged_df.reset_index()
                 depot_name = 'Optimisation Comparison - ' + depot_name
                 buffer3 = BytesIO()
                 with ExcelWriter(buffer3,engine='xlsxwriter') as writer:
