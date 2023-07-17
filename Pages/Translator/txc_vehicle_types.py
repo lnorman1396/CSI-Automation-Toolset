@@ -5,6 +5,16 @@ import io
 from zipfile import ZipFile, ZIP_DEFLATED
 import os
 
+class Instructions:
+    instructions = 'Upload the TXC File and run the script'
+    
+class Description:
+    title = "Get Vehicle types and Routes from TXC"
+    description = "The script reads TXC zip files and extracts routes and vehicle types to an excel"
+    icon = "https://cdn-icons-png.flaticon.com/512/1869/1869397.png"
+    author = 'Luke Norman'
+
+
 def process_xml(xml_content):
     # Parse XML and find VehicleJourney elements
     root = ET.fromstring(xml_content)
