@@ -15,7 +15,7 @@ class Description:
     author = 'Luke Norman'
 
 def run():
-  def main():
+    def main():
       st.title("TXC File Processor")
       file = st.file_uploader("Upload TXC ZIP file", type="zip")
   
@@ -78,5 +78,4 @@ def run():
         output_bytes.seek(0)
         return output_bytes
   
-
     main()
