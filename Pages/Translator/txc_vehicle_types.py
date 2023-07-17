@@ -18,7 +18,7 @@ def run():
     def main():
       st.title("TXC File Processor")
       file = st.file_uploader("Upload TXC ZIP file", type="zip")
-  
+    
       if file is not None:
           with ZipFile(file, 'r') as zip:
               # Assuming there's only one XML file in the zip
@@ -27,7 +27,7 @@ def run():
                   content = f.read()
                   df = process_xml(content)
                   st.write(df)
-  
+    
                   # Write DataFrame to Excel and zip it
                   file_name = file.name[:-4]  # Strip file extension
                   output_bytes = write_output_TXC(df, file_name)
@@ -77,5 +77,5 @@ def run():
         output_zip_file.close()
         output_bytes.seek(0)
         return output_bytes
-  
+    
     main()
