@@ -46,7 +46,12 @@ def run():
                         "VehicleTypeCode": vehicle_type_code.text,
                     }, ignore_index=True)
                 elem.clear()
+    
+        # Drop duplicate rows
+        df = df.drop_duplicates(subset=["ServiceRef", "VehicleTypeCode"])
+    
         return df
+
 
     def write_output_TXC(df, file_name):
         output_bytes = io.BytesIO()
