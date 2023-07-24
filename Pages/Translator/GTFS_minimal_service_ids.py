@@ -44,7 +44,7 @@ def run():
 
     def consolidate_function(zip_file):
         if platform.system() == 'Linux':  # 'Darwin' indicates macOS
-            input_file_list = [name for name in zip_file.namelist() if not name.startswith('__MACOSX') and not '/._' in name]
+            input_file_list = [os.path.basename(name) for name in zip_file.namelist() if not name.startswith('__MACOSX') and not '/._' in name and name.endswith('.txt')]
         else:
             input_file_list = zip_file.namelist()
         st.write(input_file_list)
