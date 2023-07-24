@@ -42,6 +42,7 @@ def run():
 
     def consolidate_function(zip_file):
         input_file_list = zip_file.namelist()
+        st.write(input_file_list)
         df = {}
         if 'calendar.txt' not in input_file_list:
             st.error('\nThere is no calendar file in this folder. Aborting.\n')
