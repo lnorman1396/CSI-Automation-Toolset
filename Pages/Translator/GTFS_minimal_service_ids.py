@@ -5,6 +5,8 @@ import zipfile
 from zipfile import ZipFile, ZIP_DEFLATED
 from datetime import datetime
 from io import BytesIO
+import platform
+
 
 class Instructions:
     instructions = 'Upload the GTFS File and run the script to download the file with minimal service ID, if you have calendar_dates.txt file in your GTFS, you have to run first calendar GTFS script'
@@ -41,8 +43,10 @@ def run():
     
 
     def consolidate_function(zip_file):
-        input_file_list = zip_file.namelist()
-        st.write(input_file_list)
+        if platform.system() == 'Darwin':  # 'Darwin' indicates macOS
+            input_file_list = [name for name in zip_file.namelist() if not name.startswith('__MACOSX') and not '/._' in name]
+        else:
+            input_file_list = zip_file.namelist()
         df = {}
         if 'calendar.txt' not in input_file_list:
             st.error('\nThere is no calendar file in this folder. Aborting.\n')
