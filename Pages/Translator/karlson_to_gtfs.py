@@ -1,7 +1,9 @@
 import streamlit as st
 import zipfile
 from io import BytesIO
-import pdfplumber
+from custom_import_method import _import
+
+pdfplumber = _import('pdfplumber')
 import pandas as pd
 import re
 import base64
