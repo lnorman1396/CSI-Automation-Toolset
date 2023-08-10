@@ -748,6 +748,5 @@ def run():
         if st.session_state['current_view'] == 'Form':
             render_wizard_view()
 
-
     app()
     
