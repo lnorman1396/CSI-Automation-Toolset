@@ -86,6 +86,8 @@ def run():
 
     # Check for leading/trailing spaces
     df[id_col] = df[id_col].astype(str)
+    print(df[id_col].dtype)
+    st.write(df[id_col].dtype)
     if df[id_col].str.contains(r'^\s|\s$', na=False).any():
         errors.append((id_col, 'Found leading/trailing spaces in column 0'))
     if df[short_name_col].str.contains(r'^\s|\s$', na=False).any():
