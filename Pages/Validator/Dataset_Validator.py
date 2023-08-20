@@ -464,7 +464,12 @@ def run():
     
                 # Add a day offset to arrival times that are less than departure times
                 for i in range(len(arrival_column)):
-                    if arrival_column.iloc[i] < departure_column.iloc[i]:
+                    arrival_value = arrival_column.iloc[i]
+                    departure_value = departure_column.iloc[i]
+                    if arrival_value is None or departure_value is None:
+                           # Skip the comparison for this row
+                        continue
+                    if arrival_value < departure_value:
                         arrival_column.iloc[i] += 24 * 60
     
                 # Getting rows where departure time is larger than or equal to arrival time
