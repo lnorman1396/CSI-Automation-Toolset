@@ -1,7 +1,9 @@
 import streamlit as st
 import zipfile
 from io import BytesIO
-import pdfplumber
+from custom_import_method import _import
+pdfplumber = _import('pdfplumber')
+
 import pandas as pd
 import re
 import base64
@@ -16,7 +18,6 @@ import zipfile
 import os
 import numpy as np
 from itertools import accumulate
-
 
 # Define days of the week
 
